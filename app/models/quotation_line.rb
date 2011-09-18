@@ -1,4 +1,3 @@
-require 'RMagick'
 require 'erb'
 include Magick
 
