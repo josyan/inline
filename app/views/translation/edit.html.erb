@@ -1,0 +1,8 @@
+<h2><%= trn_get('TITLE_TRANSLATION_EDIT') %></h2>
+
+<%= form_tag :action => 'update', :id => @translation do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag trn_geth('BUTTON_EDIT') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
+<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @translation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

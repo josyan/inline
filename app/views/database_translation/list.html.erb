@@ -1,0 +1,59 @@
+<h2><%= trn_geth('TITLE_DBT_LIST') %></h2>
+
+<table>
+  <tr>
+    <td>
+      <%= form_tag :action => 'list' do %>
+        <%= select_tag "dbtf", options_for_select(@dbtfs.collect{ |d| [d.table + " / " + d.field, d.id]}, @dbtf ? @dbtf.id : nil) %>
+        <%= submit_tag trn_geth('BUTTON_LIST') %>
+      <% end %>
+    </td>
+
+    <td>
+      <%= form_tag :action => 'generate' do %>
+        <%= submit_tag trn_geth('BUTTON_GENERATE') %>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<% if @log %>
+  <% if @log.length > 0 %>
+    <ul>
+      <% @log.each { |l| %>
+      <li><%= l %></li>
+      <% } %>
+    </ul>
+  <% else %>
+    <%= trn_geth('LABEL_NOTHING_TO_DO') %>
+  <% end %>
+<% end %>
+
+<% if @dbts %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NATIVE') %></th>
+    <th><%= trn_geth('HEADER_FRENCH') %></th>
+    <th><%= trn_geth('HEADER_ENGLISH') %></th>
+    <th><%= trn_geth('HEADER_SPANISH') %></th>
+    <th></th>
+  </tr>
+<% for dbt in @dbts %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td>
+      <% begin %>
+        <%= dbt.table.singularize.camelize.constantize.find(dbt.record_id).send(dbt.field) %>
+      <% rescue %>
+        ## <%= trn_get('MSG_DELETED') %> ##
+      <% end %>
+    </td>
+    <td><%= dbt.fr %></td>
+    <td><%= dbt.en %></td>
+    <td><%= dbt.es %></td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => dbt %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<% end %>

@@ -1,0 +1,18 @@
+<h3><%= trn_geth('HEADER_OPTIONS_FOR_CATEGORY') %> <%= @option_category.tr_name %></h3>
+
+<%= form_tag :action => 'update_options', :id => @option_category do %>
+<!-- first list all options assigned to this category -->
+	<% for option in @option_category.options %>
+    <%= check_box_tag 'options[]', option.id, true %><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %><%= option.tr_description %><br/>
+	<% end %>
+
+<h3><%= trn_geth('AVAILABLE_HEADER_OPTIONS_FOR_CATEGORY') %></h3>
+
+	<% for option in @options %>
+		<!-- now list all options that are not yet assigned -->
+		<%= check_box_tag 'options[]', option.id, false %><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %> <%= option.tr_description %><br/>
+	<% end %>
+
+  <%= submit_tag trn_geth('BUTTON_SAVE') %> | <%= link_to 'Back', :action => 'list' %>
+
+<% end %>

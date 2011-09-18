@@ -1,0 +1,9 @@
+<h1><%= trn_gett('TITLE_EDIT_CATEGORY') %></h1>
+
+<%= form_tag :action => 'update', :id => @option_category do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag trn_get('BUTTON_EDIT') %>
+<% end %>
+
+<%= link_to trn_get('BUTTON_SHOW'), :action => 'show', :id => @option_category %> |
+<%= link_to trn_get('BUTTON_BACK_TO_LIST'), :action => 'list' %>

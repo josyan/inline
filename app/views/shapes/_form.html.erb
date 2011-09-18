@@ -1,0 +1,17 @@
+<% semicolon = trn_geth('LABEL_SEMICOLON')%>
+
+<%= semantic_form_for @shape do |form| %>
+  <div><%= form.error_messages %></div><br/>
+	<% form.inputs  do %>
+		<%= form.input :name, :size => 50, :label => trn_geth('LABEL_NAME') + semicolon, :input_html => { :width =>30} %>
+		<%= form.input :sections_width, :size => 10,  :label => trn_geth('LABEL_SECTIONS_WIDTH') + semicolon %>
+		<%= form.input :sections_height, :size => 10,  :label => trn_geth('LABEL_SECTIONS_HEIGHT') + semicolon %>
+		<%= form.input :corners, :size => 10, :label => trn_geth('LABEL_CORNERS_NUMBER') + semicolon %>
+		<%= form.input :has_upper_transom, :label => trn_geth('LABEL_ALLOW_UPPER_TRANSOM') %>
+		<%= form.input :has_lower_transom, :label => trn_geth('LABEL_ALLOW_LOWER_TRANSOM') %>
+	<% end %>
+	<% form.buttons do %>
+ 		<%= form.commit_button trn_get('BUTTON_ADD') %>
+		<%= %>
+	<% end %>
+<% end %>

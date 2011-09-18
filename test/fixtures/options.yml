@@ -1,0 +1,43 @@
+option_a:
+  id: 1
+  description: Option A
+  comments:
+  pricing_method_id: 1
+  price: 10
+option_b:
+  id: 2
+  description: Option B
+  comments:
+  pricing_method_id: 2
+  price: 15
+option_c:
+  id: 3
+  description: Option C
+  comments:
+  pricing_method_id: 7
+  price: 20
+option_d:
+  id: 4
+  description: Option D
+  comments:
+  pricing_method_id: 3
+  price: 25
+option_e:
+  id: 5
+  description: Option E
+  comments:
+  pricing_method_id: 5
+  price: 30
+option_f:
+  id: 6
+  description: Option F
+  comments:
+  pricing_method_id: 4
+  price: 35
+option_g:
+  id: 7
+  description: Option G
+  comments:
+  pricing_method_id: 6
+  price: 40
+

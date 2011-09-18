@@ -1,0 +1,24 @@
+<h1><%= trn_geth('TITLE_PRODUCT_COLOR_LIST') %></h1>
+
+<table>
+  <tr>
+    <th></th>
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('LABEL_VALUE') %></th>
+    <th colspan="2"><%= trn_geth('HEADER_ACTION') %></th>
+  </tr>
+
+  <% @product_colors.each do |product_color| %>
+      <tr style="height:32px;">
+        <td><%= image_tag('transparent-block.png', :style => "background-color:#{product_color.value};") %></td>
+        <td><%= product_color.name %></td>
+        <td><%= product_color.value %></td>
+        <td><%= link_to trn_get('BUTTON_EDIT'), edit_product_color_path(product_color) %></td>
+        <td><%= link_to trn_get('BUTTON_DELETE'), product_color, :confirm => trn_get('LABEL_DELETE_QUESTION'), :method => :delete %></td>
+      </tr>
+  <% end %>
+</table>
+
+<br/>
+
+<%= link_to trn_get('TITLE_PRODUCT_COLOR_CREATE'), new_product_color_path %>

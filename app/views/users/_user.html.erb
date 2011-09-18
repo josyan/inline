@@ -1,0 +1,18 @@
+<tr class="<%= cycle('odd', 'even') %>">
+  <td><%= user.login %></td>
+  <td><%= user.email %></td>
+  <td><%= user.discount %>%
+  </td>
+  <td>[<%= link_to trn_geth('USER_EDIT_ROLES_LABEL'), user_roles_path(user) %>]
+    [<%= link_to trn_geth('USER_EDIT_LABEL'), edit_user_path(user) if current_user.has_role?('administrator') %>]
+    <% unless user == current_user %>
+        [
+        <% if user.enabled %>
+            <%= link_to trn_geth('DISABLE_LABEL'), user_disable_path(user.id), :method => :post  %>
+        <% else %>
+            <%= link_to trn_geth('ENABLE_LABEL'), user_enable_path(user.id), :method => :post %>
+        <% end %>]
+    <% end %>
+  </td>
+</tr>
+

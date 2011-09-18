@@ -1,0 +1,199 @@
+<div id='openings'>
+  <%= hidden_field_tag :shape_id, @quotation_line.shape_id %>
+  <%= hidden_field_tag :serie_id, @quotation_line.serie_id %>
+  <h3><%= trn_geth('HEADER_OPENINGS_AND_DIMENSIONS') %></h3>
+  <% sec_height = @quotation_line.shape.sections_height %>
+  <% sec_width = @quotation_line.shape.sections_width %>
+
+  <table class="dimensions">
+    <tr>
+      <%
+        left_box_height = 1
+        right_box_height = sec_height
+      %>
+      <td rowspan="<%= left_box_height %>"></td>
+      <td colspan="<%= sec_width %>"><%= trn_geth('HEADER_OPENINGS') %></td>
+      <% if sec_height > 1 %>
+      <td><%= trn_geth('HEADER_SECTIONS_HEIGHTS') %></td>
+      <% end %>
+      <td><%= trn_geth('HEADER_TOTAL_HEIGHT') %></td>
+    </tr>
+
+    <% if @quotation_line.shape.has_upper_transom %>
+      <tr>
+        <td><%= trn_geth('LABEL_UPPER_TRANSOM')%></td>
+        <td colspan="<%=sec_width%>" style="vertical-align:middle;">
+            <table width="100%">
+              <tr>
+                <td width="25%">&nbsp;</td>
+                <td width="50%">
+                <%= select_opening @upper_transom_index, @openings[@upper_transom_index].to_i %>
+                </td>
+                <td width="25%">
+                  <%= text_field_tag "section_height[#{@upper_transom_index}]", @section_height[@upper_transom_index], :size => 6 %>
+                </td>
+            </tr>
+          </table>      </td>
+        <td style="border-left:1px solid #AAA;"></td>
+      </tr>
+    <% end %>
+
+    <% section = 1 %>
+    <% 1.upto(sec_height) { |r| %>
+    <tr>
+    <td></td>
+      <% 1.upto(sec_width) { |c| %>
+      <!-- openings -->
+      <td>
+        <%= select_opening section, @openings[section.to_s].to_i %>
+        <% section += 1 %>
+      </td>
+      <% } %>
+      <!-- row height, only if more than one row -->
+      <% if sec_height > 1 %>
+      <td>
+        <%= text_field_tag "section_height[#{r}]", @section_height[r.to_s], :size => 6 %>
+      </td>
+      <% end %>
+      <!-- total height -->
+      <% if r == 1 %>
+      <td rowspan="<%= right_box_height %>" style="border-left:1px solid #AAA;">
+      <%=
+        if @quotation_line.serie.standard_product? and sec_height == 1 and !@quotation_line.serie.heights.nil?
+          select_tag("quotation_line[height]", options_from_collection_for_select(@quotation_line.serie.heights, "value", "value", @quotation_line.height))
+        else
+          text_field 'quotation_line', 'height', :size => 6
+        end
+      %>
+      </td>
+      <% end %>
+    </tr>
+    <% } %>
+    <!-- col width, only if more than one column -->
+    <% if sec_width > 1 %>
+    <tr>
+      <td><%= trn_geth('HEADER_SECTIONS_WIDTHS') %></td>
+      <% 1.upto(sec_width) { |c| %>
+      <td>
+        <%=
+        if @quotation_line.serie.standard_product?
+          select_tag("section_width[#{c}]", options_from_collection_for_select(@quotation_line.serie.widths, "value", "value", @section_width[c.to_s]))
+        else
+          text_field_tag "section_width[#{c}]", @section_width[c.to_s], :size => 6
+        end
+        %>
+      </td>
+      <% } %>
+      <td style="border-left:1px solid #AAA;"></td>
+      <% if sec_height > 1 %>
+      <td></td>
+      <% end %>
+    </tr>
+    <% end %>
+
+    <% if @quotation_line.shape.has_lower_transom %>
+      <tr>
+        <td><%= trn_geth('LABEL_LOWER_TRANSOM')%></td>
+        <td colspan="<%=sec_width%>">
+          <table width="100%">
+            <tr>
+              <td width="25%">&nbsp;</td>
+              <td width="50%">
+              <%= select_opening @lower_transom_index, @openings[@lower_transom_index].to_i %>
+              </td>
+              <td width="25%">
+                <%= text_field_tag "section_height[#{@lower_transom_index}]", @section_height[@lower_transom_index], :size => 6 %>
+              </td>
+          </tr>
+        </table>
+        </td>
+        <td style="border-left:1px solid #AAA;"></td>
+      </tr>
+    <% end %>
+    <!-- total width -->
+    <tr>
+      <td><%= trn_geth('HEADER_TOTAL_WIDTH') %></td>
+      <td colspan="<%= sec_width %>" style="border-top:1px solid #AAA;">
+      <%=
+        if @quotation_line.serie.standard_product? and sec_width == 1 and !@quotation_line.serie.widths.nil?
+          select_tag("quotation_line[width]", options_from_collection_for_select(@quotation_line.serie.widths, "value", "value", @quotation_line.width))
+        else
+          text_field 'quotation_line', 'width', :size => 6
+        end
+      %>
+      </td>
+      <td></td>
+      <% if sec_height > 1 %>
+      <td></td>
+      <% end %>
+    </tr>
+  </table>
+
+  <% colors = ProductColor.all%>
+  <h3><%= trn_geth('HEADER_COLORS') %></h3>
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td></td>
+      <td colspan="3" style="font-weight:bold;"><%= trn_get('LABEL_MIN_QTY_CUSTOM_COLORS')%></td>
+    </tr>
+    <tr>
+      <td><%= trn_get('LABEL_CUSTOM_INTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+          <%= text_field :quotation_line, :interior_color %>
+      </td>
+      <td><%= trn_get('LABEL_STANDARD_INTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+        <%= color_picker('quotation_line[standard_interior_color_id]', colors, "quotation_line_interior_color", @quotation_line.standard_interior_color) %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= trn_get('LABEL_CUSTOM_EXTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+        <%= text_field :quotation_line, :exterior_color %>
+      </td>
+      <td><%= trn_get('LABEL_STANDARD_EXTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+        <%= color_picker('quotation_line[standard_exterior_color_id]', colors, "quotation_line_exterior_color", @quotation_line.standard_exterior_color) %>
+      </td>
+    </tr>
+  </table>
+
+  <h3><%= trn_geth('HEADER_OPTIONS') %></h3>
+  <% selected_options = @quotation_line.options_quotation_lines.map { |o| o.option.id } %>
+
+  <% categorized_options = Serie.categorize_options(@options) %>
+  <% categorized_options.keys.sort.each do |i| %>
+    <% categorized_options[i].each do |category, options| %>
+      <span style="font-weight:bold;"><%= h category.tr_name %></span><br />
+      <% for option in options %>
+      <% if category.multiselect %>
+        <%= check_box_tag 'options[]', option.id, selected_options.include?(option.id) ? true : false %>
+      <% else %>
+        <%= radio_button_tag "options_category_#{category.id}[]", option.id, selected_options.include?(option.id) ? true : false %>
+      <% end %>
+        <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
+        <%= option.tr_description %>
+        (<%= option.pricing_method.tr_description %><%= trn_geth('LABEL_SEMICOLON') %>
+        <%= option.price %>
+        <% if option.minimum_quantity != 0 and (option.pricing_method_id == 1 or option.pricing_method_id == 2) %>
+          , <%= trn_get('LABEL_MINIMUM_QUANTITY') %>
+          <%= option.minimum_quantity %>
+          <%= option.options_minimum_unit.tr_description %>
+        <% end %> <!-- if option.minimum_quantity -->
+        )
+        <% if option.pricing_method.quantifiable %>
+          <%= trn_get('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %>
+          <%= text_field_tag "option_quantity_#{option.id}", instance_variable_get("@option_quantity_#{option.id}".to_sym), :size => 6 %>
+        <% end %><!-- if option.pricing_method.quantifiable -->
+        <br/>
+      <% end %> <!-- for option ...-->
+        <% if !category.multiselect %>
+          <%= radio_button_tag "options_category_#{category.id}[]", -1, false %>
+          <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
+          <%= trn_get("NONE_MSG") %>
+          <br/>
+        <% end %>
+    <% end %> <!-- category_and_options.each -->
+    <br/>
+  <% end %> <!-- categorized_options.keys.sort.each do -->
+</div>

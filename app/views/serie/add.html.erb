@@ -1,0 +1,18 @@
+<h2><%= trn_get('TITLE_SERIE_ADD') %></h2>
+
+<table>
+<%= form_tag :action => 'create' do %>
+  <%= render :partial => 'form' %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('SERIES_TYPE_LABEL') %></td>
+      <%
+      series_options = [[trn_get('SERIES_STANDARD_OPT'),"StandardProduct"], 
+                        [trn_get('SERIES_CUSTOM_OPT'),  "Serie"], 
+                        [trn_get('SERIES_PERSQFT_OPT'), "PerSqFtProduct"]]
+      %>
+     <td><%= select("serie", "series_type", series_options) %>
+  </tr>
+</table>
+  <%= submit_tag trn_geth('BUTTON_ADD') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %>

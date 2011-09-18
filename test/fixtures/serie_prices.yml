@@ -1,0 +1,60 @@
+one:
+  id: 1
+  width_id: 1
+  height_id: 3
+  opening_id: 1
+  price: 1
+two:
+  id: 2
+  width_id: 2
+  height_id: 3
+  opening_id: 1
+  price: 2
+three:
+  id: 3
+  width_id: 1
+  height_id: 4
+  opening_id: 1
+  price: 3
+four:
+  id: 4
+  width_id: 2
+  height_id: 4
+  opening_id: 1
+  price: 4
+five:
+  id: 5
+  width_id: 1
+  height_id: 5
+  opening_id: 1
+  price: 5
+six:
+  id: 6
+  width_id: 1
+  height_id: 3
+  opening_id: 2
+  price: 6
+seven:
+  id: 7
+  width_id: 2
+  height_id: 3
+  opening_id: 2
+  price: 7
+height:
+  id: 8
+  width_id: 1
+  height_id: 4
+  opening_id: 2
+  price: 8
+nine:
+  id: 9
+  width_id: 2
+  height_id: 4
+  opening_id: 2
+  price: 9
+ten:
+  id: 10
+  width_id: 1
+  height_id: 5
+  opening_id: 2
+  price: 10

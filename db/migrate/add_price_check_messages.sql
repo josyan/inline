@@ -1,0 +1,3 @@
+INSERT INTO `translations` VALUES   (391,'MSG_HEIGHT_TOO_SMALL','L\'un des hauteurs spécifié est trop petite pour le sélectionné ouverture.','','One of the heights specifed is too small for the selected opening.');
+INSERT INTO `translations` VALUES   (392,'MSG_WIDTH_TOO_SMALL','L\'un des largeurs spécifié est trop petite pour le sélectionné ouverture.','','One of the widths specifed is too small for the selected opening.');
+INSERT INTO `translations` VALUES (393, 'MSG_PRICES_GENERATED', 'Le tableau de prix pour cette ouverture a été généré.', '', 'The pricing table for this opening has been generated.');

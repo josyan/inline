@@ -1,0 +1,23 @@
+<h2><%= trn_gett('TITLE_SENT_MESSAGES')%> </h2>
+
+<table>
+  <tr>
+    <th><%= trn_get('LABEL_SUBJECT') %></th>
+    <th><%= trn_get('LABEL_SENT_ON') %></th>
+    <th colspan="2"><%= trn_get('HEADER_ACTION') %></th>
+  </tr>
+
+<% @emails.each do |email| %>
+  <tr>
+    <td><%= email.subject %></td>
+    <td><%= email.sent %></td>
+    <td><%= link_to trn_get('BUTTON_SHOW'), email %></td>
+<!--    <td><%= link_to 'Edit', edit_email_path(email) %></td>-->
+    <td><%= link_to trn_get('BUTTON_DELETE'), email, :confirm => trn_geth('LABEL_DELETE_QUESTION') , :method => :delete %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to trn_get('BUTTON_NEW_MESSAGE'), new_email_path %>

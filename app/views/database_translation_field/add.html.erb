@@ -1,0 +1,7 @@
+<h2><%= trn_get('TITLE_DBTF_ADD') %></h2>
+
+<%= form_tag :action => 'create' do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag trn_geth('BUTTON_ADD') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %>

@@ -1,0 +1,45 @@
+<%= error_messages_for 'option' %>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field :description, :size => 50 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_area  :comments, :cols => '39', :rows => '10' %></td>
+  </tr>
+	<tr valign="top">
+		<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= f.collection_select(:option_category_ids, @all_option_categories, "id", "tr_name") %></td>
+	</tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICING_METHOD') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.select :pricing_method_id, PricingMethod.all(:order => 'description').map { |p| [p.tr_description, p.id] } %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field :price, :size => 5 %></td>
+  </tr>
+	<tr>
+		<td align="right"><%= trn_geth('LABEL_MINIMUM_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td>
+			<%= f.text_field :minimum_quantity, :size => 5 %>
+			<%= f.select :options_minimum_unit_id, OptionsMinimumUnit.all(:order => 'description').map { |p| [p.tr_description, p.id] } %> <strong><%= trn_geth('LABEL_SIZABLE_ONLY') %></strong>
+		</td>
+	</tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.file_field :photo %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"></td>
+    <td><%= image_tag @option.photo.url, :class => "#{ 'popup' unless @option.photo.original_filename.blank? }" %></td>
+  </tr>
+</table>
+<p>
+<br/>
+
+
+<br/>
+</p>

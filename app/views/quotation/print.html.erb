@@ -1,0 +1,321 @@
+<!-- header -->
+<table cellpadding="5" width="100%">
+  <tr valign="top" width="1%">
+    <td rowspan="2">
+      <%= image_tag @quotation.company.logo.url %>
+    </td>
+    <td rowspan="2" width="1%" nowrap="nowrap">
+      <strong><%= @quotation.company.name %></strong><br/>
+      <%= @quotation.company.address.html_safe.gsub(/\n/, '<br/>') %><br/>
+      <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %><%= @quotation.company.phone %><br/>
+      <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %><%= @quotation.company.fax %>
+    </td>
+    <td width="98%" align="right">
+      <h2>
+        #<%= @quotation.id %>
+        <%= @quotation.project_name %>
+      </h2>
+			<%= gv_humanize_time @quotation.updated_at %>
+			<br/>
+			<%= @quotation.consultant%>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <%= @quotation.description %>
+    </td>
+  </tr>
+</table>
+
+<!-- customer information -->
+<table width="100%">
+  <tr valign="top">
+    <td width="50%">
+      <%= trn_geth('PRINT_LABEL_CUSTOMER') %>
+    </td>
+    <td width="50%">
+      <%= trn_geth('PRINT_LABEL_DELIVERY_ADDRESS') %>
+    </td>
+  </tr>
+    <td width="50%" style="border: 1px solid #808080;" valign="top">
+
+      <table width="100%">
+        <tr>
+          <td><%= @quotation.customer_name %></td>
+        </tr>
+        <tr>
+          <td><%= @quotation.customer_address.html_safe.gsub("\n", '<br/>') if @quotation.customer_address %></td>
+        </tr>
+        <tr>
+          <td>
+            <% if !@quotation.customer_email.blank? %>
+              <%= @quotation.customer_email %>
+              <br />
+            <% end %>
+            <% if !@quotation.customer_phone.blank? %>
+              <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %>
+              <%= @quotation.customer_phone %>
+              <br />
+            <% end %>
+            
+            <% if !@quotation.customer_fax.blank? %>
+              <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %>
+              <%= @quotation.customer_fax %>
+              <br />
+            <% end %>
+          </td>
+        </tr>
+      </table>
+
+    </td>
+    <td width="50%" style="border: 1px solid #808080;" valign="top">
+    <% if !@quotation.delivery_address.blank? %>
+        <%= @quotation.delivery_address.html_safe.gsub("\n", '<br/>')%>
+			<% elsif !@quotation.customer_address.blank? %>
+			  <%= @quotation.customer_address.html_safe.gsub("\n", '<br/>') %>
+			<% else %>
+			  &nbsp;<br />
+      
+			<% end%>
+    </td>
+  </tr>
+</table>
+<br/>
+
+<!-- content -->
+<!-- print 2 lines on the first page, 3 on all others. -->
+<% printed_line = 1 %>
+<% print_header = true %>
+<table width="100%" cellspacing="0" cellpadding="3">
+  <% total = 0 %>
+  <% for ql in @quotation.quotation_lines %>
+    <% if print_header %>
+      <tr bgcolor="#b2b2b2">
+        <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
+        <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+        <th><%= trn_geth('PRINT_HEADER_UNIT_PRICE') %></th>
+        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+        <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+      </tr>
+      <% print_header = false %>
+    <% end %>
+    <tr valign="top">
+      <% 
+        dims = ql.get_image_size 
+        options = {:style => "margin-top: 3px;"}
+        if dims[0] > dims[1]
+          options[:width] = 175
+        else
+          options[:height] = 175
+        end
+      %>
+      <td width="1%" valign="top"><%= image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
+      <td >
+        <table width="100%">
+          <% if ql.label and !ql.label.empty? %>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.label %></td>
+          </tr>
+          <% end %>
+          <tr>
+            <td width="1%" nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.serie.tr_name %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.shape.tr_name %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= number_with_precision ql.width %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= number_with_precision ql.height %></td>
+          </tr>
+					<% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
+						<tr>
+							<td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
+							<td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
+						</tr>
+				  <% end %>
+					<% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank?%>
+						<tr>
+							<td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
+							<td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM")%> </td>
+							</tr>
+					<% end %>
+        </table>
+      </td>
+      <% ql_price = ql.price * (1 - @quotation.discount / 100.0) * (1 + (@quotation.markup / 100.00)) %>
+      <td width="10%" align="right"><%= number_to_currency(ql_price) %></td>
+      <td width="10%" align="center"><%= ql.quantity %></td>
+      <td width="10%" align="right"><%= number_to_currency(ql_price * ql.quantity) %></td>
+    </tr>
+    <tr valign="top" >
+        <td  style="border-bottom: 2px dotted #808080;">
+            <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
+        </td>
+        <td colspan="3"  style="border-bottom: 2px dotted #808080;">
+	
+            <% if ql.options_quotation_lines.length > 0 %>
+                <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
+                <%
+                  first = true
+                  ql.options_quotation_lines.each { |opt| %>
+                    <%= ', ' if !first %>
+                    <%= opt.option.tr_description %>
+                    <% if opt.quantity != 1 %>
+                      x <%= opt.quantity %>
+                    <% end %>
+                <%
+                    first = false
+                  } %>
+						<% else %>
+						  &nbsp;
+            <% end %>
+
+        </td>
+        <td  style="border-bottom: 2px dotted #808080;">&nbsp;</td>
+    </tr>
+    <% total += ql_price * ql.quantity %>
+    <% printed_line += 1
+      if printed_line == 3
+        printed_line = 0
+        print_header = true %>
+        </table>
+        <div style="page-break-before: always;">&nbsp;</div>
+        <table width="100%" cellspacing="0" cellpadding="3">
+    <% end %>
+  <% end %>
+  <!-- options -->
+  <% print_header = true if @quotation.options_quotations.length > 0 %>
+  <% for option in @quotation.options_quotations %>
+    <% if print_header %>
+      <tr bgcolor="#b2b2b2">
+        <th colspan="2"><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+        <th><%= trn_geth('PRINT_HEADER_UNIT_PRICE') %></th>
+        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+        <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+      </tr>
+      <% print_header = false %>
+    <% end %>
+    <tr valign="top">
+      <td colspan="2" style="border-bottom: 2px dotted #808080;">
+        <%= option.option.tr_description %>
+      </td>
+      <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
+      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency option_price %></td>
+      <td width="10%" align="center" style="border-bottom: 2px dotted #808080;"><%= option.quantity %></td>
+      <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency option_price * option.quantity %></td>
+    </tr>
+    <% total += option_price * option.quantity %>
+    <% printed_line += 0.2
+      if printed_line == 3
+        printed_line = 0
+        print_header = true %>
+        </table>
+        <div style="page-break-before: always;">&nbsp;</div>
+        <table width="100%" cellspacing="0" cellpadding="3">
+    <% end %>
+  <% end %>
+  <!-- total -->
+  <tr>
+    <td><%= trn_get('LABEL_GST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.gst_number %></td>
+    <td><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
+  </tr>
+  <tr >
+    <td colspan="3" rowspan="4" style="border:1px solid #808080;" valign="top">
+      <p>
+        <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br />
+          <%= @quotation.notes.html_safe.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty?%>
+      </p>
+    </td>
+    <td align="right" bgcolor="#b2b2b2" width="20%" style="border-top:1px solid #808080;">
+      <strong><%= trn_geth('PRINT_HEADER_TRANSPORT') %></strong>
+    </td>
+    <td align="right" bgcolor="#b2b2b2" style="border-top:1px solid #808080;border-right:1px solid #808080;">
+      <strong><%= number_to_currency @quotation.transport %></strong>
+    </td>
+  </tr>
+  <% total += @quotation.transport %>
+  <% taxes = @quotation.calculate_taxes(total) %>
+  <% total += taxes %>
+  <% pst_taxes = @quotation.calculate_pst(total)%>
+  <tr bgcolor="#b2b2b2">
+    <td align="right" colspan="1"  width="20%">
+      <strong><%= trn_get('PRINT_HEADER_TAXES') % number_to_percentage(@quotation.taxes) %></strong>
+    </td>
+    <td align="right" style="border-right:1px solid #808080;">
+      <strong><%= number_to_currency taxes %></strong>
+    </td>
+  </tr>
+  <tr bgcolor="#b2b2b2" >
+    <td align="right" colspan="1" style="border-bottom:1px solid #808080;">
+      <strong><%= trn_get('PRINT_HEADER_PST_TAXES') % number_to_percentage(@quotation.taxes_pst) %></strong>
+    </td>
+    <td align="right" style="border-right:1px solid #808080;border-bottom:1px solid #808080;">
+      <strong><%= number_to_currency pst_taxes %></strong>
+    </td>
+  </tr>
+  <% total += pst_taxes %>
+  <tr bgcolor="#b2b2b2" >
+    <td align="right" colspan="1" style="border-bottom:1px solid #808080;">
+      <strong><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></strong>
+    </td>
+    <td align="right" style="border-right:1px solid #808080;border-bottom:1px solid #808080;">
+      <strong><%= number_to_currency total %></strong>
+    </td>
+  </tr>
+<% if !@quotation.comments.blank? %>
+  <tr>
+   <td colspan="5" style="border:1px solid #808080;" valign="top">
+      <p>
+        <strong><%= trn_geth('PRINT_LABEL_COMMENTS') %></strong><br />
+          <%= @quotation.comments.html_safe.gsub("\n", '<br/>') %>
+      </p>
+    </td>
+   </tr>
+<% end %>
+  <% if @quotation.ready_to_sign %>
+    <tr >
+      <td colspan="5" style="border-left:1px solid #808080;border-right:1px solid #808080;border-bottom:1px solid #808080;">
+      <table cellspacing="5">
+        <tr>
+          <td valign="top" colspan="5">
+            <p>
+              <%= trn_geth('PRINT_SIGNATURE_BLOCK_LINE1') %> <br /><br />
+              <%= trn_geth('PRINT_SIGNATURE_BLOCK_LINE2') %>
+            </p>
+            <p style="font-size:smaller;"><strong><%= @quotation.company.name %></strong><%= trn_geth('PRINT_SIGNATURE_BLOCK_LINE3') %></p>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5" style="height:2em;"><p>&nbsp;<br />&nbsp;</p></td>
+        </tr>
+        <tr>
+          <td>&nbsp;</td>
+          <td width="40%" style="border-top:1px solid #808080;font-size:1.2em;text-transform:uppercase;">
+            <p style="text-align:center;"><%= trn_geth('PRINT_SIGNATURE_SALES_REP_NAME')%></p>
+          </td>
+          <td width="40%" style="border-top:1px solid #808080;font-size:1.2em;text-transform:uppercase;">
+            <p style="text-align:center;"><%= trn_geth('PRINT_SIGNATURE_CLIENT_NAME')%></p>
+          </td>
+          <td width="15%" style="border-top:1px solid #808080;font-size:1.2em;text-transform:uppercase;">
+            <p style="text-align:center;"><%= trn_geth('PRINT_DATE')%></p>
+          </td>
+          <td>&nbsp;</td>
+        </tr>
+        <tr >
+          <td valign="top" colspan="5">&nbsp;</td>
+        </tr>
+      </table>
+      </td>
+  </tr>
+  <% end %>
+</table>

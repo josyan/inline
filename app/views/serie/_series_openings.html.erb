@@ -1,0 +1,12 @@
+<h3><%= trn_geth('HEADER_OPENINGS') %></h3>
+
+<% if @serie.openings.count == 0 %>
+  <%= trn_geth('MSG_NO_OPENINGS_SELECTED') %><br/>
+<% else %>
+<ul>
+  <% for opening in @serie.openings %>
+  <li><%= opening.tr_name %></li>
+  <% end %>
+</ul>
+<% end %>
+<%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit_openings', :id => @serie %>

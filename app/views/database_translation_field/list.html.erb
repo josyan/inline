@@ -1,0 +1,20 @@
+<h2><%= trn_geth('TITLE_DBTF_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_TABLE') %></th>
+    <th><%= trn_geth('HEADER_FIELD') %></th>
+    <th></th>
+  </tr>
+<% for dbtf in @dbtfs %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= dbtf.table %></td>
+    <td><%= dbtf.field %></td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => dbtf %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => dbtf}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    </td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,8 @@
+<h2><%= trn_geth('HEADER_OPENINGS_FOR_SERIE') %> <%= @serie.tr_name %></h2>
+
+<%= form_tag :action => 'update_openings', :id => @serie do %>
+  <% for opening in @openings %>
+    <%= check_box_tag 'openings[]', opening.id, @serie.openings.include?(opening) ? true : false %><%= opening.tr_name %><br/>
+  <% end %>
+  <%= submit_tag trn_geth('BUTTON_SAVE') %>
+<% end %>

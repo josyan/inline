@@ -1,0 +1,12 @@
+<h2><%= trn_get('TITLE_EDIT_OPTION_IN_QUOTATION') %></h2>
+
+<%= form_tag :action => 'update', :id => @option.id do %>
+  <%= image_tag @option.option.photo.url(:original), :style => "float:right;"   %>
+  <%= trn_gett('LABEL_OPTION') %><%= trn_get('LABEL_SEMICOLON') %>
+  <%= select_tag 'option_id', options_for_select(@options.map { |o| [o.tr_description, o.id]}, @option.option.id) %><br/>
+  <%= trn_gett('LABEL_QUANTITY') %><%= trn_get('LABEL_SEMICOLON') %>
+  <%= text_field_tag 'quantity', @option.quantity, :size => 6 %><br/>
+  <%= submit_tag trn_geth('BUTTON_EDIT') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @option.quotation.id %>
+

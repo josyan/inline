@@ -1,0 +1,6 @@
+<h2>Adding Sheet Size for Series <%= params[:series_name]%> </h2>
+<%= form_tag :action => 'create' do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag trn_geth('BUTTON_ADD') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_SERIE'), :controller => 'serie', :action => 'show', :id => @sheet.sheet_product_id %>

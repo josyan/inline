@@ -1,0 +1,9 @@
+<h2><%= trn_geth('TITLE_CUSTOMER_EDIT')%></h2>
+
+<%= form_tag :action => 'update', :id => @customer, :html=> { :autocomplete => "off" } do %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag trn_geth('BUTTON_EDIT') %>
+<% end %>
+
+<%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @customer %> |
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %>

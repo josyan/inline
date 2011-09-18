@@ -1,0 +1,21 @@
+methodes de calcul de prix
+ - prix au pied carre
+ - prix au perimetre
+ - prix par ouvrant
+ - prix par lumiere (section)
+ - prix par section fixe
+ - prix unitaire
+ - prix par coin (pas vraiment important pour l'instant)
+
+
+option: 
+ - nom
+ - description
+ - methode de calcul_id
+
+lien serie/option
+ - serie_id
+ - option_id
+
+calcul a la dimension superieure
+

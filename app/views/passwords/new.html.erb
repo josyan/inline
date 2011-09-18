@@ -1,0 +1,5 @@
+<%= form_tag url_for(:action => 'create') do %>
+    <%= trn_geth('EMAIL_ADDRESS_LABEL') %> <br />
+    <%= text_field_tag :email, "", :size => 50 %><br />
+    <%= submit_tag trn_geth('PASSWD_RESET_LABEL') %>
+<% end %>

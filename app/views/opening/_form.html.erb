@@ -1,0 +1,43 @@
+<%= error_messages_for "opening" %>
+
+<% if not @opening.series[0].nil? %>
+<div style="float: right;background-color:#BFBAA8;padding:10px;margin-right:20px">
+<p>
+  This Opening belongs to the following Series:<br /><br />
+  <table>  
+    <tr>
+      <td style="font-weight:bold;border-bottom:1px solid black;"><%= trn_geth('LABEL_NAME') %></td>
+      <td style="font-weight:bold;border-left:1px solid black;border-bottom:1px solid black;"><%= trn_geth('LABEL_DESCRIPTION') %></td>
+    </tr>
+    <% @opening.series.each {|s| %>
+    <tr>
+      <td><%= h s.tr_name %></td>
+      <td style="border-left:1px solid black;"><%= h s.tr_description%></td></tr>
+    <% } %>
+  </table>
+</p>
+</div>
+<% end %>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "opening", "name", :size => 50 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_ABBREVIATION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field 'opening', 'abbreviation', :size => 10 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_OPENABLE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= check_box 'opening', 'openable' %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_GLASSES_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field 'opening', 'glasses_quantity', :size => 10 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PREVIEW_IMAGE_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "opening", "preview_image_name", :size => 50 %></td>
+  </tr>
+</table>

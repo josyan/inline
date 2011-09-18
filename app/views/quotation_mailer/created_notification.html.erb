@@ -1,0 +1,203 @@
+<div>
+	<h2>New Quotation Created</h2>
+	<p>
+		<%= @admin_user.login %>, <br /> <br />
+		<%= @quotation.user.login -%> has created a new <a href="<%=@url-%>">quotation</a> for <%= @quotation.customer_name -%>
+	</p>
+	
+</div>
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NUMBER') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.id %></td>
+  </tr>
+  <% if @quotation.description and !@quotation.description.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.description %></td>
+  </tr>
+  <% end %>
+  <% if @quotation.comments and !@quotation.comments.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.comments.html_safe.gsub("\n", '<br/>') %></td>
+  </tr>
+  <% end %>
+  <tr valign="top">
+    <td align="right"><strong><%= trn_geth('LABEL_PROJECT_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></strong></td>
+    <td><strong><%= @quotation.project_name %></strong></td>
+  </tr>
+  <% if @quotation.customer_name and !@quotation.customer_name.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.customer_name %></td>
+  </tr>
+  <% end %>
+  <% if @quotation.customer_address and !@quotation.customer_address.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.customer_address.html_safe.gsub("\n", '<br/>') %></td>
+  </tr>
+  <% end %>
+  <% if @quotation.customer_phone and !@quotation.customer_phone.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.customer_phone %></td>
+  </tr>
+  <% end %>
+  <% if @quotation.customer_fax and !@quotation.customer_fax.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_FAX') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.customer_fax %></td>
+  </tr>
+  <% end %>
+  <% if @quotation.customer_email and !@quotation.customer_email.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_EMAIL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.customer_email %></td>
+  </tr>
+  <% end %>
+	<tr valign="top">
+		<td align="right"><%= trn_geth('LABEL_DATE_CREATED')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= @quotation.created_at.strftime("%a %b %d, %Y") %>
+	</tr>
+	<tr valign="top">
+		<td align="right"><%= trn_geth('LABEL_DATE_MODIFIED')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= @quotation.updated_at.strftime("%a %b %d, %Y") %>
+	</tr>
+  <% if @quotation.notes and !@quotation.notes.empty? %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NOTES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.notes.html_safe.gsub("\n", '<br/>') %></td>
+  </tr>
+  <% end %>
+
+</table>
+<hr/>
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_TRANSPORT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.transport %>$</td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.discount %>%</td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.taxes %>%</td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_get('LABEL_PST_RATE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= number_to_percentage(@quotation.taxes_pst, :precision => 3)%></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @quotation.ready_to_sign ? trn_geth('MSG_YES') : trn_geth('MSG_NO') %></td>
+  </tr>
+</table>
+
+<br/>
+
+<h3><%= trn_geth('HEADER_LINES')%></h3>
+<table class="quotation">
+  <tr>
+    <th><%= trn_geth('HEADER_PREVIEW') %></th>
+    <th><%= trn_geth('HEADER_DETAILS') %></th>
+    <th><%= trn_geth('HEADER_TOTAL_PRICE') %></th>
+    <th></th>
+  </tr>
+  <% total = 0 %>
+  <% for line in @quotation.quotation_lines %>
+    <%   total += line.quantity * line.price %>
+  <tr valign="top" class="quotation-line">
+    <td width="1%" style="border-bottom: 2px dotted #808080;"><%= image_tag "/system/images/previews/preview_#{line.id}.png" %></td>
+    <td style="border-bottom: 2px dotted #808080;">
+
+      <table>
+        <% if line.label and !line.label.empty? %>
+        <tr>
+          <td><%= trn_geth('HEADER_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= line.label %></td>
+        </tr>
+        <% end %>
+        <tr>
+          <td><%= trn_geth('HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= line.serie.tr_name %></td>
+        </tr>
+        <tr>
+          <td><%= trn_geth('HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= line.shape.tr_name %></td>
+        </tr>
+        <tr>
+          <td><%= trn_geth('HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= line.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
+        </tr>
+        <% if line.options_quotation_lines.length > 0 %>
+        <tr>
+          <td valign="top"><%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td>
+            <% for option in line.options_quotation_lines %>
+              <%= option.option.tr_description %>
+              <% if option.quantity != 1 %>
+                x <%= option.quantity %>
+              <% end %>
+              <br/>
+            <% end %>
+          </td>
+        </tr>
+        <% end %>
+        <tr>
+          <td><%= trn_geth('HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= format('%.3f', line.height) %></td>
+        </tr>
+          <tr>
+            <td><%= trn_geth('HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= format('%.3f', line.width) %></td>
+          </tr>
+        <tr>
+          <td><%= trn_geth('HEADER_UNIT_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= format('%.2f', line.price) %>$</td>
+        </tr>
+        <tr>
+          <td><%= trn_geth('HEADER_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= line.quantity %></td>
+        </tr>
+      </table>
+
+    </td>
+    <td align="right" style="border-bottom: 2px dotted #808080;"><%= format('%.2f', line.quantity * line.price) %>$</td>
+    <td nowrap="nowrap" style="border-bottom: 2px dotted #808080;">
+    </td>
+  </tr>
+  <% end %>
+  <% for option in @quotation.options_quotations %>
+    <%   total += option.quantity * option.option.price %>
+  <tr valign="top" class="quotation-line">
+    <td colspan="1" style="border-bottom: 2px dotted #808080;">
+      <%= option.option.tr_description %>
+    </td>
+    <% option_price = option.option.price * (1 - @quotation.discount / 100) %>
+		<td>
+			<table>
+				<tr>
+			    <td><%= trn_geth('HEADER_UNIT_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+			    <td><%= format('%.2f', option_price) %>$</td>
+			  </tr>
+			  <tr>
+			    <td><%= trn_geth('HEADER_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+			    <td><%= option.quantity %></td>
+			  </tr>
+			</table>
+		</td>
+    <td align="right" style="border-bottom: 2px dotted #808080;"><%= format('%.2f', option.quantity * option.option.price) %>$</td>
+    <td nowrap="nowrap" style="border-bottom: 2px dotted #808080;">
+    </td>
+  </tr>
+  <% end %>
+  <tr>
+    <td align="right" colspan="2">Total</td>
+    <td align="right"><%= format('%.2f', total) %>$</td>
+    <td></td>
+  </tr>
+</table>

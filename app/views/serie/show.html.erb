@@ -1,0 +1,37 @@
+<h2><%= trn_geth('TITLE_SERIE_SHOW')%> - <%= humanize_series_type @serie.series_type %></h2>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @serie.tr_name %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @serie.tr_description %></td>
+  </tr>
+</table>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
+<%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @serie %> |
+<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @serie}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+
+<%= render :partial => "serie" %>
+
+<h3><%= trn_geth('HEADER_OPTIONS') %></h3>
+
+<% if @serie.options.count == 0 %>
+  <%= trn_geth('MSG_NO_OPTIONS_SELECTED') %><br/>
+<% else %>
+	<% @categorized_options.each_value do |category_and_options| %>
+		<% category_and_options.each do |category, options| %>
+			<h4><%= h category.tr_name %></h4>
+			<ul>
+		  <% for option in options %>
+		    <li><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %><%= option.tr_description %></li>
+		  <% end %>
+		</ul>
+		<% end %>
+	<% end %>
+
+<% end %>
+
+<%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit_options', :id => @serie %>

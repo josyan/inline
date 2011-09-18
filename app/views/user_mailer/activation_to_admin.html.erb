@@ -1,0 +1,4 @@
+<%= @admin_user.login %>,  
+<%= trn_get('NEW_ACCOUNT_ADMIN_NOTIFY') % @user.login %> <%= trn_get('NEW_ACCOUNT_ADMIN_REMINDER') % [@user.login, number_to_percentage(@user.discount, {:precision => 2}).to_s]%>.
+
+<%= @url %>

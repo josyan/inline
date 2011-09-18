@@ -1,0 +1,23 @@
+<h2><%= trn_geth('TITLE_SERIE_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
+    <th><%= trn_geth('SERIES_TYPE_LABEL') %></th>
+    <th></th>
+  </tr>
+<% for serie in @series %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= serie.tr_name %></td>
+    <td><%= serie.tr_description %></td>
+    <td><%= humanize_series_type serie.series_type %></td>
+    <td>
+      <%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => serie %> |
+      <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => serie %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => serie}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    </td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,46 @@
+<h2><%= trn_geth('TITLE_COMPANY_SHOW') %></h2>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @company.name %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @company.address.gsub(/\n/, '<br/>') %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @company.phone %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @company.fax %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_GST') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @company.gst_number %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PST') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @company.pst_number %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_LOGO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= image_tag @company.logo.url %></td>
+  </tr>
+</table>
+<br />
+
+<h3><%= trn_geth('TITLE_COMPANY_ACTIVE_USERS') +":" unless @company.users.empty? %></h3>
+  <ul>
+      <% @company.users.each do |user| %>
+         <li><%= user.login %> </li>
+      <% end %>
+  </ul>
+<br />
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
+<%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @company %> |
+<%= link_to trn_geth('BUTTON_COMPANY_EDIT_USERS'), :action => 'add_users', :id => @company %> |
+<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @company}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+

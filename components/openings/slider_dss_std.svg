@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="<%= section_width * PIXELS_PER_INCH + PIXELS_PER_INCH %>" height="<%= section_height * PIXELS_PER_INCH + PIXELS_PER_INCH %>" viewBox="0 0 <%= section_width + 1 %> <%= section_height + 1 %>" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     version="1.1"
+     baseProfile="full">
+<% small_width = (section_width - frame_thickness * 4) / 4 %>
+<% center_width = (section_width - frame_thickness * 4) / 2 %>
+<% small_height = section_height - frame_thickness * 2 %>
+
+<% vertical_center_of_section = section_height / 2 %>
+<% left_arrow_vertex_horiz_position = small_width  %>
+<% right_arrow_vertex_horiz_position = small_width + center_width + frame_thickness * 3 + 1 %>
+<% line_length = small_width - frame_thickness * 2 - 1  %>
+<% arrow_hht = arrow_size / 2%>
+
+
+  <rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x="0" y="0" width="<%= section_width %>" height="<%= section_height %>"/>
+  <rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x="<%= frame_thickness %>" y="<%= frame_thickness %>" width="<%= small_width %>" height="<%= small_height %>"/>
+  <rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x="<%= small_width + frame_thickness * 2 %>" y="<%= frame_thickness %>" width="<%= center_width %>" height="<%= small_height %>"/>
+  <rect style="fill: none; fill-opacity:0; stroke-width: 0.1; stroke: #000000" x="<%= small_width + center_width + frame_thickness * 3 %>" y="<%= frame_thickness %>" width="<%= small_width %>" height="<%= small_height %>"/>
+
+<!-- new arrows -->
+<line style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" 
+      x1="0" y1="0" x2="<%= line_length %>" y2="0" transform="translate(<%=right_arrow_vertex_horiz_position + arrow_size  %> <%= vertical_center_of_section %>)"/>
+
+<polygon style="fill: #000000" points="0,<%= arrow_hht %> <%= arrow_size%>,0 <%= arrow_size%>,<%= arrow_size%>" 
+	                             transform="translate(<%=right_arrow_vertex_horiz_position  %> <%= vertical_center_of_section - arrow_hht%>)" />
+
+<line style="fill: none; fill-opacity:0; stroke-width: 0.2; stroke: #000000" 
+	      x1="0" y1="0" x2="<%= line_length %>" y2="0" transform="translate(<%= 5 %> <%= vertical_center_of_section%>)"/>
+
+<polygon style="fill: #000000" points="0,<%= arrow_hht%> <%= arrow_size%>,0 <%= arrow_size%>,<%= arrow_size%>" 
+	                             transform=" translate(<%= left_arrow_vertex_horiz_position%> <%= vertical_center_of_section%>) rotate(180 <%= arrow_hht%> <%= arrow_hht%>)" />
+
+</svg>

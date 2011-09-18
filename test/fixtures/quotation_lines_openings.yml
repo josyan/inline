@@ -1,0 +1,35 @@
+ql_1_1:
+  id: 1
+  quotation_line_id: 1
+  opening_id: 1
+  sort_order: 1
+ql_1_2:
+  id: 2
+  quotation_line_id: 1
+  opening_id: 2
+  sort_order: 2
+ql_1_3:
+  id: 3
+  quotation_line_id: 1
+  opening_id: 1
+  sort_order: 3
+ql_1_4:
+  id: 4
+  quotation_line_id: 1
+  opening_id: 2
+  sort_order: 4
+ql_2_1:
+  id: 5
+  quotation_line_id: 2
+  opening_id: 1
+  sort_order: 1
+ql_2_2:
+  id: 6
+  quotation_line_id: 2
+  opening_id: 1
+  sort_order: 2
+ql_3_1:
+  id: 7
+  quotation_line_id: 3
+  opening_id: 1
+  sort_order: 1

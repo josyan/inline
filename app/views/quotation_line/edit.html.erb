@@ -1,0 +1,8 @@
+<h2><%= trn_get('TITLE_QUOTATION_LINE_EDIT') %></h2>
+
+<%= form_tag({:action => 'update', :id => @quotation_line}, :id =>"ql") do %>
+  <%= render :partial => 'form2' %>
+  <%= submit_tag trn_geth('BUTTON_EDIT') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation_id %> |
+<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation_line}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

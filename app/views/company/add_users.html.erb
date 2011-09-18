@@ -1,0 +1,14 @@
+<h2><%= trn_get('TITLE_COMPANY_ADD_USERS') %></h2>
+
+<%= form_for :company, @company, :url => {:action => 'update_users', :id => @company} do |f| %>
+    <% @all_users.each do |user| %>
+        <%= check_box_tag "user_ids[]", user.id, @company.user_ids.include?(user.id) %>
+        <%= user.login %>
+        <br />
+    <% end %>
+    <br />
+  <%= submit_tag trn_geth('BUTTON_SAVE') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
+<%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @company %> |
+<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @company}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

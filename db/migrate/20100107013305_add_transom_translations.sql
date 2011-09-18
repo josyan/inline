@@ -1,0 +1,4 @@
+INSERT INTO `translations` VALUES (459, 'LABEL_UPPER_TRANSOM', 'Supérieure traverse', '', 'Upper Transom', 'travesaño superior');
+INSERT INTO `translations` VALUES (460, 'LABEL_LOWER_TRANSOM', 'Inférieurs tableau arrière', '', 'Lower Transom', 'inferior del travesaño');
+INSERT INTO `translations` VALUES (461, 'LABEL_ALLOW_UPPER_TRANSOM', 'Comprennent tableau supérieur', '', 'Include upper transom', 'incluyen travesaño superior');
+INSERT INTO `translations` VALUES (462, 'LABEL_ALLOW_LOWER_TRANSOM', 'Notamment une baisse du tableau arrière', '', 'Include lower transom', 'incluidas la disminución de espejo de popa');

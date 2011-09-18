@@ -1,0 +1,5 @@
+page['quotation_customer_name'].value = @customer.name
+page['customer_address'].value = @customer.address
+page['customer_phone'].value = @customer.phone
+page['customer_fax'].value = @customer.fax
+page['customer_email'].value = @customer.email

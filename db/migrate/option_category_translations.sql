@@ -1,0 +1,14 @@
+INSERT INTO `translations` VALUES (394, 'HEADER_ORDER', 'Ordre','','Order', 'Orden');
+INSERT INTO `translations` VALUES (395, 'HEADER_ACTION', 'Action','','Action', 'Acción');
+INSERT INTO `translations` VALUES (396, 'BUTTON_EDIT_OPTIONS', 'Options','','Options', 'Opciones');
+INSERT INTO `translations` VALUES (397, 'HEADER_OPTIONS_FOR_CATEGORY', 'Options pour la catégorie','','Options for Category', 'Opciones para la Categoría');
+INSERT INTO `translations` VALUES (398, 'AVAILABLE_HEADER_OPTIONS_FOR_CATEGORY', 'Options disponibles','','Available Options', 'Opciones disponibles');
+INSERT INTO `translations` VALUES (399, 'TITLE_HOME_WELCOME', 'Bienvenue sur Glass Vision Citant Application en ligne','','Welcome to Glass Vision\'s Online Quoting Application', 'Bienvenido a Cristal Vision Citando Solicitud en línea');
+INSERT INTO `translations` VALUES (400, 'MSG_CATEGORY_CREATED', 'La catégorie a été créée avec succès.','', 'The category was successfully created.','La categoría se ha creado correctamente.');
+INSERT INTO `translations` VALUES (401, 'MSG_CATEGORY_UPDATED', 'La catégorie a été mis à jour.','', 'The category was successfully updated.','La categoría se ha actualizado.');
+INSERT INTO `translations` VALUES (402, 'TITLE_EDIT_CATEGORY', 'fr','Modifier une catégorie', 'Edit Category','Editar Categoría');
+INSERT INTO `translations` VALUES (403, 'BUTTON_PREVIOUS', 'Précédent','', 'Previous','Anterior');
+INSERT INTO `translations` VALUES (404, 'BUTTON_NEXT', 'Suivant','', 'Next', 'Siguiente');
+INSERT INTO `translations` VALUES (405, 'LABEL_DISPLAY_ORDER', 'Ordre d\'affichage','', 'Display Order', 'Mostrar Pedido');
+INSERT INTO `translations` VALUES (406, 'TITLE_OPTION_CATEGORY_LIST', 'Catégories','','Categories', 'Categorías');
+INSERT INTO `translations` VALUES (407, 'LABEL_CATEGORY', 'Catégorie','','Category', 'Categoría');

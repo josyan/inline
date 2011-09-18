@@ -1,0 +1,25 @@
+<div style="text-align:center;">
+  <div id="login_frame">
+    <div id="login_logo">
+      <%= image_tag 'logos/glass-vision.png' %>
+    </div>
+  <h2 class="clearfix"><%= trn_get('LOGIN_WELCOME_LABEL') %><br/></h2>
+  <p style="clear:both;line-height:5px;" >&nbsp;</p> 
+  <fieldset>
+    <legend> <%= trn_geth('PLEASE_LOGIN_LABEL') %> </legend>
+    <%= form_tag session_path do %>
+    <p><label for="login"><%= trn_geth('LOGIN_LABEL') %></label><br/>
+    <%= text_field_tag 'login' %></p>
+     
+    <p><label for="password"><%= trn_geth('PASSWORD_LABEL') %></label><br />
+    <%= password_field_tag 'password' %><br />
+    <%= link_to trn_geth('FORGOT_PASSWORD_LABEL'), forgot_password_path %></p>
+     
+    <p><label for="remember_me"><%= trn_geth('REMEMBER_ME_LABEL') %>:</label>
+    <%= check_box_tag 'remember_me' %></p>
+     
+    <p style="line-height:1.5em;"><%= submit_tag trn_geth('LOGIN_LABEL') %><br /><%= trn_geth('LOGIN_SIGNUP_PROMPT') %> <%= link_to trn_get('SIGNUP_LABEL'), new_user_path %></p>
+  <% end %>
+  </fieldset>
+  </div>
+</div>

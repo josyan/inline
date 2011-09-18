@@ -1,0 +1,46 @@
+<h2><%= trn_geth('TITLE_OPTION_CATEGORY_LIST') %></h2>
+
+
+<table>
+  <tr valign="top">
+    <td align="right" style="font-weight:bold;"><%= trn_geth('HEADER_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @option_category.tr_name %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right" style="font-weight:bold;"><%= trn_geth('HEADER_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @option_category.tr_description %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right" style="font-weight:bold;"><%= trn_geth('LABEL_ALLOW_MULTISELECT_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= yes_or_no @option_category.multiselect %></td>
+  </tr>
+	<tr valign="top">
+		<td align="right" style="font-weight:bold;"><%= trn_geth('LABEL_DISPLAY_ORDER') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+		<td><%= @option_category.display_order %></td>
+	</tr>
+</table>
+
+
+<% if @option_category.options.empty? %>
+	<p><%= trn_get('MSG_NO_OPTIONS')%></p>
+<% else %>
+	<% option_count = @option_category.options.count %>
+	<p><%= trn_get(option_count == 1 ? 'MSG_OPTION_COUNT' : 'MSG_OPTION_COUNTS') % [option_count] -%> </p>
+<% end %>
+
+<% if @option_category.has_options? %>
+<div style="margin-top:10px;" id="showoptions">
+	<!-- What works better, a simple checklist of unassigned options, or dual list boxes? -->
+	<!-- start by just showing options assigned to this category -->
+	<h3><%= trn_geth('HEADER_OPTIONS') %></h3>
+	<ul>
+	<% for option in @option_category.options %>
+  	<li><%= option.tr_description %></li>
+	<% end %>
+	</ul>
+</div>
+<% end %>
+
+<%= link_to	trn_get('BUTTON_EDIT_OPTIONS'), :action => 'edit_options', :id => @option_category %> |
+<%= link_to trn_get('BUTTON_EDIT'), :action => 'edit', :id => @option_category %> |
+<%= link_to trn_get('BUTTON_BACK_TO_LIST'), :action => 'list' %>

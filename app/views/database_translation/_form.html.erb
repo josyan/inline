@@ -1,0 +1,26 @@
+<%= error_messages_for "dbt" %>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NATIVE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td>
+      <% begin %>
+        <%= @dbt.table.singularize.camelize.constantize.find(@dbt.record_id).send(@dbt.field) %>
+      <% rescue %>
+        ## <%= trn_get('MSG_DELETED') %> ##
+      <% end %>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_FR') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_area "dbt", "fr", :cols => "39", :rows => "5" %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_EN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_area "dbt", "en", :cols => "39", :rows => "5" %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_ES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_area "dbt", "es", :cols => "39", :rows => "5" %></td>
+  </tr>
+</table>

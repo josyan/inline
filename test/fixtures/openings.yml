@@ -1,0 +1,10 @@
+fixe:
+  id: 1
+  name: "Fixe"
+  abbreviation: "F"
+  openable: 0
+ouvrant:
+  id: 2
+  name: "Ouvrant"
+  abbreviation: "O"
+  openable: 1

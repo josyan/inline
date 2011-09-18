@@ -1,0 +1,33 @@
+<%= error_messages_for "quotation_line" %>
+
+<table>
+  <tr>
+    <td align="right"><%= trn_geth('LABEL_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select 'quotation_line', 'serie_id', Serie.all(:order => 'name').collect{|s| [s.tr_name, s.id]} %></td>
+    <%= observe_field 'quotation_line_serie_id',
+                      :on => 'onselect',
+                      :url => { :controller => 'quotation_line', :action => 'change_series'},
+                      :with => "'serie_id='+value+'&'+Form.serialize('ql')"
+                      %>
+  </tr>
+  <tr>
+    <td align="right"><%= trn_geth('LABEL_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select 'quotation_line', 'shape_id', Shape.all(:order => 'name').collect{|s| [s.tr_name, s.id]} %></td>
+    <%= observe_field 'quotation_line_shape_id',
+                      :on => 'onchanged',
+                      :url => { :controller => 'quotation_line', :action => 'change_shape'},
+                      :with => "'shape_id='+value+'&'+Form.serialize('ql')"
+                      %>
+
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field 'quotation_line', 'quantity', :size => 10 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field 'quotation_line', 'label', :size => 30 %></td>
+  </tr>
+</table>
+
+<%= render :partial => 'openings_and_dimensions' %>

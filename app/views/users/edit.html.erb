@@ -1,0 +1,22 @@
+<h2><%= trn_get(@current_user == @user ? 'EDIT_ACCOUNT_TITLE' : 'EDIT_USER_ACCOUNT_TITLE') % @user.login %></h2>
+<p><%= link_to trn_geth('SHOW_PROFILE_LABEL'), user_path(@user) %> 
+	<% if @current_user == @user %>
+	| <%= link_to trn_geth('CHANGE_PASSWORD_LABEL'), change_password_path  %></p>
+	<% end%>
+<%= error_messages_for :user %>
+ 
+<%= form_for :user, :url => user_url(@user), :html => { :method => :put } do |f| %>
+  <p><%= trn_geth('EMAIL_LABEL')%>:<br /><%= f.text_field :email, :size => 60 %></p>
+  <p><%= trn_geth('LABEL_DISCOUNT')%><br /><%= f.text_field :discount, :size => 10 %> </p>
+
+
+
+  <%= trn_geth('LABEL_COMPANY') +":" unless @user.companies.empty? %>
+  <% @user.companies.each do |company| %>
+      <%= company.name %> <br />
+  <% end %>
+<br />
+
+<%= submit_tag trn_get('BUTTON_SAVE') %>
+<% end %>
+

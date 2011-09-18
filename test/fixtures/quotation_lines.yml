@@ -1,0 +1,27 @@
+line_1:
+  id: 1
+  quotation_id: 1
+  serie_id: 1
+  shape_id: 3
+  width: 10
+  height: 10
+  quantity: 2
+  price: 14
+line_2:
+  id: 2
+  quotation_id: 1
+  serie_id: 1
+  shape_id: 2
+  width: 5
+  height: 5
+  quantity: 10
+  price: 2
+line_3:
+  id: 3
+  quotation_id: 1
+  serie_id: 1
+  shape_id: 1
+  width: 5
+  height: 5
+  quantity: 10
+  price: 1

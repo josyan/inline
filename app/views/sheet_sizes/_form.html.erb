@@ -1,0 +1,28 @@
+<%= error_messages_for 'sheet' %>
+<%= hidden_field "sheet", "sheet_product_id" %>
+<p>Enter a brief description for this product:<br />
+   <%= text_area "sheet", "description", "rows" => 5, "cols" => 50 %>
+ </p>
+<p>Products priced per square foot have minimum and maximum dimensions.<br /> Enter them below:</p>
+<table>
+  <tr>
+    <td></td>
+    <td>Minimum</td>
+    <td>Maximum</td>
+  </tr>
+  <tr>
+    <td>Width</td>
+    <td><%= text_field "sheet", "minimum_width", "size" => 10 %></td>
+    <td><%= text_field "sheet", "maximum_width", "size" => 10 %></td>
+  </tr>
+  <tr>
+    <td>Height</td>
+    <td><%= text_field "sheet", "minimum_height", "size" => 10 %></td>
+    <td><%= text_field "sheet", "maximum_height", "size" => 10 %></td>
+  </tr>
+</table>
+
+<p>Price per square foot:
+  <%= text_field "sheet", "price", "size" => 10 %>
+</p>
+

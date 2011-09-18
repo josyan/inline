@@ -1,0 +1,16 @@
+<%= error_messages_for :user %>
+<%= form_for :user, :url => users_path do |f| -%>
+<p><label for="login"><%= trn_geth('LOGIN_LABEL') %></label><br/>
+<%= f.text_field :login %></p>
+
+<p><label for="email"><%= trn_geth('EMAIL_LABEL') %></label><br/>
+<%= f.text_field :email %></p>
+
+<p><label for="password"><%= trn_geth('PASSWORD_LABEL') %></label><br/>
+<%= f.password_field :password %></p>
+
+<p><label for="password_confirmation"><%= trn_geth('CONFIRM_PASSWORD_LABEL') %></label><br/>
+<%= f.password_field :password_confirmation %></p>
+
+<p><%= submit_tag trn_get('SIGNUP_LABEL') %></p>
+<% end -%>

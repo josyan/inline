@@ -1,0 +1,5 @@
+serie_one:
+  id: 1
+  name: "Test"
+  description: "Serie de test"
+  comments:

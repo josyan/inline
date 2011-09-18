@@ -1,0 +1,9 @@
+<%= error_messages_for "dimension" %>
+
+<%= hidden_field "dimension", "serie_id" %>
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_VALUE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "dimension", "value", :size => 50 %></td>
+  </tr>
+</table>

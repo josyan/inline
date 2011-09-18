@@ -1,0 +1,7 @@
+<h2><%= trn_get('TITLE_COMPANY_ADD') %></h2>
+
+<%= form_for :company, @company, :url => {:action => 'create', :id => @company}, :html => {:multipart => true} do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag trn_geth('BUTTON_ADD') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %>

@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+first:
+  id: 1
+  name: "Interior"
+  description: "Interior Options"
+  display_order: 2
+second:
+  id: 2
+  name: "Exterior"
+  description: "Exterior Options"
+  display_order: 1
+third:
+  id: 3
+  name: "Misc"
+  description: "replacement hardware, screws, miscellaneous"
+  display_order: 3
+  

@@ -1,0 +1,15 @@
+<%= form_tag url_for(:action => "update") do %>
+  <p><label for="old_password" class="block"><%= trn_geth('OLD_PASSWORD_LABEL')%></label><br />
+  <%= password_field_tag 'old_password', @old_password, :size => 45 %></p>
+ 
+  <p><label for="password" class="block"><%= trn_geth('NEW_PASSWORD_LABEL')%> </label><br />
+  <%= password_field_tag 'password', {}, :size => 45 %><br />
+  <span style="font-size:smaller"><%= trn_geth('PASSWORD_REQUIREMENTS_LABEL')%> </span></p>
+ 
+  <p><label for="password_confirmation"  class="block"><%= trn_geth('CONFIRM_NEW_PASSWORD_LABEL')%></label><br />
+  <%= password_field_tag 'password_confirmation', {}, :size => 45 %></p>
+ 
+  <%= submit_tag trn_geth('CHANGE_PASSWORD_LABEL') %>
+ 
+<% end %>
+

@@ -1,0 +1,28 @@
+<h1><%= trn_geth('TITLE_CUSTOMER_LIST') %></h1>
+
+<table>
+  <tr>
+  <% for column in Customer.content_columns %>
+    <th><%= trn_get(column.human_name)  unless %w{created_at updated_at}.include?(column.name) %></th>
+  <% end %>
+		<th colspan="3"><%= trn_geth('HEADER_ACTION')%></th>
+  </tr>
+  
+<% for customer in @customers %>
+  <tr class="<%= cycle('odd', 'even') %>">
+  <% for column in Customer.content_columns %>
+    <td><%= trn_get(customer.send(column.name)) unless %w{created_at updated_at}.include?(column.name) %></td>
+  <% end %>
+    <td><%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :action => 'show', :id => customer %></td>
+    <td><%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => customer %></td>
+    <td><%= link_to trn_geth('BUTTON_DELETE'), { :action => 'destroy', :id => customer }, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :post %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= will_paginate @customers %>
+
+
+<br />
+
+<%= link_to trn_get('LABEL_CUSTOMER_CREATE'), :action => 'new' %>

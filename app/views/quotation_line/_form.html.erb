@@ -1,0 +1,17 @@
+<%= error_messages_for "quotation_line" %>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select 'quotation_line', 'serie_id', Serie.all(:order => 'name').collect{|s| [s.tr_name, s.id]} %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select 'quotation_line', 'shape_id', Shape.all(:order => 'name').collect{|s| [s.tr_name, s.id]} %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"> </td>
+    <td><%= check_box_tag :ql_copy_options, 1, true %> <%= trn_get('LABEL_QUOTATION_LINE_USE_PREV_OPTIONS')%></td>
+  </tr>
+</table>
+<br />

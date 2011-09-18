@@ -1,0 +1,61 @@
+<h2><%= trn_get('TITLE_SERIE_EDIT_PRICES') %></h2>
+
+<%= trn_geth('LABEL_EDIT_PRICES_FOR_OPENING') %><%= trn_geth('LABEL_SEMICOLON') %>
+<strong><%= @opening.tr_name %></strong>
+
+<br/>
+<%= link_to trn_geth('BUTTON_IMPORT_PRICES'), :action => 'import_prices_selection', :id => @serie, :opening_id => @opening.id %>
+
+<%= form_for(@serie, :url => {:action => 'generate_prices', :id => @serie, :opening_id => @opening.id}, :html =>{ :method => :put }) do %>
+	<p><%= trn_get('MSG_CALC_BY_AREA_WARNING')%></p>
+	<p><%= trn_get('PRICE_PER_SQFT_LABEL')%>:
+	  <%= text_field_tag "price", nil, :size => 10 %>
+	</p>
+  <%= submit_tag trn_geth('BUTTON_GENERATE') %>
+<% end %>
+
+<%= form_tag :action => 'update_prices', :id => @serie, :opening_id => @opening.id do %>
+
+<table cellspacing="0" cellpadding="0">
+  <tr>
+    <td colspan="2" class="dark-grey"></td>
+    <td colspan="<%= @serie.widths.length %>" align="center" class="dark-grey"><%= trn_geth('HEADER_WIDTH') %></td>
+  </tr>
+  <tr>
+    <td colspan="2" class="dark-grey"></td>
+
+<% for width in @serie.widths %>
+      <td class="<%= cycle('white', 'light-grey') %>" align="center"><%= width.value %></td>
+<% end %>
+  </tr>
+<% first_one = true %>
+<% row_color = 1 %>
+<% for height in @serie.heights %>
+<%   row_color = 1 - row_color %>
+  <tr>
+<%   if first_one %>
+    <td rowspan="<%= @serie.heights.length %>" valign="middle" class="dark-grey"><%= trn_geth('HEADER_HEIGHT') %></td>
+<%     first_one = false %>
+<%   end %>
+    <td class="<%= cycle('white','light-grey',:name =>"c") %>"><%= height.value %></td>
+<%   for width in @serie.widths %>
+    <td>
+<%     price = SeriePrice.where(:width_id => width.id, :height_id => height.id, :opening_id => @opening.id).first
+       if price
+         name = "price_#{price.id}"
+         value = price.price
+       else
+         name = "price_#{width.id}_#{height.id}"
+         value = ""
+       end
+%>
+      <%= text_field_tag name, value, :size => 5, :class => (row_color == 0 ? cycle('white','light-grey', :name =>"a") : cycle('light-grey','dark-grey', :name =>"b")) %>
+    </td>
+<%   end %>
+  </tr>
+<% end %>
+</table>
+
+  <%= submit_tag trn_geth('BUTTON_SAVE') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_SERIE'), :action => 'show', :id => @serie %>

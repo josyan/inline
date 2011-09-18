@@ -1,0 +1,28 @@
+<%= error_messages_for 'customer' %>
+
+<!--[form:customer]-->
+<table>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= text_field "customer", "name", :size => 50 %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= text_area "customer", "address", :cols => "39", :rows => "5" %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= text_field "customer", "phone", :size => 50 %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_FAX') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= text_field "customer", "fax", :size => 50 %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_EMAIL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= text_field "customer", "email", :size => 50 %></td>
+</tr>
+</table>
+
+<!--[eoform:customer]-->
+

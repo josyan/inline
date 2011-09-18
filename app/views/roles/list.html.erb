@@ -1,0 +1,15 @@
+<h2><%= trn_geth('ROLES_FOR_LABEL') %> <%= @user.login.capitalize %></h2>
+
+<h3><%= trn_geth('ROLES_ASSIGNED_LABEL') %> :</h3>
+<% if @user.roles.empty? %>
+    <ul><%= trn_get('NONE_MSG') %></ul>
+<% else %>
+    <ul><%= render :partial => 'role', :collection => @user.roles %></ul>
+<% end %>
+
+<h3><%= trn_geth('ROLES_AVAIL_LABEL') %>:</h3>
+<% if (@all_roles - @user.roles).length > 0 %>
+    <ul><%= render :partial => 'role', :collection => (@all_roles - @user.roles) %></ul>
+<% else %>
+    <ul><%= trn_get('NONE_MSG') %></ul>
+<% end %>

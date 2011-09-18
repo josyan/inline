@@ -1,0 +1,30 @@
+<h1><%= trn_geth('TITLE_OPTION_CATEGORY_LIST') %></h1>
+
+<%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<table>
+  <tr class="header">
+    <th><%= trn_geth('HEADER_ORDER') %></th>
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
+    <th><%= trn_geth('HEADER_ACTION') %></th>
+  </tr>
+
+  <% for option_category in @option_categories %>
+      <tr class="<%= cycle('odd', 'even') %>">
+        <td><%= option_category.display_order %></td>
+        <td><%= option_category.tr_name %></td>
+        <td><%= option_category.tr_description %></td>
+        <td>
+          <%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => option_category %> |
+          <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => option_category %> |
+          <%= link_to trn_geth('BUTTON_EDIT_OPTIONS'), :action => 'edit_options', :id => option_category %> |
+          <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => option_category}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+        </td>
+      </tr>
+  <% end %>
+</table>
+
+<%= will_paginate @option_categories %>
+
+<br/>
+

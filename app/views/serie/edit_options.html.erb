@@ -1,0 +1,18 @@
+<h2><%= trn_geth('HEADER_OPTIONS_FOR_SERIE') %> <%= @serie.tr_name %></h2>
+
+<%= form_tag :action => 'update_options', :id => @serie do %>
+
+	<% @categorized_options.each_value do |category_and_options| %>
+		<% category_and_options.each do |category, options| %>
+			<h3><%= h category.tr_name %></h3>
+		  <% for option in options %>
+		    <%= check_box_tag 'options[]', option.id, @serie.options.include?(option) ? true : false %><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %><%= option.tr_description %><br/>
+		  <% end %>
+		<% end %>
+	<% end %>
+	<p>
+		<%= submit_tag trn_geth('BUTTON_SAVE') %>
+	</p>
+<% end %>
+
+

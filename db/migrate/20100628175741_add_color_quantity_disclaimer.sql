@@ -1,0 +1,1 @@
+INSERT INTO `translations` VALUES (484, 'LABEL_MIN_QTY_CUSTOM_COLORS', 'Minimum 5 cadres requis pour les couleurs non standard.', '', 'Minimum 5 frames required for custom colors', 'Mínimo 5 fotogramas necesarios para los colores no estándar.');

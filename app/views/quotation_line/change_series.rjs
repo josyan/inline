@@ -1,0 +1,1 @@
+page.replace "openings", :partial => "openings_and_dimensions"

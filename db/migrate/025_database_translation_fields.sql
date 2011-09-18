@@ -1,0 +1,10 @@
+INSERT INTO `database_translation_fields` VALUES   (1,'serie','name');
+INSERT INTO `database_translation_fields` VALUES   (2,'serie','description');
+INSERT INTO `database_translation_fields` VALUES   (3,'serie','comments');
+INSERT INTO `database_translation_fields` VALUES   (4,'openings','name');
+INSERT INTO `database_translation_fields` VALUES   (5,'openings','abbreviation');
+INSERT INTO `database_translation_fields` VALUES   (6,'shapes','name');
+INSERT INTO `database_translation_fields` VALUES   (7,'options','description');
+INSERT INTO `database_translation_fields` VALUES   (8,'options','comments');
+INSERT INTO `database_translation_fields` VALUES   (9,'pricing_methods','description');
+INSERT INTO `database_translation_fields` VALUES   (10,'pricing_methods','comments');

@@ -1,0 +1,27 @@
+<h2><%= trn_geth('TITLE_QUOTATION_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_quotation_path %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NUMBER') %></th>
+    <th><%= trn_geth('HEADER_DATE_MODIFIED') %></th>
+    <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
+    <th><%= trn_geth('HEADER_CREATED_BY') if @current_user.has_role?('administrator') %></th>
+    <th><%= trn_geth('LABEL_CONSULTANT') if @current_user.has_role?('administrator') %></th>
+    <th></th>
+  </tr>
+<% for quotation in @quotations %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= quotation.id %></td>
+		<td><%= gv_humanize_time quotation.updated_at %></td>
+    <td><%= quotation.project_name %><%= ' (' + quotation.description + ')' if quotation.description and !quotation.description.empty? %></td>
+    <td><%= quotation.user.login  if @current_user.has_role?('administrator') and !quotation.user.nil? %> </td>
+    <td><%= quotation.consultant  if @current_user.has_role?('administrator') and !quotation.consultant.nil? %> </td>
+    <td>
+      <%= link_to trn_geth('BUTTON_SHOW'), quotation_path(quotation) %> |
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_quotation_path(quotation) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'destroy', :id => quotation}, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    </td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,7 @@
+<h2><%= trn_get('TITLE_SHAPE_EDIT') %></h2>
+
+<%= render :partial => 'form' %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), shapes_path %> |
+<%= link_to trn_geth('BUTTON_SHOW'), @shape %> |
+<%= link_to trn_geth('BUTTON_DELETE'), @shape, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+

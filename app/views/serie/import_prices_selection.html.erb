@@ -1,0 +1,20 @@
+<h2><%= trn_get('TITLE_IMPORT_PRICES') %></h2>
+
+<%= trn_geth('LABEL_IMPORT_SELECT') %>
+
+<%= form_tag :action => 'import_prices', :id => @serie, :opening_id => @opening.id do %>
+<table>
+  <tr>
+    <td><%= trn_geth('LABEL_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select_tag 'selected_serie_id', options_for_select(@series.map { |s| [s.tr_name, s.id]}) %></td>
+  </tr>
+  <tr>
+    <td><%= trn_geth('LABEL_OPENING') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select_tag 'selected_opening_id', options_for_select(@openings.map { |s| [s.tr_name, s.id]}) %></td>
+  </tr>
+</table>
+
+<%= submit_tag trn_geth('BUTTON_IMPORT') %>
+<% end %>
+<br/>
+<%= link_to trn_geth('BUTTON_BACK_TO_PRICES'), :action => 'edit_prices', :id => @serie, :opening_id => @opening.id %>

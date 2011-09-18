@@ -1,0 +1,45 @@
+<script type="text/javascript" charset="utf-8">
+	function change_swatch() {
+		$('colorswatch').setStyle({backgroundColor:$('product_color_value').value });
+	}
+	
+jQuery(function($) {
+	  myColor = $('input#product_color_value').val();
+	  myColor = myColor.substring ( 1, myColor.length - 1 );
+    $('input#product_color_value').ColorPicker({
+        color: myColor,
+        onShow: function(colpkr) {
+            $(colpkr).fadeIn(500);
+            return false;
+        },
+        onHide: function(colpkr) {
+            $(colpkr).fadeOut(500);
+            return false;
+        },
+				onSubmit: function(hsb, hex, rgb, el)
+				{
+					$(el).val('#'+hex);
+					$('div#colorswatch').css('backgroundColor', '#' + hex);
+					$(el).ColorPickerHide();
+				}
+    }).bind('keyup',
+    function() {
+        $(this).ColorPickerSetColor(this.value);
+    });
+});
+
+
+</script>
+
+
+<%= semantic_form_for @product_color do |form| %>
+  <div><%= form.error_messages %></div><br/>
+	<div id="colorswatch" style="<%="float:right;background-color:#{@product_color.value};width:100px;height:100px;"%>"></div>
+	<%= form.inputs  do %>
+		<%= form.input :name, :label => trn_geth('LABEL_NAME') %>
+		<%= form.input :value, :label => trn_geth('LABEL_COLOR_VALUE'), :input_html => {:onchange=> 'change_swatch();', :onkeyup=> 'change_swatch();'}%>
+	<% end %>
+	<%= form.buttons do %>
+ 		<%= form.commit_button  trn_get('BUTTON_SAVE_COLOR') %>
+	<% end %>
+<% end %>

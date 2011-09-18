@@ -1,0 +1,18 @@
+one_section:
+  id: 1
+  name: "1 section"
+  sections_width: 1
+  sections_height: 1
+  corners: 4
+two_sections:
+  id: 2
+  name: "2 sections"
+  sections_width: 2
+  sections_height: 1
+  corners: 4
+four_sections:
+  id: 3
+  name: "4 sections"
+  sections_width: 2
+  sections_height: 2
+  corners: 4

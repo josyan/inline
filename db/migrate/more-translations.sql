@@ -1,0 +1,9 @@
+INSERT INTO `translations` VALUES   (193,'PRINT_HEADER_NOTES', 'Note', '','Notes');
+INSERT INTO `translations` VALUES   (194,'LABEL_NOTES', 'Note', '', 'Notes');
+INSERT INTO `translations` VALUES   (195, 'LABEL_QUOTE_READY_TO_SIGN', 'Prêt pour les signatures', '', 'Ready for signatures');
+INSERT INTO `translations` VALUES   (196, 'PRINT_SIGNATURE_BLOCK_LINE1', 'La signature de ce document confirme que le client a lu, compris et accepte la quantité, la description et le prix des produits énumérés ci dessus.', '', 'The signing of this document confirms that the customer has read, understood and accepted the quantity, description and price of products listed above.');
+INSERT INTO `translations` VALUES   (197, 'PRINT_SIGNATURE_BLOCK_LINE2', 'Ce document signé sera interprété comme une commande d\'achat de la part du client et sera considéré comme un contrat de vente sujet aux termes et conditions déjà acceptés et signés.', '', 'The signed document will be interpreted as a purchase order from the customer and will be regarded as a contract of sale subject to the terms and conditions already accepted and signed.');
+INSERT INTO `translations` VALUES   (198, 'PRINT_SIGNATURE_BLOCK_LINE3', ' se réserve le droit de remplacer le PVC couleur solide par du PVC peinturé et ce, en tout temps.', '', ' reserves the right to replace the PVC with solid color of PVC and painted, at any time.');
+INSERT INTO `translations` VALUES   (199, 'PRINT_SIGNATURE_SALES_REP_NAME', 'NOM DU REPRESENTANT', '', 'NAME OF REPRESENTATIVE');
+INSERT INTO `translations` VALUES   (200, 'PRINT_SIGNATURE_CLIENT_NAME', 'SIGNATURE DU CLIENT', '', 'SIGNATURE OF CLIENT');
+INSERT INTO `translations` VALUES   (201, 'PRINT_DATE', 'DATE', '', 'DATE');

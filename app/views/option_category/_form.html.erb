@@ -1,0 +1,20 @@
+<%= error_messages_for 'option_category' %>
+
+<!--[form:option_category]-->
+<p><label for="option_category_name"><%= trn_get('HEADER_NAME') %></label><br/>
+<%= text_field 'option_category', 'name'  %></p>
+
+<p><label for="option_category_description"><%= trn_get('HEADER_DESCRIPTION') %></label><br/>
+<%= text_field 'option_category', 'description'  %></p>
+
+<p>
+  <%= check_box 'option_category', 'multiselect'  %>
+  <label for="option_category_multiselect"><%= trn_get('LABEL_ALLOW_MULTISELECT_OPTIONS') %></label>
+</p>
+
+
+<p><label for="option_category_order"><%= trn_get('LABEL_DISPLAY_ORDER') %></label><br/>
+
+<%= text_field 'option_category', 'display_order'  %></p>
+<!--[eoform:option_category]-->
+

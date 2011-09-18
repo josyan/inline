@@ -1,0 +1,10 @@
+<h2><%= trn_get('TITLE_COMPANY_EDIT') %></h2>
+
+<%= form_for :company, @company, :url => {:action => 'update', :id => @company}, :html => {:multipart => true} do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag trn_geth('BUTTON_SAVE') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
+<%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @company %> |
+<%= link_to trn_geth('BUTTON_COMPANY_EDIT_USERS'), :action => 'add_users', :id => @company %> |
+<%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @company}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

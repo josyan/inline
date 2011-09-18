@@ -1,0 +1,13 @@
+<h2><%= trn_get('TITLE_QUOTATION_EDIT') %></h2>
+
+<%= form_for  @quotation do %>
+  <%= render :partial => 'form' %>
+  <br />
+  <div class="form_button_bar submit" >
+    <%= css_button_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> 
+    <%= css_button_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %> 
+    <%= css_button_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @quotation %> 
+    <%= submit_tag trn_geth('BUTTON_EDIT') %>
+  </div>
+  <% end %>
+

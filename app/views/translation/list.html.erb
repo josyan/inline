@@ -1,0 +1,24 @@
+<h2><%= trn_geth('TITLE_TRANSLATION_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_KEY') %></th>
+    <th><%= trn_geth('HEADER_FRENCH') %></th>
+    <th><%= trn_geth('HEADER_ENGLISH') %></th>
+    <th><%= trn_geth('HEADER_SPANISH') %></th>
+    <th></th>
+  </tr>
+<% for translation in @translations %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= translation.translation_key %></td>
+    <td><%= translation.fr %></td>
+    <td><%= translation.en %></td>
+    <td><%= translation.es %></td>
+    <td class="command">
+      <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => translation %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => translation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    </td>
+  </tr>
+<% end %>
+</table>

@@ -1,0 +1,117 @@
+
+<%= error_messages_for "quotation" %>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "description", :size => 50%></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_area "quotation", "comments", :cols => "39", :rows => "7" %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PROJECT_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "project_name", :size => 50 %><strong> *</strong></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field :quotation, :customer_name, :size => 50  %>
+      <%= ajax_spinner_for('quotation_customer_name').html_safe %>
+    </td>
+    <div class="auto_complete" id="quotation_customer_name_auto_complete"></div>
+    <%= auto_complete_field :quotation_customer_name,
+                            :url => { :controller => 'customer', :action => 'autocomplete_for_name'},
+                            :indicator => 'quotation_customer_name_spinner',
+                            :after_update_element => "function(element,value){" + remote_function(:url => {
+                                    :controller => :customer, :action => :show_by_name },
+                                    :with =>"'customer_name='+element.value") + "}"
+    %>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME_PICK') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select("customer", "name", Customer.all().collect(&:name)) %>
+    </td>
+    <%= observe_field :customer_name,
+        :on => 'onchanged',
+        :url => { :controller => 'customer', :action => 'show_by_name'},
+        :with =>"'customer_name='+element.value"
+    %>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_area "quotation", "customer_address", :cols => "39", :rows => "5", :id => 'customer_address'  %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DELIVERY_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_area "quotation", "delivery_address", :cols => "39", :rows => "5", :id => 'delivery_address'  %>
+      <br />
+      <%= check_box_tag 'use_billing_address', @quotation.use_billing_address?-%><%= trn_get('LABEL_SAME_DELIVERY_ADDRESS') -%>
+
+      <%= observe_field 'use_billing_address',
+         {
+         :function => 'updateShippingAddress(this.checked)',
+         :frequency => 0.3,
+         :on => 'onclicked'
+         }
+      %>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "customer_phone", :size => 50, :id => 'customer_phone'  %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_FAX') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "customer_fax", :size => 50, :id => 'customer_fax'  %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CUSTOMER_EMAIL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "customer_email", :size => 50, :id => 'customer_email'  %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NOTES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_area "quotation", "notes", :cols => "39", :rows => "5"  %></td>
+  </tr>
+</table>
+<hr/>
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_TRANSPORT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "transport", :size => 10, :style => "text-align: right;" %>$</td>
+  </tr>
+  <% if current_user.has_role?('administrator')%>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "discount", :size => 10, :style => "text-align: right;" %>%</td>
+  </tr>
+  <% end %>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_MARKUP') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "markup", :size => 10, :style => "text-align: right;" %>%</td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_get('LABEL_TAXES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "taxes", :size => 10, :style => "text-align: right;" %>%</td>
+  </tr>  
+  <tr valign="top">
+    <td align="right"><%= trn_get('LABEL_PST_RATE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "taxes_pst", :size => 10, :style => "text-align: right;" %>%</td>
+  </tr>  
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DEPOSIT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "quotation", "deposit", :size => 10, :style => "text-align: right;" %>$</td>
+  </tr>  
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= check_box "quotation", "ready_to_sign" %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_COMPANY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select 'quotation', 'company_id', @current_user.active_companies.map { |c| [c.name, c.id] } %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CONSULTANT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field 'quotation', 'consultant',  :size => 50  %></td>
+  </tr>
+</table>

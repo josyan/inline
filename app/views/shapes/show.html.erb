@@ -1,0 +1,23 @@
+<h2><%= trn_geth('TITLE_SHAPE_SHOW') %></h2>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @shape.tr_name %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_SECTIONS_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @shape.sections_width %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_SECTIONS_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @shape.sections_height %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_CORNERS_NUMBER') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @shape.corners %></td>
+  </tr>
+</table>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), shapes_path %> |
+<%= link_to trn_geth('BUTTON_EDIT'), edit_shape_path(@shape)%> |
+<%= link_to trn_geth('BUTTON_DELETE'), @shape, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>

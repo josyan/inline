@@ -1,0 +1,112 @@
+<!DOCTYPE html >
+<html>
+<head>
+  <title><%= trn_get('SITE_TITLE') %></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <link rel="Shortcut Icon" href="/images/favicon.ico"/>
+  <%= stylesheet_link_tag "application", "formtastic", "formtastic_changes", "colorpicker" %>
+
+  <%= javascript_include_tag :defaults %>
+  <%= javascript_include_tag 'jquery', 'colorpicker', 'hover-popup' %>
+  <script type="text/javascript" charset="utf-8">
+      jQuery.noConflict();
+
+      jQuery(document).ready(function() {
+          // put all your jQuery goodness in here.
+          jQuery("img.popup").thumbPopup({
+              imgSmallFlag: "thumb",
+              imgLargeFlag: "original"
+          });
+      });
+  </script>
+
+  <%= csrf_meta_tag %>
+</head>
+<body>
+<div id="header">
+  <%= image_tag 'haut_glassvision.gif', :size => "646x53" %>
+</div>
+<div id="nav">
+  <ul>
+    <li><%= link_to image_tag("fr.png", :border => 0, :class => "flag"), :controller => 'home', :action => 'set_lang', :lang => "fr" %></li>
+    <li><%= link_to image_tag("us.png", :border => 0, :class => "flag"), :controller => 'home', :action => 'set_lang', :lang => "en" %></li>
+    <li><%= link_to image_tag("es.png", :border => 0, :class => "flag"), :controller => 'home', :action => 'set_lang', :lang => "es" %></li>
+    <li><%= link_to trn_get('MENU_HOME'), :controller => 'home' %></li>
+    <% if logged_in? %>
+        <!--        <li>Hi, <%= link_to h(current_user.login.capitalize), user_path(current_user) %></li> -->
+        <!--        <li><%= link_to 'Profile', edit_user_path(current_user) %></li> -->
+        <!--          <li><%= link_to 'Change Password', change_password_path %></li> -->
+        <% if current_user.has_role?('administrator') %>
+            <li><%= link_to trn_geth('MENU_ADMIN_USERS_LABEL'), users_path %></li>
+        <% end %>
+    <% end %>
+  </ul>
+  <% if logged_in? %>
+      <div id='greeting' class="clearfix">
+        <ul>
+          <li><%= trn_geth('MENU_GREETING_LABEL') %>,<%= link_to h(current_user.login), edit_user_path(current_user) %>
+            .
+          </li>
+          <li><%= link_to trn_geth('MENU_LOGOUT_LABEL'), logout_path %></li>
+        </ul>
+      </div>
+  <% end %>
+</div>
+<!-- nav -->
+<div id="wrap">
+  <div id="leftnav">
+    <!-- this is the left nav menu -->
+    <ul>
+      <li><%= link_to image_tag("home.png", :size => "32x32", :border => 0) + trn_get('MENU_HOME'), :controller => 'home' %></li>
+      <% if logged_in? %>
+          <% if current_user.has_role?('administrator') %>
+              <li><%= link_to image_tag("series.png", :size => "32x32", :border => 0) + trn_geth('TITLE_SERIE_LIST'), :controller => 'serie', :action => 'list' %></li>
+              <li><%= link_to image_tag("window.png", :size => "32x32", :border => 0) + trn_geth('TITLE_SHAPE_LIST'), shapes_path %></li>
+              <li><%= link_to image_tag("image_32.png", :size => "32x32", :border => 0) + trn_geth('TITLE_OPENING_LIST'), :controller => 'opening', :action => 'list' %></li>
+              <li><%= link_to image_tag("process.png", :size => "32x32", :border => 0) + trn_geth('TITLE_OPTION_LIST'), :controller => 'option', :action => 'list' %></li>
+              <li><%= link_to image_tag("process.png", :size => "32x32", :border => 0) + trn_geth('TITLE_OPTION_CATEGORY_LIST'), :controller => 'option_category', :action => 'list' %></li>
+              <li><%= link_to image_tag("colors.png", :size => "32x32", :border => 0) + trn_geth('TITLE_PRODUCT_COLORS_LIST'), product_colors_path %></li>
+              <li><%= link_to image_tag("comment.png", :size => "32x32", :border => 0) + trn_geth('TITLE_TRANSLATION_LIST'), :controller => 'translation', :action => 'list' %></li>
+              <li><%= link_to image_tag("comment.png", :size => "32x32", :border => 0) + trn_geth('TITLE_DBTF_LIST'), :controller => 'database_translation_field', :action => 'list' %></li>
+              <li><%= link_to image_tag("comment.png", :size => "32x32", :border => 0) + trn_geth('TITLE_DBT_LIST'), :controller => 'database_translation', :action => 'list' %></li>
+              <li><%= link_to image_tag("companies.png", :size => "32x32", :border => 0) + trn_geth('TITLE_COMPANY_LIST'), :controller => 'company', :action => 'list' %></li>
+              <li><%= link_to image_tag("user.png", :size => "32x32", :border => 0) + trn_geth('MENU_ADMIN_USERS_LABEL'), users_path %></li>
+          <% end %>
+          <li><%= link_to image_tag("users_two.png", :size => "32x32", :border => 0) + trn_geth('MENU_CUSTOMERS'), :controller => 'customer', :action => 'list' %></li>
+          <li><%= link_to image_tag("folder.png", :size => "32x32", :border => 0) + trn_geth('TITLE_QUOTATION_LIST'), quotations_path %></li>
+          <li><%= link_to image_tag("mail.png", :size => "32x32", :border => 0) + trn_geth('MENU_SEND_MAIL'), :controller => 'emails', :action => 'new' %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div id='content'>
+    <!--
+    <h1 id="site_title"><%= trn_get('SITE_TITLE') %></h1>
+  -->
+    <% if flash[:error] %>
+        <div class="error">
+          <table>
+            <tr>
+              <td>
+                <%= flash[:error] %>
+              </td>
+            </tr>
+          </table>
+        </div>
+    <% end %>
+    <% if flash[:notice] %>
+        <div class="notice">
+          <table>
+            <tr>
+              <td>
+                <%= flash[:notice] %>
+              </td>
+            </tr>
+          </table>
+        </div>
+    <% end %>
+
+    <%= yield %>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<h2><%= trn_geth('TITLE_CUSTOMER_DETAILS') %></h2>
+
+<table>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= trn_get(@customer.name) %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= trn_get(@customer.address) %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= trn_get(@customer.phone) %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_FAX') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= trn_get(@customer.fax) %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_CUSTOMER_EMAIL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= trn_get(@customer.email) %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_DATE_CREATED') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= gv_humanize_time(@customer.created_at) %></td>
+</tr>
+<tr valign="top">
+  <td align="right"><%= trn_geth('LABEL_DATE_MODIFIED') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+  <td><%= gv_humanize_time(@customer.updated_at) %></td>
+</tr>
+</table>
+<br />
+
+<%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @customer %> |
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %>

@@ -1,0 +1,2 @@
+class SectionHeight < SectionDimension
+end

@@ -1,0 +1,30 @@
+<h2><%= trn_geth('TITLE_OPENING_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_ABBREVIATION') %></th>
+    <th><%= trn_geth('HEADER_OPENABLE') %></th>
+    <th><%= trn_geth('HEADER_GLASSES_QUANTITY') %></th>
+    <th><%= trn_geth('HEADER_PREVIEW') %></th>
+    <th></th>
+  </tr>
+<% for opening in @openings %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= opening.tr_name %></td>
+    <td><%= opening.tr_abbreviation %></td>
+    <td><%= opening.openable ? trn_get('MSG_YES') : trn_get('MSG_NO') %></td>
+    <td><%= opening.glasses_quantity %></td>
+    <td>
+      <% if opening.preview_image_name and !opening.preview_image_name.empty? %>
+      <%= image_tag 'openings/' + opening.preview_image_name %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => opening %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => opening}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    </td>
+  </tr>
+<% end %>
+</table>

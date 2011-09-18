@@ -1,0 +1,75 @@
+<%= render :partial => 'series_openings' %>
+
+<h3><%= trn_geth('HEADER_DIMENSIONS') %></h3>
+
+<!-- dimension management -->
+<table id='nonstdseries'>
+  <tr>
+    <th>
+      <%= trn_geth('HEADER_WIDTHS') %><br/>
+      <%= link_to trn_geth('BUTTON_ADD'), :controller => 'dimension', :action => 'add', :serie_id => @serie, :type => 'Width' %>
+    </th>
+    <th>
+      <%= trn_geth('HEADER_HEIGHTS') %><br/>
+      <%= link_to trn_geth('BUTTON_ADD'), :controller => 'dimension', :action => 'add', :serie_id => @serie, :type => 'Height' %>
+    </th>
+  </tr>
+  <tr valign="top">
+    <td nowrap>
+      <% for width in @serie.widths %>
+        <%= width.value %>
+        <%= link_to trn_geth('BUTTON_EDIT'), :controller => 'dimension', :action => 'edit', :id => width %> |
+        <%= link_to trn_geth('BUTTON_DELETE'), {:controller => 'dimension', :action => 'delete', :id => width}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+        <br/>
+      <% end %>
+    </td>
+    <td nowrap>
+      <% for height in @serie.heights %>
+        <%= height.value %>
+        <%= link_to trn_geth('BUTTON_EDIT'), :controller => 'dimension', :action => 'edit', :id => height %> |
+        <%= link_to trn_geth('BUTTON_DELETE'), {:controller => 'dimension', :action => 'delete', :id => height}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+        <br/>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+<div onclick="this.hide();new Effect.BlindDown('quicksizing');" style="cursor:pointer;">
+	<p><%= trn_get('MSG_QUICKSIZE_HINT').html_safe %></p>
+</div>
+<div style="display:none; margin-top:10px;" id="quicksizing">
+	<%= form_tag :action => 'generate_sizes', :id => @serie do %>
+	<table>
+	  <tr>
+	    <td></td>
+	    <td>Minimum</td>
+	    <td>Maximum</td>
+	  </tr>
+	  <tr>
+	    <td><%= trn_get('HEADER_WIDTH') %></td>
+	    <td><%= text_field "series", "minimum_width", "size" => 10 %></td>
+	    <td><%= text_field "series", "maximum_width", "size" => 10 %></td>
+	  </tr>
+	  <tr>
+	    <td><%= trn_get('HEADER_HEIGHT') %></td>
+	    <td><%= text_field "series", "minimum_height", "size" => 10 %></td>
+	    <td><%= text_field "series", "maximum_height", "size" => 10 %></td>
+	  </tr>
+	</table>
+
+  <%= submit_tag trn_geth('BUTTON_GENERATE') %>
+<% end %>
+</div>
+
+
+<h3><%= trn_geth('HEADER_PRICE') %></h3>
+
+<% if @serie.openings.count == 0 %>
+  <%= trn_geth('MSG_NO_OPENINGS_SELECTED') %><br/>
+<% else %>
+  <%= form_tag :action => 'edit_prices', :id => @serie do %>
+    <%= select_tag 'opening_id', options_from_collection_for_select(@serie.openings, 'id', 'tr_name') %>
+    <%= submit_tag trn_geth('BUTTON_EDIT_PRICES') %>
+  <% end %>
+<% end %>
+
