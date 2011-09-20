@@ -40,6 +40,13 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     debug_log "Saving user id #{@user.id}, discount is #{params[:user]}"
     if @user.update_attributes(params[:user])
+
+      # saving access to modules
+      @user.module_types.clear
+      params[:module_type].each do |mt_id, active|
+        @user.module_types << ModuleType.find(mt_id) if active.to_i == 1
+      end
+
       flash[:notice] = trn_get('USER_UPDATED_FLASH')
       redirect_to :action => 'show', :id => @user
     else
