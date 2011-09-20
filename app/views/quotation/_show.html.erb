@@ -129,7 +129,9 @@
 <br/>
 
 <h3><%= trn_geth('HEADER_LINES')%></h3>
-<%= link_to trn_geth('BUTTON_ADD'), :controller => 'quotation_line', :action => 'add', :id => @quotation %>
+<% @current_user.module_types.each do |mt| %>
+  <%= link_to "#{trn_geth('BUTTON_ADD')} #{trn_geth("LABEL_ONE_#{mt.gender.upcase}").downcase} #{mt.tr_name.downcase}", :controller => 'quotation_line', :action => 'add', :id => @quotation, :mt => mt.id %> | 
+<% end %>
 | <%= link_to trn_geth('BUTTON_ADD_OPTION'), :controller => 'option_quotation', :action => 'add', :id => @quotation %>
 <table class="quotation">
   <tr>
