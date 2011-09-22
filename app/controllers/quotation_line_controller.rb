@@ -2,10 +2,15 @@ class PriceError < RuntimeError
 end
 
 class QuotationLineController < ApplicationController
-  
+
   before_filter :prepare_vars, :only => {"edit", "print_calculations"}
 
   def add
+    # some ugly hardcoding, but hard to do without as doors are totally different from windows
+    # and the app has not been build around a common ground between doors and windows (like EasyQuote)
+    if params[:mt].to_i == 2
+      redirect_to :controller => 'door', :action => 'new', :id => params[:id]
+    end
     @quotation_line = QuotationLine.new
     @quotation_line.quotation_id = params[:id]
   end
@@ -24,9 +29,9 @@ class QuotationLineController < ApplicationController
     # are we creating a similar window? if so, bring forward selected options
     # from the last line entered
     copy_options_from_last_line() if params[:ql_copy_options]
-    
+
     initialize_options_for_series()
-    
+
   end
 
   # ajax call to change the series for this line
@@ -38,9 +43,9 @@ class QuotationLineController < ApplicationController
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
     @serie = Serie.includes(:options => [:pricing_method, :options_minimum_unit]).find(serie_id)
-    initialize_options_for_series()    
+    initialize_options_for_series()
   end
-  
+
   # ajax call to change the shape for this line
   def change_shape
     return unless request.xhr?
@@ -49,7 +54,7 @@ class QuotationLineController < ApplicationController
     @section_height = params[:section_height] || {}
     @section_width = params[:section_width] || {}
     @serie = Serie.includes(:options => [:pricing_method, :options_minimum_unit]).find(@quotation_line.serie_id)
-    initialize_options_for_series()        
+    initialize_options_for_series()
   end
 
   def create
@@ -129,10 +134,10 @@ class QuotationLineController < ApplicationController
   end
 
   def edit
-    
-    #    @quotation_line = QuotationLine.find(params[:id], :include => [:shape,  {:serie => {:options => [:pricing_method, :options_minimum_unit]}}, 
+
+    #    @quotation_line = QuotationLine.find(params[:id], :include => [:shape,  {:serie => {:options => [:pricing_method, :options_minimum_unit]}},
     #                                                                  {:options_quotation_lines => [:option=> [:pricing_method, :options_minimum_unit]]}])
-    
+
     @quotation_line = QuotationLine.includes(:serie => [:options => [:pricing_method, :options_minimum_unit]], :options_quotation_lines => :option).find(params[:id])
     @openings = {}
     @quotation_line.quotation_lines_openings.each do |o|
@@ -149,7 +154,7 @@ class QuotationLineController < ApplicationController
     @serie = @quotation_line.serie
 
     shape = Shape.find(@quotation_line.shape_id)
-    
+
     @upper_transom_index = upper_transom_index(shape) if shape.has_upper_transom
     @lower_transom_index = lower_transom_index(shape) if shape.has_lower_transom
 
@@ -180,16 +185,16 @@ class QuotationLineController < ApplicationController
     @quotation_line.shape = shape
     @upper_transom_index = upper_transom_index(shape) if shape.has_upper_transom
     @lower_transom_index = lower_transom_index(shape) if shape.has_lower_transom
-    
+
     error = calculate_dimensions(params[:quotation_line][:width], params[:quotation_line][:height])
     if error
       @quotation_line.price = 0
       flash[:notice] = error
       render :action => 'edit'
     else
-      
+
       new_selected_options = get_options_from_params(params)
-      
+
       begin
         @quotation_line.price = calculate_price(@quotation_line.serie_id, @quotation_line.shape_id, @openings, new_selected_options)
       rescue PriceError => err
@@ -289,7 +294,7 @@ private
     if !selected_height
       raise PriceError, trn_get('MSG_CANT_FIND_HEIGHT')
     end
-    
+
     selected_height
   end
 
@@ -304,7 +309,7 @@ private
 
     selected_width
   end
-  
+
   def calculate_option_prices(options_ids, openings, shape)
     price = 0
     options_ids.each do |o|
@@ -313,10 +318,10 @@ private
       qty = ((opt_qty = params["option_quantity_#{o}".to_sym]) ? opt_qty.to_i : 1)
       price += option_price * qty
     end
-  
-    price  
+
+    price
   end
-  
+
   def calculate_price(serie_id, shape_id, openings, options_ids)
     serie = @quotation_line.serie
     shape = Shape.find(shape_id)
@@ -337,9 +342,9 @@ private
         price += found_price.price
       end
     end
-    
+
     # for shapes that have transoms, price them here
-    
+
     if shape.has_upper_transom
       selected_height = validate_height(serie, @section_height[upper_transom_index(shape)])
       selected_width = validate_width(serie, @total_width)
@@ -351,7 +356,7 @@ private
       end
       price += found_price.price
     end
-    
+
     if shape.has_lower_transom
       selected_height = validate_height(serie, @section_height[lower_transom_index(shape)])
       selected_width = validate_width(serie, @total_width)
@@ -377,7 +382,7 @@ private
     total_transom_height = 0
     total_transom_height += @section_height[@upper_transom_index].to_f if shape.has_upper_transom
     total_transom_height += @section_height[@lower_transom_index].to_f if shape.has_lower_transom
-    
+
     ## calculate all heights
     # get known heights, or 0 if missing
     @real_height = {}
@@ -447,7 +452,7 @@ private
     end
     return nil
   end
-  
+
   def upper_transom_index(shape)
     @quotation_line.upper_transom_index(shape).to_s
   end
@@ -455,12 +460,12 @@ private
   def lower_transom_index(shape)
     @quotation_line.lower_transom_index(shape).to_s
   end
-  
+
   def get_options_from_params(params)
     new_selected_options = params[:options] ? params[:options].map{ |o| o.to_i } : []
     # we have params[:option_category_<id>] that hold a single option id for single-select categories
     # we can take those id's and merge them into new_selected_options
-    
+
     more_options = params.keys.grep(/options_category_[0-9]+/).map { |k| params[k]}.flatten
     new_selected_options += more_options
     # remove any options with index of -1, those are the special "None" options
@@ -643,7 +648,7 @@ protected
       @quotation_line.standard_exterior_color = last_line.standard_exterior_color
     end
   end
-  
+
   def initialize_options_for_series()
     @options = @serie.options.sort_by { |o| o.tr_description }
     @options.each do |option|
