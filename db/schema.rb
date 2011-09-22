@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110603121438) do
+ActiveRecord::Schema.define(:version => 20110918184219) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -66,6 +66,18 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
     t.boolean  "sent"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "module_types", :force => true do |t|
+    t.string   "name"
+    t.string   "gender"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "module_types_users", :id => false, :force => true do |t|
+    t.integer "module_type_id"
+    t.integer "user_id"
   end
 
   create_table "openings", :force => true do |t|
@@ -218,11 +230,10 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
   end
 
   create_table "series", :force => true do |t|
-    t.string  "name",             :limit => 50,  :default => "",    :null => false
-    t.string  "description",                     :default => "",    :null => false
-    t.text    "comments"
-    t.text    "series_type",      :limit => 255
-    t.boolean "fixed_sizes_only",                :default => false
+    t.string "name",        :limit => 50,  :default => "", :null => false
+    t.string "description",                :default => "", :null => false
+    t.text   "comments"
+    t.text   "series_type", :limit => 255
   end
 
   create_table "sessions", :force => true do |t|

@@ -9,14 +9,24 @@
   <p><%= trn_geth('EMAIL_LABEL')%>:<br /><%= f.text_field :email, :size => 60 %></p>
   <p><%= trn_geth('LABEL_DISCOUNT')%><br /><%= f.text_field :discount, :size => 10 %> </p>
 
-
-
-  <%= trn_geth('LABEL_COMPANY') +":" unless @user.companies.empty? %>
-  <% @user.companies.each do |company| %>
-      <%= company.name %> <br />
+  <% unless @user.companies.empty? %>
+    <%= trn_geth('LABEL_COMPANY') + ":" %>
+    <% @user.companies.each do |company| %>
+        <%= company.name %> <br />
+    <% end %>
+    <br />
   <% end %>
-<br />
 
-<%= submit_tag trn_get('BUTTON_SAVE') %>
+  <h3><%= trn_geth('LABEL_MODULE_TYPES') %></h3>
+  <ul>
+    <% ModuleType.all.each do |mt| %>
+      <li>
+      <%= check_box_tag "module_type[#{mt.id}]", '1', @user.module_types.find(:first, :conditions => { :id => mt.id }) ? true : false %>
+        <%= mt.tr_name %>
+      </li>
+    <% end %>
+  </ul>
+
+  <%= submit_tag trn_get('BUTTON_SAVE') %>
 <% end %>
 
