@@ -1,0 +1,22 @@
+class DoorFrameController < ApplicationController
+
+  def index
+    @door_frames = DoorFrame.all
+  end
+
+  def new
+  end
+
+  def create
+  end
+
+  def edit
+  end
+
+  def update
+  end
+
+  def destroy
+  end
+
+end
