@@ -33,6 +33,9 @@ class DoorFrameController < ApplicationController
   end
 
   def destroy
+    DoorFrame.find(params[:id]).destroy
+    flash[:notice] = trn_geth('LABEL_DOOR_FRAME') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_M')
+    redirect_to door_frame_index_path
   end
 
 end
