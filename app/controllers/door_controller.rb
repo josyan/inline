@@ -8,6 +8,8 @@ class DoorController < ApplicationController
   end
 
   def step2
+    @door_line = DoorLine.new(params[:door_line])
+
   end
 
 end

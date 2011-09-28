@@ -4,8 +4,8 @@
 
 <div class="door-frame-list">
   <% form_tag :action => :step2 do %>
-    <%= hidden_field_tag 'quotation_id', @door_line.quotation_id %>
-    <%= hidden_field_tag 'door_frame_id', @door_line.door_frame_id %>
+    <%= hidden_field_tag 'door_line[quotation_id]', @door_line.quotation_id %>
+    <%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
 
     <% @door_frames.each do |door_frame| %>
       <div class="door-frame">
