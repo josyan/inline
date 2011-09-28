@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110927230035) do
+ActiveRecord::Schema.define(:version => 20110927231644) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -64,6 +64,15 @@ ActiveRecord::Schema.define(:version => 20110927230035) do
     t.string   "name"
     t.integer  "sections"
     t.string   "preview_image_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "door_lines", :force => true do |t|
+    t.integer  "quotation_id"
+    t.integer  "door_frame_id"
+    t.integer  "quantity"
+    t.float    "price"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

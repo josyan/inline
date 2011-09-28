@@ -1,0 +1,15 @@
+.door-frame-list {
+  margin: 20px;
+}
+.door-frame-list .door-frame{
+  display: block;
+  float: left;
+  margin: 10px;
+  text-align: center;
+  border: 4px solid #3F3C2F;
+  padding: 10px;
+  cursor: pointer;
+}
+.door-frame-list .door-frame:hover{
+  background-color: #948B6D;
+}
