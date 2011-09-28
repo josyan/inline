@@ -9,7 +9,7 @@
 
     <% @door_frames.each do |door_frame| %>
       <div class="door-frame">
-        <%= hidden_field_tag 'id', door_frame.id %>
+        <%= hidden_field_tag 'df_id', door_frame.id %>
         <div class="preview-image">
           <%= image_tag 'door_frames/' + door_frame.preview_image_name %>
         </div>

@@ -7,4 +7,7 @@ class DoorController < ApplicationController
     @door_frames = DoorFrame.all(:order => 'sections')
   end
 
+  def step2
+  end
+
 end
