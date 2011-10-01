@@ -2,7 +2,7 @@ class CreateDoorCombinations < ActiveRecord::Migration
   def self.up
     create_table :door_combinations do |t|
       t.string :name
-      t.integer :sections
+      t.string :sections
       t.string :preview_image_name
       t.integer :door_frame_id
 
