@@ -1,0 +1,22 @@
+<h2><%= trn_get('TITLE_DOOR_LINE_NEW') %> - <%= trn_get('TITLE_DOOR_LINE_DOOR_FRAME') %></h2>
+
+<%= trn_get('DOOR_FRAME_INTRO') %>
+
+<div class="door-frame-list">
+  <% form_tag :action => :step2 do %>
+    <%= hidden_field_tag 'door_line[quotation_id]', @door_line.quotation_id %>
+    <%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
+
+    <% @door_frames.each do |door_frame| %>
+      <div class="door-frame">
+        <%= hidden_field_tag 'df_id', door_frame.id %>
+        <div class="preview-image">
+          <%= image_tag 'door_frames/' + door_frame.preview_image_name %>
+        </div>
+        <div class="label">
+          <%= door_frame.tr_name %>
+        </div>
+      </div>
+    <% end %>
+  <% end %>
+</div>
