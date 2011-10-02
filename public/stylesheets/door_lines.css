@@ -1,7 +1,9 @@
-.door-frame-list {
+.door-frame-list,
+.door-combination-list {
   margin: 20px;
 }
-.door-frame-list .door-frame{
+.door-frame-list .door-frame,
+.door-combination-list .door-combination {
   display: block;
   float: left;
   margin: 10px;
@@ -10,6 +12,7 @@
   padding: 10px;
   cursor: pointer;
 }
-.door-frame-list .door-frame:hover{
+.door-frame-list .door-frame:hover,
+.door-combination-list .door-combination:hover {
   background-color: #948B6D;
 }

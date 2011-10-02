@@ -5,4 +5,8 @@ $j(document).ready(function(){
     $j('#door_line_door_frame_id').val($j(this).find('#df_id').val());
     $j('.door-frame-list form').submit();
   });
+  $j('.door-combination-list .door-combination').click(function(){
+    $j('#door_line_door_combination_id').val($j(this).find('#dc_id').val());
+    $j('.door-combination-list form').submit();
+  });
 });
