@@ -22,6 +22,7 @@ GlassVision::Application.routes.draw do
   resources :door_frames
   resources :door_combinations
 
+  resources :frame_profile
   resource :session, :controller => :session
   resource :passwords
   resources :quotations, :controller => :quotation do
