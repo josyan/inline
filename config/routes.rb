@@ -20,7 +20,7 @@ GlassVision::Application.routes.draw do
   resources :shapes
 
   resources :door_frames
-  resources :door_combination
+  resources :door_combinations
 
   resource :session, :controller => :session
   resource :passwords

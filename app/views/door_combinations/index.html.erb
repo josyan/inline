@@ -21,7 +21,7 @@
     </td>
     <td>
       <%= link_to trn_geth('BUTTON_EDIT'), edit_door_combination_path(door_combination) %> |
-      <%= link_to trn_geth('BUTTON_DELETE'), door_combination, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+      <%= link_to trn_geth('BUTTON_DELETE'), door_combination_path(door_combination), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
     </td>
   </tr>
 <% end %>

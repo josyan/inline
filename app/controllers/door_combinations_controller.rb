@@ -1,4 +1,4 @@
-class DoorCombinationController < ApplicationController
+class DoorCombinationsController < ApplicationController
 
   def index
     @door_combinations = DoorCombination.all(:order => :name)
@@ -12,7 +12,7 @@ class DoorCombinationController < ApplicationController
     @door_combination = DoorCombination.new(params[:door_combination])
     if @door_combination.save
       flash[:notice] = trn_geth('LABEL_DOOR_COMBINATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
-      redirect_to door_combination_index_path
+      redirect_to door_combinations_path
     else
       render :action => 'new'
     end
@@ -26,7 +26,7 @@ class DoorCombinationController < ApplicationController
     @door_combination = DoorCombination.find(params[:id])
     if @door_combination.update_attributes(params[:door_combination])
       flash[:notice] = trn_geth('LABEL_DOOR_COMBINATION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-      redirect_to door_combination_index_path
+      redirect_to door_combinations_path
     else
       render :action => 'edit'
     end
@@ -35,7 +35,7 @@ class DoorCombinationController < ApplicationController
   def destroy
     DoorCombination.find(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_DOOR_COMBINATION') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to door_combination_index_path
+    redirect_to door_combinations_path
   end
 
 end
