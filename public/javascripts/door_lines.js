@@ -9,4 +9,8 @@ $j(document).ready(function(){
     $j('#door_line_door_combination_id').val($j(this).find('#dc_id').val());
     $j('.door-combination-list form').submit();
   });
+  $j('.frame-profile-list .frame-profile').click(function(){
+    $j('#door_line_frame_profile_id').val($j(this).find('#fp_id').val());
+    $j('.frame-profile-list form').submit();
+  });
 });

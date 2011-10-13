@@ -16,6 +16,12 @@ class DoorController < ApplicationController
   def step3
     @door_line = DoorLine.new(params[:door_line])
 
+    @frame_profiles = FrameProfile.all(:order => :name)
+  end
+
+  def step4
+    @door_line = DoorLine.new(params[:door_line])
+
   end
 
 end

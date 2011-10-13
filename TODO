@@ -1,3 +1,5 @@
 Notes:
  * verifier le .htaccess dans /public
  * ajouter les traductions au dessus de 497
+ * remettre le bon chemin dans l'initializer de paperclip
+ * ajouter le répertoire des frame_profiles dans public/system
