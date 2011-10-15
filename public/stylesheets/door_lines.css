@@ -4,6 +4,7 @@
 .section {
   float: left;
   margin-bottom: 20px;
+  width: 100%;
 }
 .choice-list {
   margin: 20px;
