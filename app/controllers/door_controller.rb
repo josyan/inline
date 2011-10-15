@@ -1,27 +1,19 @@
 class DoorController < ApplicationController
 
   def new
+
+    # create new door line with default settings
     @door_line = DoorLine.new
     @door_line.quotation_id = params[:id]
 
     @door_frames = DoorFrame.all(:order => 'sections')
-  end
-
-  def step2
-    @door_line = DoorLine.new(params[:door_line])
+    @door_line.door_frame = @door_frames.first
 
     @door_combinations = DoorCombination.all(:conditions => { :door_frame_id => @door_line.door_frame_id })
-  end
-
-  def step3
-    @door_line = DoorLine.new(params[:door_line])
+    @door_line.door_combination = @door_combinations.first
 
     @frame_profiles = FrameProfile.all(:order => :name)
-  end
-
-  def step4
-    @door_line = DoorLine.new(params[:door_line])
-
+    @door_line.frame_profile = @frame_profiles.first
   end
 
 end

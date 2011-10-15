@@ -1,21 +1,27 @@
-.door-frame-list,
-.frame-profile-list,
-.door-combination-list {
+.clear {
+  clear: both;
+}
+.section {
+  float: left;
+  margin-bottom: 20px;
+}
+.choice-list {
   margin: 20px;
 }
-.door-frame-list .door-frame,
-.frame-profile-list .frame-profile,
-.door-combination-list .door-combination {
+.choice-list .choice {
   display: block;
   float: left;
   margin: 10px;
   text-align: center;
-  border: 4px solid #3F3C2F;
   padding: 10px;
   cursor: pointer;
+  border: 4px solid #C7BD93;
+  width: 150px;
+  height: 120px;
 }
-.door-frame-list .door-frame:hover,
-.frame-profile-list .frame-profile:hover,
-.door-combination-list .door-combination:hover {
+.choice-list .choice.selected {
+  border: 4px solid #3F3C2F;
+}
+.choice-list .choice:hover {
   background-color: #948B6D;
 }

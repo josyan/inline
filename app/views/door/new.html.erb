@@ -1,15 +1,18 @@
-<h2><%= trn_get('TITLE_DOOR_LINE_NEW') %> - <%= trn_get('TITLE_DOOR_LINE_DOOR_FRAME') %></h2>
+<h2><%= trn_get('TITLE_DOOR_LINE_NEW') %></h2>
 
-<%= trn_get('DOOR_FRAME_INTRO') %>
+<%= hidden_field_tag 'door_line[quotation_id]', @door_line.quotation_id %>
+<%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
+<%= hidden_field_tag 'door_line[door_combination_id]', @door_line.door_combination_id %>
+<%= hidden_field_tag 'door_line[frame_profile_id]', @door_line.frame_profile_id %>
 
-<div class="door-frame-list">
-  <% form_tag :action => :step2 do %>
-    <%= hidden_field_tag 'door_line[quotation_id]', @door_line.quotation_id %>
-    <%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
+<div id="door-frame-selection" class="section">
+  <div class="intro">
+    <%= trn_get('DOOR_FRAME_INTRO') %>
+  </div>
 
+  <div class="door-frame-list choice-list">
     <% @door_frames.each do |door_frame| %>
-      <div class="door-frame">
-        <%= hidden_field_tag 'df_id', door_frame.id %>
+      <div class="choice door-frame <%= 'selected' if door_frame.id == @door_line.door_frame_id %>" id="df-<%= door_frame.id %>">
         <div class="preview-image">
           <%= image_tag 'door_frames/' + door_frame.preview_image_name %>
         </div>
@@ -18,5 +21,27 @@
         </div>
       </div>
     <% end %>
-  <% end %>
+  </div>
 </div>
+
+<div id="door-combination-selection" class="section">
+  <div class="intro">
+    <%= trn_get('DOOR_COMBINATION_INTRO') %>
+  </div>
+
+  <div class="door-combination-list choice-list">
+    <% @door_combinations.each do |door_combination| %>
+      <div class="choice door-combination <%= 'selected' if door_combination.id == @door_line.door_combination_id %>" id="dc-<%= door_combination.id %>">
+        <div class="preview-image">
+          <%= image_tag 'door_combinations/' + door_combination.preview_image_name %>
+        </div>
+        <div class="label">
+          <%= door_combination.tr_name %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+
+<div class="clear"></div>
