@@ -1,16 +1,50 @@
 // this ugly hack because something somewhere conflict with the $ object from jQuery
 var $j = jQuery;
 $j(document).ready(function(){
-  $j('.door-frame-list .door-frame').click(function(){
-    $j('#door_line_door_frame_id').val($j(this).find('#df_id').val());
-    $j('.door-frame-list form').submit();
+
+  // door frame interraction
+  $j('#door-frame-selection .door-frame').click(function(){
+    id = $j(this).attr('id').replace('df-', '');
+
+    if(id != $j('#door_line_door_frame_id').val()){
+
+      // highlight the selection
+      $j('#door-frame-selection .door-frame').removeClass('selected');
+      $j(this).addClass('selected');
+
+      // save the selection
+      $j('#door_line_door_frame_id').val(id);
+
+      // show the right door combinations list
+      $j('#door-combination-selection .door-combination-list').hide();
+      $j('#door-combination-selection #dcl-' + id).show();
+
+      // launch click on first door combination
+      $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
+    }
   });
-  $j('.door-combination-list .door-combination').click(function(){
-    $j('#door_line_door_combination_id').val($j(this).find('#dc_id').val());
-    $j('.door-combination-list form').submit();
+
+  // door combination interraction
+  $j('#door-combination-selection .door-combination').click(function(){
+    id = $j(this).attr('id').replace('dc-', '');
+
+    // highlight the selection
+    $j('#door-combination-selection .door-combination').removeClass('selected');
+    $j(this).addClass('selected');
+
+    // save the selection
+    $j('#door_line_door_combination_id').val(id);
   });
-  $j('.frame-profile-list .frame-profile').click(function(){
-    $j('#door_line_frame_profile_id').val($j(this).find('#fp_id').val());
-    $j('.frame-profile-list form').submit();
+
+  // frame profile interraction
+  $j('#frame-profile-selection .frame-profile').click(function(){
+    id = $j(this).attr('id').replace('fp-', '');
+
+    // highlight the selection
+    $j('#frame-profile-selection .frame-profile').removeClass('selected');
+    $j(this).addClass('selected');
+
+    // save the selection
+    $j('#door_line_frame_profile_id').val(id);
   });
 });
