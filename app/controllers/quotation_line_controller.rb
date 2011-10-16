@@ -9,7 +9,7 @@ class QuotationLineController < ApplicationController
     # some ugly hardcoding, but hard to do without as doors are totally different from windows
     # and the app has not been build around a common ground between doors and windows (like EasyQuote)
     if params[:mt].to_i == 2
-      redirect_to :controller => 'door', :action => 'new', :id => params[:id]
+      redirect_to :controller => 'doors', :action => 'new', :id => params[:id]
     end
     @quotation_line = QuotationLine.new
     @quotation_line.quotation_id = params[:id]

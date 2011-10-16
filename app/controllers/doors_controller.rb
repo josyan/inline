@@ -1,4 +1,4 @@
-class DoorController < ApplicationController
+class DoorsController < ApplicationController
 
   def new
 

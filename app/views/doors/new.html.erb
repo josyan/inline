@@ -1,9 +1,11 @@
 <h2><%= trn_get('TITLE_DOOR_LINE_NEW') %></h2>
 
-<%= hidden_field_tag 'door_line[quotation_id]', @door_line.quotation_id %>
-<%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
-<%= hidden_field_tag 'door_line[door_combination_id]', @door_line.door_combination_id %>
-<%= hidden_field_tag 'door_line[frame_profile_id]', @door_line.frame_profile_id %>
+<% form_tag doors_path, :id => 'door-submit' do %>
+  <%= hidden_field_tag 'door_line[quotation_id]', @door_line.quotation_id %>
+  <%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
+  <%= hidden_field_tag 'door_line[door_combination_id]', @door_line.door_combination_id %>
+  <%= hidden_field_tag 'door_line[frame_profile_id]', @door_line.frame_profile_id %>
+<% end %>
 
 <div id="door-frame-selection" class="section">
   <div class="intro">

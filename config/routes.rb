@@ -19,6 +19,7 @@ GlassVision::Application.routes.draw do
   resources :product_colors
   resources :shapes
 
+  resources :doors
   resources :door_frames
   resources :door_combinations
   resources :frame_profiles
