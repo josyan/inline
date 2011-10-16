@@ -35,4 +35,16 @@ $j(document).ready(function(){
     // save the selection
     $j('#door_line_door_combination_id').val(id);
   });
+
+  // frame profile interraction
+  $j('#frame-profile-selection .frame-profile').click(function(){
+    id = $j(this).attr('id').replace('fp-', '');
+
+    // highlight the selection
+    $j('#frame-profile-selection .frame-profile').removeClass('selected');
+    $j(this).addClass('selected');
+
+    // save the selection
+    $j('#door_line_frame_profile_id').val(id);
+  });
 });

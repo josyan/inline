@@ -45,5 +45,23 @@
   <% end %>
 </div>
 
+<div id="frame-profile-selection" class="section">
+  <div class="intro">
+    <%= trn_get('FRAME_PROFILE_INTRO') %>
+  </div>
+
+  <div class="frame-profile-list choice-list">
+    <% @frame_profiles.each do |frame_profile| %>
+      <div class="choice frame-profile <%= 'selected' if frame_profile.id == @door_line.frame_profile_id %>" id="fp-<%= frame_profile.id %>">
+        <div class="preview-image">
+          <%= image_tag frame_profile.photo.url(:normal) %>
+        </div>
+        <div class="label">
+          <%= frame_profile.tr_name %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
 
 <div class="clear"></div>

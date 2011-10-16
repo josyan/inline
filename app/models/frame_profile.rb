@@ -9,7 +9,7 @@ class FrameProfile < ActiveRecord::Base
                     :whiny_thumbnails => true,
                     :styles => {
                        :thumb => "32x32#",
-                       :normal  => "200x200>",
+                       :normal  => "100x100>",
                        :original => "300x300"
                     }
 
