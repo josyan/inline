@@ -6,8 +6,33 @@ $j(document).ready(function(){
   $j('#door-frame-selection .door-frame').click(function(){
     id = $j(this).attr('id').replace('df-', '');
 
-    $j('#door_line_door_frame_id').val(id);
-    $j('#door-combination-selection .door-combination-list').hide();
-    $j('#door-combination-selection #dcl-' + id).show();
+    if(id != $j('#door_line_door_frame_id').val()){
+
+      // highlight the selection
+      $j('#door-frame-selection .door-frame').removeClass('selected');
+      $j(this).addClass('selected');
+
+      // save the selection
+      $j('#door_line_door_frame_id').val(id);
+
+      // show the right door combinations list
+      $j('#door-combination-selection .door-combination-list').hide();
+      $j('#door-combination-selection #dcl-' + id).show();
+
+      // launch click on first door combination
+      $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
+    }
+  });
+
+  // door combination interraction
+  $j('#door-combination-selection .door-combination').click(function(){
+    id = $j(this).attr('id').replace('dc-', '');
+
+    // highlight the selection
+    $j('#door-combination-selection .door-combination').removeClass('selected');
+    $j(this).addClass('selected');
+
+    // save the selection
+    $j('#door_line_door_combination_id').val(id);
   });
 });
