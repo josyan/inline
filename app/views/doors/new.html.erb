@@ -5,65 +5,76 @@
   <%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
   <%= hidden_field_tag 'door_line[door_combination_id]', @door_line.door_combination_id %>
   <%= hidden_field_tag 'door_line[frame_profile_id]', @door_line.frame_profile_id %>
-<% end %>
 
-<div id="door-frame-selection" class="section">
-  <div class="intro">
-    <%= trn_get('DOOR_FRAME_INTRO') %>
-  </div>
+  <div id="door-frame-selection" class="section">
+    <div class="intro">
+      <%= trn_get('DOOR_FRAME_INTRO') %>
+    </div>
 
-  <div class="door-frame-list choice-list">
-    <% @door_frames.each do |door_frame| %>
-      <div class="choice door-frame <%= 'selected' if door_frame.id == @door_line.door_frame_id %>" id="df-<%= door_frame.id %>">
-        <div class="preview-image">
-          <%= image_tag 'door_frames/' + door_frame.preview_image_name %>
-        </div>
-        <div class="label">
-          <%= door_frame.tr_name %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
-
-<div id="door-combination-selection" class="section">
-  <div class="intro">
-    <%= trn_get('DOOR_COMBINATION_INTRO') %>
-  </div>
-
-  <% @door_frames.each do |door_frame| %>
-    <div id="dcl-<%= door_frame.id %>" class="door-combination-list choice-list" style="<%= 'display: none;' if door_frame != @door_line.door_frame %>">
-      <% door_frame.door_combinations.each do |door_combination| %>
-        <div class="choice door-combination <%= 'selected' if door_combination.id == @door_line.door_combination_id %>" id="dc-<%= door_combination.id %>">
+    <div class="door-frame-list choice-list">
+      <% @door_frames.each do |door_frame| %>
+        <div class="choice door-frame <%= 'selected' if door_frame.id == @door_line.door_frame_id %>" id="df-<%= door_frame.id %>">
           <div class="preview-image">
-            <%= image_tag 'door_combinations/' + door_combination.preview_image_name %>
+            <%= image_tag 'door_frames/' + door_frame.preview_image_name %>
           </div>
           <div class="label">
-            <%= door_combination.tr_name %>
+            <%= door_frame.tr_name %>
           </div>
         </div>
       <% end %>
     </div>
-  <% end %>
-</div>
-
-<div id="frame-profile-selection" class="section">
-  <div class="intro">
-    <%= trn_get('FRAME_PROFILE_INTRO') %>
   </div>
 
-  <div class="frame-profile-list choice-list">
-    <% @frame_profiles.each do |frame_profile| %>
-      <div class="choice frame-profile <%= 'selected' if frame_profile.id == @door_line.frame_profile_id %>" id="fp-<%= frame_profile.id %>">
-        <div class="preview-image">
-          <%= image_tag frame_profile.photo.url(:normal) %>
-        </div>
-        <div class="label">
-          <%= frame_profile.tr_name %>
-        </div>
+  <div id="door-combination-selection" class="section">
+    <div class="intro">
+      <%= trn_get('DOOR_COMBINATION_INTRO') %>
+    </div>
+
+    <% @door_frames.each do |door_frame| %>
+      <div id="dcl-<%= door_frame.id %>" class="door-combination-list choice-list" style="<%= 'display: none;' if door_frame != @door_line.door_frame %>">
+        <% door_frame.door_combinations.each do |door_combination| %>
+          <div class="choice door-combination <%= 'selected' if door_combination.id == @door_line.door_combination_id %>" id="dc-<%= door_combination.id %>">
+            <div class="preview-image">
+              <%= image_tag 'door_combinations/' + door_combination.preview_image_name %>
+            </div>
+            <div class="label">
+              <%= door_combination.tr_name %>
+            </div>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>
-</div>
+
+  <div id="frame-profile-selection" class="section">
+    <div class="intro">
+      <%= trn_get('FRAME_PROFILE_INTRO') %>
+    </div>
+
+    <div class="frame-profile-list choice-list">
+      <% @frame_profiles.each do |frame_profile| %>
+        <div class="choice frame-profile <%= 'selected' if frame_profile.id == @door_line.frame_profile_id %>" id="fp-<%= frame_profile.id %>">
+          <div class="preview-image">
+            <%= image_tag frame_profile.photo.url(:normal) %>
+          </div>
+          <div class="label">
+            <%= frame_profile.tr_name %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div id="slab-material-selection" class="section">
+    <div class="intro">
+      <%= trn_get('SLAB_MATERIAL_INTRO') %>
+    </div>
+
+    <%= select 'door_line', 'slab_material_id', @slab_materials.map { |sm| [sm.tr_name, sm.id] } %>
+  </div>
+
+  <%= submit_tag trn_geth('BUTTON_ADD') %>
+  <%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @door_line.quotation_id %>
+<% end %>
 
 <div class="clear"></div>

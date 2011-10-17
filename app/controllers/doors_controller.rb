@@ -13,6 +13,13 @@ class DoorsController < ApplicationController
 
     @frame_profiles = FrameProfile.all(:order => :name)
     @door_line.frame_profile = @frame_profiles.first
+
+    @slab_materials = SlabMaterial.all(:order => :name)
+    @door_line.slab_material = @slab_materials.first
+  end
+
+  def create
+
   end
 
 end
