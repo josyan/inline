@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111012014403) do
+ActiveRecord::Schema.define(:version => 20111017000706) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -289,6 +289,12 @@ ActiveRecord::Schema.define(:version => 20111012014403) do
     t.integer "corners",                         :default => 4,     :null => false
     t.boolean "has_upper_transom",               :default => false
     t.boolean "has_lower_transom",               :default => false
+  end
+
+  create_table "slab_materials", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "translations", :force => true do |t|
