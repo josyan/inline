@@ -47,4 +47,16 @@ $j(document).ready(function(){
     // save the selection
     $j('#door_line_frame_profile_id').val(id);
   });
+
+  // door panel interraction
+  $j('#door-panel-selection .door-panel').click(function(){
+    id = $j(this).attr('id').replace('dp-', '');
+
+    // highlight the selection
+    $j('#door-panel-selection .door-panel').removeClass('selected');
+    $j(this).addClass('selected');
+
+    // save the selection
+    $j('#door_line_door_panel_id').val(id);
+  });
 });
