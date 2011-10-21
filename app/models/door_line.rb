@@ -4,4 +4,5 @@ class DoorLine < ActiveRecord::Base
   belongs_to :door_combination
   belongs_to :frame_profile
   belongs_to :slab_material
+  belongs_to :door_panel
 end
