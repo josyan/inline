@@ -23,6 +23,7 @@ GlassVision::Application.routes.draw do
   resources :door_frames
   resources :door_combinations
   resources :frame_profiles
+  resources :door_panels
 
   resource :session, :controller => :session
   resource :passwords
