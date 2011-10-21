@@ -16,6 +16,9 @@ class DoorsController < ApplicationController
 
     @slab_materials = SlabMaterial.all(:order => :name)
     @door_line.slab_material = @slab_materials.first
+
+    @door_panels = DoorPanel.all(:order => :name)
+    @door_line.door_panel = @door_panels.first
   end
 
   def create
