@@ -3,3 +3,4 @@ Notes:
  * ajouter les traductions au dessus de 497
  * remettre le bon chemin dans l'initializer de paperclip
  * ajouter le répertoire des frame_profiles dans public/system
+ * ajouter le répertoire des door_glasses dans public/system

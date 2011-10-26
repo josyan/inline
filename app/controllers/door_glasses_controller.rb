@@ -5,37 +5,42 @@ class DoorGlassesController < ApplicationController
   end
 
   def new
-    @frame_profile = FrameProfile.new
+    @door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
+    @door_glass = @door_glass_family.door_glasses.new
   end
 
   def create
-    @frame_profile = FrameProfile.new(params[:frame_profile])
-    if @frame_profile.save
-      flash[:notice] = trn_geth('LABEL_FRAME_PROFILE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_M')
-      redirect_to frame_profiles_path
+    @door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
+    @door_glass = @door_glass_family.door_glasses.new(params[:door_glass])
+    if @door_glass.save
+      flash[:notice] = trn_geth('LABEL_DOOR_GLASS') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_M')
+      redirect_to door_glass_family_door_glasses_path(@door_glass_family)
     else
       render :action => 'new'
     end
   end
 
   def edit
-    @frame_profile = FrameProfile.find(params[:id])
+    @door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
+    @door_glass = DoorGlass.find(params[:id])
   end
 
   def update
-    @frame_profile = FrameProfile.find(params[:id])
-    if @frame_profile.update_attributes(params[:frame_profile])
-      flash[:notice] = trn_geth('LABEL_FRAME_PROFILE') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_M')
-      redirect_to frame_profiles_path
+    @door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
+    @door_glass = DoorGlass.find(params[:id])
+    if @door_glass.update_attributes(params[:door_glass])
+      flash[:notice] = trn_geth('LABEL_DOOR_GLASS') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_M')
+      redirect_to door_glass_family_door_glasses_path(@door_glass_family)
     else
       render :action => 'edit'
     end
   end
 
   def destroy
-    FrameProfile.find(params[:id]).destroy
-    flash[:notice] = trn_geth('LABEL_FRAME_PROFILE') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_M')
-    redirect_to frame_profiles_path
+    @door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
+    DoorGlass.find(params[:id]).destroy
+    flash[:notice] = trn_geth('LABEL_DOOR_GLASS') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_M')
+    redirect_to door_glass_family_door_glasses_path(@door_glass_family)
   end
 
 end
