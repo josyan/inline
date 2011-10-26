@@ -1,0 +1,2 @@
+class DoorGlassesController < ApplicationController
+end
