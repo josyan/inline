@@ -18,10 +18,6 @@ class DoorGlassFamiliesController < ApplicationController
     end
   end
 
-  def show
-    @door_glass_family = DoorGlassFamily.find(params[:id])
-  end
-
   def edit
     @door_glass_family = DoorGlassFamily.find(params[:id])
   end
