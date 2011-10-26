@@ -1,0 +1,8 @@
+<h2><%= trn_get('TITLE_FRAME_PROFILE_ADD') %></h2>
+
+<%= form_for @frame_profile, :html => {:multipart => true} do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag trn_geth('BUTTON_ADD') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), frame_profiles_path %>
+
