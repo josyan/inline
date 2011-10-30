@@ -3,8 +3,6 @@ class CreateDoorGlassesDoorPanels < ActiveRecord::Migration
     create_table :door_glasses_door_panels, :id => false do |t|
       t.integer :door_glass_id
       t.integer :door_panel_id
-
-      t.timestamps
     end
   end
 

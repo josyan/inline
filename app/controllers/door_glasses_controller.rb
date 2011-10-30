@@ -7,6 +7,7 @@ class DoorGlassesController < ApplicationController
   def new
     @door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
     @door_glass = @door_glass_family.door_glasses.new
+    @door_panels = DoorPanel.all(:order => :name)
   end
 
   def create
@@ -23,6 +24,7 @@ class DoorGlassesController < ApplicationController
   def edit
     @door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
     @door_glass = DoorGlass.find(params[:id])
+    @door_panels = DoorPanel.all(:order => :name)
   end
 
   def update
