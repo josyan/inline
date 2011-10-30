@@ -1,2 +1,3 @@
  - lier les vitraux à des embossages
  - lier les vitraux a des SL ou SLO/SLF
+ - lier les embossages à des SL ou SLO/SLF
