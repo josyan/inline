@@ -1,0 +1,33 @@
+<h2><%= trn_geth('TITLE_DOOR_GLASS_LIST') %></h2>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DOOR_GLASS_FAMILY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @door_glass_family.tr_name %></td>
+  </tr>
+</table>
+<br/>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_door_glass_family_door_glass_path(@door_glass_family) %> |
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), door_glass_families_path %>
+
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_PREVIEW') %></th>
+    <th></th>
+  </tr>
+<% for door_glass in @door_glass_family.door_glasses %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= door_glass.tr_name %></td>
+    <td>
+      <%= image_tag door_glass.photo.url(:thumb), :class => "#{ 'popup' unless door_glass.photo.original_filename.blank? }" %>
+    </td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_door_glass_family_door_glass_path(@door_glass_family, door_glass) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), door_glass_family_door_glass_path(@door_glass_family, door_glass), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+

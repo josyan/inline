@@ -204,6 +204,10 @@ div#content {
 	padding: 0px 10px;
 }
 
+#leftnav ul li label {
+	cursor: pointer;
+}
+
 #leftnav ul li a {
   background-color: #3F3C2F;
   display:block;

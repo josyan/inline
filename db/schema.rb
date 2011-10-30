@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111030013434) do
+ActiveRecord::Schema.define(:version => 20111030015139) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -89,6 +89,13 @@ ActiveRecord::Schema.define(:version => 20111030013434) do
     t.string   "photo_file_name"
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "door_glasses_door_panels", :id => false, :force => true do |t|
+    t.integer  "door_glass_id"
+    t.integer  "door_panel_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
