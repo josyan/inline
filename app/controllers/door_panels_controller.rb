@@ -6,6 +6,7 @@ class DoorPanelsController < ApplicationController
 
   def new
     @door_panel = DoorPanel.new
+    @door_sections = DoorSection.all(:order => :name)
   end
 
   def create
@@ -20,6 +21,7 @@ class DoorPanelsController < ApplicationController
 
   def edit
     @door_panel = DoorPanel.find(params[:id])
+    @door_sections = DoorSection.all(:order => :name)
   end
 
   def update
