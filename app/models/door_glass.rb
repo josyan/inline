@@ -1,5 +1,6 @@
 class DoorGlass < ActiveRecord::Base
   belongs_to :door_glass_family
+  has_and_belongs_to_many :door_panels
 
   has_attached_file :photo,
                     :url => "/system/:class/:attachment/:id/:style_:basename.:extension",
