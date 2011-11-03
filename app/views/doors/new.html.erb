@@ -79,18 +79,7 @@
       <%= trn_get('DOOR_PANEL_INTRO') %>
     </div>
 
-    <div class="door-panel-list choice-list">
-      <% @door_panels.each do |door_panel| %>
-        <div class="choice door-panel <%= 'selected' if door_panel.id == @door_line.door_panel_id %>" id="dp-<%= door_panel.id %>">
-          <div class="preview-image">
-            <%= image_tag 'door_panels/' + door_panel.preview_image_name %>
-          </div>
-          <div class="label">
-            <%= door_panel.tr_name %>
-          </div>
-        </div>
-      <% end %>
-    </div>
+    <div id="door_panels_configuration"></div>
   </div>
 
   <%= submit_tag trn_geth('BUTTON_ADD') %>
