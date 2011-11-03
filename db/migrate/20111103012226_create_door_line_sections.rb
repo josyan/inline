@@ -5,7 +5,7 @@ class CreateDoorLineSections < ActiveRecord::Migration
       t.integer :order
       t.integer :door_section_id
       t.integer :door_panel_id
-      t.inetger :door_glass_id
+      t.integer :door_glass_id
 
       t.timestamps
     end
