@@ -34,6 +34,11 @@ $j(document).ready(function(){
 
     // save the selection
     $j('#door_line_door_combination_id').val(id);
+
+    // generate the interface to configure panels and glasses
+    $j.get('/doors/configure', {door_combination_id: id}, function(response) {
+      $j('#door_panels_configuration').html(response);
+    });
   });
 
   // frame profile interraction

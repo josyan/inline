@@ -18,6 +18,22 @@ class DoorsController < ApplicationController
     @door_line.slab_material = @slab_materials.first
   end
 
+  def configure
+    combination = DoorCombination.find(params[:door_combination_id])
+    @sections = combination.sections.split(';').map do |section_code|
+      section = { :door_line_section => DoorLineSection.new,
+                  :door_section => DoorSection.find_by_code(section_code) }
+      section[:door_panels] = section[:door_section].door_panels
+      unless section[:door_panels].empty?
+        section[:door_line_section].door_panel = section[:door_panels].first
+        section[:door_glasses] = section[:door_panels].first.door_glasses
+        section[:door_glass_families] = DoorGlassFamily.all(:conditions => { :id => section[:door_panels].first.door_glasses.map { |glass| glass.door_glass_family_id }.uniq })
+      end
+      section
+    end
+
+  end
+
   def create
 
   end
