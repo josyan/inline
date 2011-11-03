@@ -1,0 +1,43 @@
+<div id="sections" class="section">
+  <% @sections.each_with_index do |section, index| %>
+    <div class="single-section">
+
+      <div class="section-label">
+        <%= section[:door_section].tr_name %>
+      </div>
+
+      <% unless section[:door_panels].blank? %>
+        <div class="section-door-panels">
+          <div class="selected-door-panel">
+            <div class="preview-image">
+              <%= image_tag 'door_panels/' + section[:door_line_section].door_panel.preview_image_name %>
+            </div>
+            <div class="label">
+              <%= section[:door_line_section].door_panel.tr_name %>
+            </div>
+          </div>
+
+          <div class="list-door-panels">
+            <% section[:door_panels].each do |door_panel| %>
+              <div class="door-panel">
+                <div class="preview-image">
+                  <%= image_tag 'door_panels/' + door_panel.preview_image_name %>
+                </div>
+                <div class="label">
+                  <%= door_panel.tr_name %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+
+        <% unless section[:door_glass_families].blank? %>
+          <%= select_tag "door_line_sections[#{index}][door_glass_family]", options_for_select([[trn_get('NONE_MSG'), '']] + section[:door_glass_families].map { |dgf| [dgf.tr_name, dgf.id] }) %>
+
+          <div class="section-door-glasses">
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

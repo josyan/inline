@@ -78,7 +78,9 @@
       <%= trn_get('DOOR_PANEL_INTRO') %>
     </div>
 
-    <div id="door_panels_configuration"></div>
+    <div id="door_panels_configuration">
+      <%= render :partial => 'configure' %>
+    </div>
   </div>
 
   <%= submit_tag trn_geth('BUTTON_ADD') %>
