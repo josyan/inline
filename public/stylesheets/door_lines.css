@@ -29,3 +29,46 @@
 .choice-list .choice:hover {
   background-color: #948B6D;
 }
+
+/* door configuration section */
+.single-section {
+  display: table-cell;
+  border-top: 4px solid #3F3C2F;
+  border-bottom: 4px solid #3F3C2F;
+  border-left: 4px solid #3F3C2F;
+  min-width: 50px;
+  padding: 4px;
+  background-color: #C7BD93;
+}
+.single-section.last {
+  border-right: 4px solid #3F3C2F;
+}
+
+/* label */
+.section-label {
+  text-align: center;
+  padding: 3px;
+}
+
+/* door panel */
+.selected-door-panel {
+  padding: 5px;
+  background: #FFFFFF;
+  text-align: center;
+}
+.selected-door-panel:hover {
+  background-color: #948B6D;
+}
+.list-door-panels {
+  display: none;
+}
+
+/* door glass */
+.section-door-glasses {
+}
+.section-door-glasses:hover {
+  background-color: #948B6D;
+}
+.section-door-glasses select {
+  width: 100%;
+}

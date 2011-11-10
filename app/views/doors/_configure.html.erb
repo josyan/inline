@@ -1,6 +1,5 @@
-<div id="sections" class="section">
   <% @sections.each_with_index do |section, index| %>
-    <div class="single-section">
+    <div class="single-section <%= 'last' if index == @sections.length - 1 %>">
 
       <div class="section-label">
         <%= section[:door_section].tr_name %>
@@ -32,12 +31,11 @@
         </div>
 
         <% unless section[:door_glass_families].blank? %>
-          <%= select_tag "door_line_sections[#{index}][door_glass_family]", options_for_select([[trn_get('NONE_MSG'), '']] + section[:door_glass_families].map { |dgf| [dgf.tr_name, dgf.id] }) %>
-
           <div class="section-door-glasses">
+            <%= select_tag "door_line_sections[#{index}][door_glass_family]", options_for_select([[trn_get('NO_GLASS'), '']] + section[:door_glass_families].map { |dgf| [dgf.tr_name, dgf.id] }) %>
+
           </div>
         <% end %>
       <% end %>
     </div>
   <% end %>
-</div>
