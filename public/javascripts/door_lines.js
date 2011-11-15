@@ -2,6 +2,23 @@
 var $j = jQuery;
 $j(document).ready(function(){
 
+  // door configuration interraction
+  var attach_configuration_events = function(root_item){
+    root_item.find('.single-section .selected-door-panel').click(function(e){
+      e.stopPropagation();
+      popup = $j(this).parent().find('.list-door-panels');
+
+      // panel choices interraction
+
+
+      // ensure popup is shown and hidden correctly
+      $j('body').click(function(){
+        popup.hide();
+      });
+      popup.show();
+    });
+  };
+
   // door frame interraction
   $j('#door-frame-selection .door-frame').click(function(){
     id = $j(this).attr('id').replace('df-', '');
@@ -38,6 +55,7 @@ $j(document).ready(function(){
     // generate the interface to configure panels and glasses
     $j.get('/doors/configure', {door_combination_id: id}, function(response) {
       $j('#door_panels_configuration').html(response);
+      attach_configuration_events($j('#door_panels_configuration'));
     });
   });
 
@@ -52,4 +70,7 @@ $j(document).ready(function(){
     // save the selection
     $j('#door_line_frame_profile_id').val(id);
   });
+
+  // plug interraction on configuration part
+  attach_configuration_events($j('#door_panels_configuration'));
 });

@@ -5,6 +5,7 @@
         <%= section[:door_section].tr_name %>
       </div>
 
+      <%= hidden_field_tag "door_sections[][door_panel]", section[:door_line_section].door_panel_id %>
       <% unless section[:door_panels].blank? %>
         <div class="section-door-panels">
           <div class="selected-door-panel">
@@ -18,7 +19,7 @@
 
           <div class="list-door-panels">
             <% section[:door_panels].each do |door_panel| %>
-              <div class="door-panel">
+              <div class="door-panel <%= 'selected' if door_panel.id == section[:door_line_section].door_panel_id %>">
                 <div class="preview-image">
                   <%= image_tag 'door_panels/' + door_panel.preview_image_name %>
                 </div>

@@ -59,8 +59,33 @@
 .selected-door-panel:hover {
   background-color: #948B6D;
 }
+
+/* door panel list */
 .list-door-panels {
   display: none;
+  position: absolute;
+  overflow: auto;
+  height: 500px;
+  width: 550px;
+  background: #FFFFFF;
+  border: 1px solid #3F3C2F;
+}
+.door-panel {
+  display: block;
+  float: left;
+  margin: 10px;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border: 4px solid #C7BD93;
+  width: 130px;
+  height: 220px;
+}
+.door-panel:hover {
+  background-color: #948B6D;
+}
+.door-panel.selected {
+  border: 4px solid #3F3C2F;
 }
 
 /* door glass */
