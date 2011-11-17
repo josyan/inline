@@ -19,7 +19,7 @@
 
           <div class="list-door-panels">
             <% section[:door_panels].each do |door_panel| %>
-              <div class="door-panel <%= 'selected' if door_panel.id == section[:door_line_section].door_panel_id %>">
+              <div class="door-panel <%= 'selected' if door_panel.id == section[:door_line_section].door_panel_id %>" id="dp-<%= door_panel.id %>">
                 <div class="preview-image">
                   <%= image_tag 'door_panels/' + door_panel.preview_image_name %>
                 </div>

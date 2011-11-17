@@ -6,10 +6,27 @@ $j(document).ready(function(){
   var attach_configuration_events = function(root_item){
     root_item.find('.single-section .selected-door-panel').click(function(e){
       e.stopPropagation();
+      selected = $j(this);
       popup = $j(this).parent().find('.list-door-panels');
 
       // panel choices interraction
+      popup.find('.door-panel').click(function(){
+        value_holder = $j(this).closest('.single-section').find('#door_sections__door_panel');
+        id = $j(this).attr('id').replace('dp-', '');
 
+        if(id != value_holder.val()){
+
+          // highlight the selection
+          popup.find('.door-panel').removeClass('selected');
+          $j(this).addClass('selected');
+
+          // save the selection
+          value_holder.val(id);
+
+          // update section image
+          selected.html($j(this).html());
+        }
+      });
 
       // ensure popup is shown and hidden correctly
       $j('body').click(function(){
