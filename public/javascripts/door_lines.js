@@ -3,8 +3,8 @@ var $j = jQuery;
 $j(document).ready(function(){
 
   // door configuration interraction
-  var attach_configuration_events = function(root_item){
-    root_item.find('.single-section .selected-door-panel').click(function(e){
+  var attach_door_panels_configuration_events_2 = function(){
+    $j('#door-panels-configuration .single-section .selected-door-panel').click(function(e){
       e.stopPropagation();
       selected = $j(this);
       popup = $j(this).parent().find('.list-door-panels');
@@ -36,26 +36,41 @@ $j(document).ready(function(){
     });
   };
 
+  var attach_door_panels_configuration_events = function(){
+
+    // door panel interraction
+    $j('#door-panels-configuration .door-panel').click(function(){
+      id = $j(this).attr('id').replace('dp-', '');
+
+      // highlight the selection
+      $j(this).parent().find('.door-panel').removeClass('selected');
+      $j(this).addClass('selected');
+
+      // save the selection
+      $j(this).closest('.door-line-section').find('#door-panel-id').val(id);
+
+      // replace the selected panel preview with the new selected one
+      $j(this).closest('.selection-door-panel').find('.selected-door-panel').html($j(this).html());
+    });
+  };
+
   // door frame interraction
   $j('#door-frame-selection .door-frame').click(function(){
     id = $j(this).attr('id').replace('df-', '');
 
-    if(id != $j('#door_line_door_frame_id').val()){
+    // highlight the selection
+    $j('#door-frame-selection .door-frame').removeClass('selected');
+    $j(this).addClass('selected');
 
-      // highlight the selection
-      $j('#door-frame-selection .door-frame').removeClass('selected');
-      $j(this).addClass('selected');
+    // save the selection
+    $j('#door_line_door_frame_id').val(id);
 
-      // save the selection
-      $j('#door_line_door_frame_id').val(id);
+    // show the right door combinations list
+    $j('#door-combination-selection .door-combination-list').hide();
+    $j('#door-combination-selection #dcl-' + id).show();
 
-      // show the right door combinations list
-      $j('#door-combination-selection .door-combination-list').hide();
-      $j('#door-combination-selection #dcl-' + id).show();
-
-      // launch click on first door combination
-      $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
-    }
+    // launch click on first door combination
+    $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
   });
 
   // door combination interraction
@@ -69,10 +84,11 @@ $j(document).ready(function(){
     // save the selection
     $j('#door_line_door_combination_id').val(id);
 
-    // generate the interface to configure panels and glasses
-    $j.get('/doors/configure', {door_combination_id: id}, function(response) {
-      $j('#door_panels_configuration').html(response);
-      attach_configuration_events($j('#door_panels_configuration'));
+    // load the interface to configure panels
+    $j.get('/doors/configure_panels', {door_combination_id: id}, function(response) {
+      $j('#door-panels-configuration').html(response);
+      attach_door_panels_configuration_events();
+      $j('#door-panels-configuration .door-panel.selected').click();
     });
   });
 
@@ -88,6 +104,6 @@ $j(document).ready(function(){
     $j('#door_line_frame_profile_id').val(id);
   });
 
-  // plug interraction on configuration part
-  attach_configuration_events($j('#door_panels_configuration'));
+  // launch click on first door frame to trigger events cascade
+  $j('#door-frame-selection .door-frame.selected').click();
 });

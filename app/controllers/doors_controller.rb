@@ -16,32 +16,21 @@ class DoorsController < ApplicationController
 
     @slab_materials = SlabMaterial.all(:order => :name)
     @door_line.slab_material = @slab_materials.first
-
-    init_sections @door_line.door_combination_id
   end
 
-  def configure
-    init_sections params[:door_combination_id]
-    render :partial => 'configure'
+  def configure_panels
+    door_combination = DoorCombination.find(params[:door_combination_id])
+    @door_line_sections = door_combination.sections.split(';').map do |door_section_code|
+      door_line_section = { :door_section => DoorSection.find_by_code(door_section_code) }
+      door_line_section[:door_panels] = door_line_section[:door_section].door_panels
+      door_line_section[:door_line_section] = DoorLineSection.new(:door_section => door_line_section[:door_section],
+                                                                  :door_panel => door_line_section[:door_panels].first)
+      door_line_section
+    end
   end
 
   def create
 
   end
 
-  private
-
-  def init_sections(door_combination_id)
-    combination = DoorCombination.find(door_combination_id)
-    @sections = combination.sections.split(';').map do |section_code|
-      section = { :door_line_section => DoorLineSection.new,
-                  :door_section => DoorSection.find_by_code(section_code) }
-      section[:door_panels] = section[:door_section].door_panels
-      unless section[:door_panels].empty?
-        section[:door_line_section].door_panel = section[:door_panels].first
-        section[:door_glass_families] = DoorGlassFamily.all(:conditions => { :id => section[:door_panels].first.door_glasses.map { |glass| glass.door_glass_family_id }.uniq })
-      end
-      section
-    end
-  end
 end

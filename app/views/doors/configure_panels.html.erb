@@ -1,0 +1,29 @@
+  <% @door_line_sections.each_with_index do |door_line_section, index| %>
+    <div class="door-line-section<%= ' last' if index == @door_line_sections.length - 1 %>">
+
+      <div class="label">
+        <%= door_line_section[:door_section].tr_name %>
+      </div>
+
+      <%= hidden_field_tag "door_line_sections[][door_section_id]", door_line_section[:door_line_section].door_section_id, :id => 'door-section-id '%>
+      <%= hidden_field_tag "door_line_sections[][door_panel_id]", door_line_section[:door_line_section].door_panel_id, :id => 'door-panel-id' %>
+      <% unless door_line_section[:door_panels].blank? %>
+        <div class="selection-door-panel">
+          <div class="selected-door-panel"></div>
+          <div class="door-panels-list choice-list">
+            <% door_line_section[:door_panels].each do |door_panel| %>
+              <div class="choice door-panel <%= 'selected' if door_panel.id == door_line_section[:door_line_section].door_panel_id %>" id="dp-<%= door_panel.id %>">
+                <div class="preview-image">
+                  <%= image_tag 'door_panels/' + door_panel.preview_image_name %>
+                </div>
+                <div class="label">
+                  <%= door_panel.tr_name %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="selection-door-glass-family"></div>
+      <% end %>
+    </div>
+  <% end %>
