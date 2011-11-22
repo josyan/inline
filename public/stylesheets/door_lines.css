@@ -56,6 +56,7 @@
   padding: 5px;
   background: #FFFFFF;
   text-align: center;
+  cursor: pointer;
 }
 #door-panels-configuration .selected-door-panel:hover {
   background-color: #948B6D;
