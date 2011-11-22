@@ -23,7 +23,18 @@ $j(document).ready(function(){
 
       // replace the selected panel preview with the new selected one
       $j(this).closest('.selection-door-panel').find('.selected-door-panel').html($j(this).html());
+
+      // load the interface to configure glass families
+      $j.get('/doors/configure_glass_families', {door_panel_id: id}, function(response) {
+        $j(this).closest('.door-line-section').find('.selection-door-glass-family').html(response);
+        attach_door_glass_families_configuration_events();
+        $j(this).closest('.door-line-section').find('.selected-door-glass-family').change();
+      });
     });
+  };
+
+  var attach_door_glass_families_configuration_events = function(){
+    // TODO
   };
 
   // door frame interraction

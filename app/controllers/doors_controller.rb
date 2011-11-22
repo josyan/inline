@@ -29,6 +29,10 @@ class DoorsController < ApplicationController
     end
   end
 
+  def configure_glass_families
+
+  end
+
   def create
 
   end
