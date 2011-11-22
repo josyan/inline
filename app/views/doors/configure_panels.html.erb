@@ -10,7 +10,7 @@
       <% unless door_line_section[:door_panels].blank? %>
         <div class="selection-door-panel">
           <div class="selected-door-panel"></div>
-          <div class="door-panels-list choice-list">
+          <div class="door-panels-list choice-list door-popup">
             <% door_line_section[:door_panels].each do |door_panel| %>
               <div class="choice door-panel <%= 'selected' if door_panel.id == door_line_section[:door_line_section].door_panel_id %>" id="dp-<%= door_panel.id %>">
                 <div class="preview-image">

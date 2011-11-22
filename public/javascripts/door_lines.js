@@ -2,41 +2,13 @@
 var $j = jQuery;
 $j(document).ready(function(){
 
-  // door configuration interraction
-  var attach_door_panels_configuration_events_2 = function(){
-    $j('#door-panels-configuration .single-section .selected-door-panel').click(function(e){
-      e.stopPropagation();
-      selected = $j(this);
-      popup = $j(this).parent().find('.list-door-panels');
-
-      // panel choices interraction
-      popup.find('.door-panel').click(function(){
-        value_holder = $j(this).closest('.single-section').find('#door_sections__door_panel');
-        id = $j(this).attr('id').replace('dp-', '');
-
-        if(id != value_holder.val()){
-
-          // highlight the selection
-          popup.find('.door-panel').removeClass('selected');
-          $j(this).addClass('selected');
-
-          // save the selection
-          value_holder.val(id);
-
-          // update section image
-          selected.html($j(this).html());
-        }
-      });
-
-      // ensure popup is shown and hidden correctly
-      $j('body').click(function(){
-        popup.hide();
-      });
-      popup.show();
-    });
-  };
-
   var attach_door_panels_configuration_events = function(){
+    // selected door panel interraction
+    $j('#door-panels-configuration .selected-door-panel').click(function(e){
+      e.stopPropagation();
+
+      $j(this).parent().find('.door-panels-list').show();
+    });
 
     // door panel interraction
     $j('#door-panels-configuration .door-panel').click(function(){
@@ -102,6 +74,11 @@ $j(document).ready(function(){
 
     // save the selection
     $j('#door_line_frame_profile_id').val(id);
+  });
+
+  // ensure click anywhere hide popups
+  $j('body').click(function(){
+    $j('.door-popup').hide();
   });
 
   // launch click on first door frame to trigger events cascade
