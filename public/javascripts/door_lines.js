@@ -68,7 +68,7 @@ $j(document).ready(function(){
     $j('#door_line_door_combination_id').val(id);
 
     // load the interface to configure panels
-    $j.get('/doors/configure_panels', {door_combination_id: id}, function(response) {
+    $j.get('/doors/configure_panels', $j('#door-panels-configuration input').serialize() + '&door_combination_id=' + id, function(response) {
       $j('#door-panels-configuration').html(response);
       attach_door_panels_configuration_events();
       $j('#door-panels-configuration .door-panel.selected').click();
