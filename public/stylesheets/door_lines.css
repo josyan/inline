@@ -52,18 +52,21 @@
 }
 
 /* door panel */
-#door-panels-configuration .selected-door-panel {
+#door-panels-configuration .selected-door-panel,
+#door-panels-configuration .selected-door-glass{
   padding: 5px;
   background: #FFFFFF;
   text-align: center;
   cursor: pointer;
 }
-#door-panels-configuration .selected-door-panel:hover {
+#door-panels-configuration .selected-door-panel:hover,
+#door-panels-configuration .selected-door-glass:hover {
   background-color: #948B6D;
 }
 
 /* door panel list */
-#door-panels-configuration .door-panels-list {
+#door-panels-configuration .door-panels-list,
+#door-panels-configuration .door-glasses-list {
   display: none;
   position: absolute;
   overflow: auto;

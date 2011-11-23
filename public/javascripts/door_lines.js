@@ -53,7 +53,28 @@ $j(document).ready(function(){
   };
 
   var attach_door_glasses_configuration_events = function(section){
+    // selected door glass interraction
+    $j('#door-panels-configuration .selected-door-glass').click(function(e){
+      e.stopPropagation();
 
+      $j(this).parent().find('.door-glasses-list').show();
+    });
+
+    // door glass interraction
+    $j('#door-panels-configuration .door-glass').click(function(){
+      selected_glass = $j(this);
+      id = selected_glass.attr('id').replace('dg-', '');
+
+      // highlight the selection
+      selected_glass.parent().find('.door-glass').removeClass('selected');
+      selected_glass.addClass('selected');
+
+      // save the selection
+      section.find('#door-panel-id').val(id);
+
+      // replace the selected glass preview with the new selected one
+      section.find('.selected-door-glass').html(selected_glass.html());
+    });
   };
 
   // door frame interraction
