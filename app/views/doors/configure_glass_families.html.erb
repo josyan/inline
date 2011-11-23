@@ -1,0 +1,1 @@
+<%= select_tag "door_glass_family", options_for_select([[trn_get('NO_GLASS'), '']] + @door_glass_families.map { |dgf| [dgf.tr_name, dgf.id] }) %>

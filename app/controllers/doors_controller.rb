@@ -20,7 +20,7 @@ class DoorsController < ApplicationController
 
   def configure_panels
     door_combination = DoorCombination.find(params[:door_combination_id])
-    previous_sections = params[:door_line_sections]
+    previous_sections = params[:door_line_sections] || []
 
     @door_line_sections = door_combination.sections.split(';').map do |door_section_code|
       door_line_section = { :door_section => DoorSection.find_by_code(door_section_code) }
@@ -45,7 +45,9 @@ class DoorsController < ApplicationController
   end
 
   def configure_glass_families
+    door_panel = DoorPanel.find(params[:door_panel_id])
 
+    @door_glass_families = DoorGlassFamily.find(:all, :conditions => { :id => door_panel.door_glasses.map { |dg| dg.door_glass_family_id }.uniq }, :order => 'name')
   end
 
   def create
