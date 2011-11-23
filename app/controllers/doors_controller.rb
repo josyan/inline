@@ -50,6 +50,10 @@ class DoorsController < ApplicationController
     @door_glass_families = DoorGlassFamily.find(:all, :conditions => { :id => door_panel.door_glasses.map { |dg| dg.door_glass_family_id }.uniq }, :order => 'name')
   end
 
+  def configure_glasses
+
+  end
+
   def create
 
   end

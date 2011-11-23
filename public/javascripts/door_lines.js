@@ -28,14 +28,32 @@ $j(document).ready(function(){
       // load the interface to configure glass families
       $j.get('/doors/configure_glass_families', {door_panel_id: id}, function(response) {
         selected_panel.closest('.door-line-section').find('.selection-door-glass-family').html(response);
-        attach_door_glass_families_configuration_events();
+        attach_door_glass_families_configuration_events(selected_panel.closest('.door-line-section'));
         selected_panel.closest('.door-line-section').find('.selected-door-glass-family').change();
       });
     });
   };
 
-  var attach_door_glass_families_configuration_events = function(){
-    // TODO
+  var attach_door_glass_families_configuration_events = function(section){
+    section.find('#door_glass_family').change(function(){
+      id = $j(this).val();
+
+      if(id == '0') {
+        section.find('#door-glass-id').val('');
+        section.find('.selection-door-glass').html('');
+      } else {
+        // load the interface to configure glasses
+        $j.get('/doors/configure_glasses', {door_glass_family_id: id}, function(response) {
+          section.find('.selection-door-glass').html(response);
+          attach_door_glasses_configuration_events(section);
+          section.find('.door-glass.selected').click();
+        });
+      }
+    });
+  };
+
+  var attach_door_glasses_configuration_events = function(section){
+
   };
 
   // door frame interraction

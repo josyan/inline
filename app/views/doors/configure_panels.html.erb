@@ -7,6 +7,7 @@
 
       <%= hidden_field_tag "door_line_sections[][door_section_id]", door_line_section[:door_line_section].door_section_id, :id => 'door-section-id '%>
       <%= hidden_field_tag "door_line_sections[][door_panel_id]", door_line_section[:door_line_section].door_panel_id, :id => 'door-panel-id' %>
+      <%= hidden_field_tag "door_line_sections[][door_glass_id]", door_line_section[:door_line_section].door_glass_id, :id => 'door-glass-id' %>
       <% unless door_line_section[:door_panels].blank? %>
         <div class="selection-door-panel">
           <div class="selected-door-panel"></div>
