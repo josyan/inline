@@ -51,7 +51,9 @@ class DoorsController < ApplicationController
   end
 
   def configure_glasses
+    door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
 
+    @door_glasses = door_glass_family.door_glasses
   end
 
   def create

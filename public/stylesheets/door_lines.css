@@ -76,3 +76,8 @@
   left: 0px;
   z-index: 1;
 }
+
+/* door family list */
+#door-panels-configuration select {
+  width: 100%;
+}
