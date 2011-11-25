@@ -12,31 +12,32 @@ $j(document).ready(function(){
 
     // door panel interraction
     $j('#door-panels-configuration .door-panel').click(function(){
-      selected_panel = $j(this);
-      id = selected_panel.attr('id').replace('dp-', '');
+      var selected_panel = $j(this);
+      var section = selected_panel.closest('.door-line-section');
+      var id = selected_panel.attr('id').replace('dp-', '');
 
       // highlight the selection
       selected_panel.parent().find('.door-panel').removeClass('selected');
       selected_panel.addClass('selected');
 
       // save the selection
-      selected_panel.closest('.door-line-section').find('#door-panel-id').val(id);
+      section.find('#door-panel-id').val(id);
 
       // replace the selected panel preview with the new selected one
       selected_panel.closest('.selection-door-panel').find('.selected-door-panel').html(selected_panel.html());
 
       // load the interface to configure glass families
       $j.get('/doors/configure_glass_families', {door_panel_id: id}, function(response) {
-        selected_panel.closest('.door-line-section').find('.selection-door-glass-family').html(response);
-        attach_door_glass_families_configuration_events(selected_panel.closest('.door-line-section'));
-        selected_panel.closest('.door-line-section').find('.selected-door-glass-family').change();
+        section.find('.selection-door-glass-family').html(response);
+        attach_door_glass_families_configuration_events(section);
+        section.find('.selected-door-glass-family').change();
       });
     });
   };
 
   var attach_door_glass_families_configuration_events = function(section){
     section.find('#door_glass_family').change(function(){
-      id = $j(this).val();
+      var id = $j(this).val();
 
       if(id == '0') {
         section.find('#door-glass-id').val('');
@@ -62,8 +63,8 @@ $j(document).ready(function(){
 
     // door glass interraction
     $j('#door-panels-configuration .door-glass').click(function(){
-      selected_glass = $j(this);
-      id = selected_glass.attr('id').replace('dg-', '');
+      var selected_glass = $j(this);
+      var id = selected_glass.attr('id').replace('dg-', '');
 
       // highlight the selection
       selected_glass.parent().find('.door-glass').removeClass('selected');
@@ -79,7 +80,7 @@ $j(document).ready(function(){
 
   // door frame interraction
   $j('#door-frame-selection .door-frame').click(function(){
-    id = $j(this).attr('id').replace('df-', '');
+    var id = $j(this).attr('id').replace('df-', '');
 
     // highlight the selection
     $j('#door-frame-selection .door-frame').removeClass('selected');
@@ -98,7 +99,7 @@ $j(document).ready(function(){
 
   // door combination interraction
   $j('#door-combination-selection .door-combination').click(function(){
-    id = $j(this).attr('id').replace('dc-', '');
+    var id = $j(this).attr('id').replace('dc-', '');
 
     // highlight the selection
     $j('#door-combination-selection .door-combination').removeClass('selected');
@@ -117,7 +118,7 @@ $j(document).ready(function(){
 
   // frame profile interraction
   $j('#frame-profile-selection .frame-profile').click(function(){
-    id = $j(this).attr('id').replace('fp-', '');
+    var id = $j(this).attr('id').replace('fp-', '');
 
     // highlight the selection
     $j('#frame-profile-selection .frame-profile').removeClass('selected');
