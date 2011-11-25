@@ -55,14 +55,14 @@ $j(document).ready(function(){
 
   var attach_door_glasses_configuration_events = function(section){
     // selected door glass interraction
-    $j('#door-panels-configuration .selected-door-glass').click(function(e){
+    section.find('.selected-door-glass').click(function(e){
       e.stopPropagation();
 
       $j(this).parent().find('.door-glasses-list').show();
     });
 
     // door glass interraction
-    $j('#door-panels-configuration .door-glass').click(function(){
+    section.find('.door-glass').click(function(){
       var selected_glass = $j(this);
       var id = selected_glass.attr('id').replace('dg-', '');
 
@@ -71,7 +71,7 @@ $j(document).ready(function(){
       selected_glass.addClass('selected');
 
       // save the selection
-      section.find('#door-panel-id').val(id);
+      section.find('#door-glass-id').val(id);
 
       // replace the selected glass preview with the new selected one
       section.find('.selected-door-glass').html(selected_glass.html());
