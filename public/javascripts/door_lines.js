@@ -15,6 +15,7 @@ $j(document).ready(function(){
       var selected_panel = $j(this);
       var section = selected_panel.closest('.door-line-section');
       var id = selected_panel.attr('id').replace('dp-', '');
+      var door_glass_id = section.find('#door-glass-id').val();
 
       // highlight the selection
       selected_panel.parent().find('.door-panel').removeClass('selected');
@@ -27,7 +28,7 @@ $j(document).ready(function(){
       selected_panel.closest('.selection-door-panel').find('.selected-door-panel').html(selected_panel.html());
 
       // load the interface to configure glass families
-      $j.get('/doors/configure_glass_families', {door_panel_id: id}, function(response) {
+      $j.get('/doors/configure_glass_families', {door_panel_id: id, door_glass_id: door_glass_id}, function(response) {
         section.find('.selection-door-glass-family').html(response);
         attach_door_glass_families_configuration_events(section);
         section.find('.selected-door-glass-family').change();

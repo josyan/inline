@@ -22,7 +22,7 @@ class DoorsController < ApplicationController
     door_combination = DoorCombination.find(params[:door_combination_id])
 
     # create and populate each section of the door
-    previous_sections = params[:door_line_sections].dup || []
+    previous_sections = params[:door_line_sections] ? params[:door_line_sections].dup : []
     @door_line_sections = door_combination.sections.split(';').map do |door_section_code|
       door_line_section = { :door_section => DoorSection.find_by_code(door_section_code) }
       door_line_section[:door_panels] = door_line_section[:door_section].door_panels
@@ -45,7 +45,7 @@ class DoorsController < ApplicationController
     end
 
     # assign the glasses if possible
-    previous_sections = params[:door_line_sections].dup || []
+    previous_sections = params[:door_line_sections] ? params[:door_line_sections].dup : []
     @door_line_sections.each do |door_line_section|
       # check if we had a similar panel
       possible_choices = previous_sections.select { |s| s[:door_panel_id] == door_line_section[:door_line_section].door_panel_id.to_s }
@@ -65,8 +65,11 @@ class DoorsController < ApplicationController
 
   def configure_glass_families
     door_panel = DoorPanel.find(params[:door_panel_id])
-
     @door_glass_families = DoorGlassFamily.find(:all, :conditions => { :id => door_panel.door_glasses.map { |dg| dg.door_glass_family_id }.uniq }, :order => 'name')
+    unless params[:door_glass_id].blank?
+      door_glass = DoorGlass.find(params[:door_glass_id])
+      @door_glass_family_id = door_glass.door_glass_family_id
+    end
   end
 
   def configure_glasses
