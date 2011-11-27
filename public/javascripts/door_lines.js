@@ -31,7 +31,7 @@ $j(document).ready(function(){
       $j.get('/doors/configure_glass_families', {door_panel_id: id, door_glass_id: door_glass_id}, function(response) {
         section.find('.selection-door-glass-family').html(response);
         attach_door_glass_families_configuration_events(section);
-        section.find('.selected-door-glass-family').change();
+        section.find('#door_glass_family').change();
       });
     });
   };
