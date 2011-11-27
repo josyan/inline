@@ -1,3 +1,5 @@
+require 'pp'
+
 # Filters added to this controller will be run for all controllers in the application.
 # Likewise, all the methods added will be available for all controllers.
 class ApplicationController < ActionController::Base
@@ -15,7 +17,11 @@ class ApplicationController < ActionController::Base
   # require authenticated user for all actions (have to exclude signup and login right?)
   before_filter :login_required
 
-  def debug_log(text)
-    logger.info  "####################\n#{text}\n####################"
+  def debug_log(text, value = nil)
+    logger.error  "#################### #{text} ####################"
+    if value
+      logger.error value.inspect
+      logger.error "------------------------------------------------"
+    end
   end
 end

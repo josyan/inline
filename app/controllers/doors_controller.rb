@@ -20,8 +20,9 @@ class DoorsController < ApplicationController
 
   def configure_panels
     door_combination = DoorCombination.find(params[:door_combination_id])
-    previous_sections = params[:door_line_sections] || []
 
+    # create and populate each section of the door
+    previous_sections = params[:door_line_sections].dup || []
     @door_line_sections = door_combination.sections.split(';').map do |door_section_code|
       door_line_section = { :door_section => DoorSection.find_by_code(door_section_code) }
       door_line_section[:door_panels] = door_line_section[:door_section].door_panels
@@ -41,6 +42,24 @@ class DoorsController < ApplicationController
         end
       end
       door_line_section
+    end
+
+    # assign the glasses if possible
+    previous_sections = params[:door_line_sections].dup || []
+    @door_line_sections.each do |door_line_section|
+      # check if we had a similar panel
+      possible_choices = previous_sections.select { |s| s[:door_panel_id] == door_line_section[:door_line_section].door_panel_id.to_s }
+      if possible_choices.length >= 1
+        door_line_section[:door_line_section].door_glass_id = possible_choices[0][:door_glass_id] unless possible_choices[0][:door_glass_id].blank?
+        if possible_choices.length > 1
+          previous_sections.each_with_index do |section, index|
+            if section[:door_panel_id] == possible_choices.first[:door_panel_id]
+              previous_sections.delete_at index
+              break
+            end
+          end
+        end
+      end
     end
   end
 
