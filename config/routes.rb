@@ -19,7 +19,13 @@ GlassVision::Application.routes.draw do
   resources :product_colors
   resources :shapes
 
-  resources :doors
+  resources :doors do
+    collection do
+      get 'configure_panels'
+      get 'configure_glass_families'
+      get 'configure_glasses'
+    end
+  end
   resources :door_frames
   resources :door_combinations
   resources :frame_profiles

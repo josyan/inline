@@ -5,7 +5,6 @@
   <%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
   <%= hidden_field_tag 'door_line[door_combination_id]', @door_line.door_combination_id %>
   <%= hidden_field_tag 'door_line[frame_profile_id]', @door_line.frame_profile_id %>
-  <%= hidden_field_tag 'door_line[door_panel_id]', @door_line.door_panel_id %>
 
   <div id="door-frame-selection" class="section">
     <div class="intro">
@@ -79,17 +78,7 @@
       <%= trn_get('DOOR_PANEL_INTRO') %>
     </div>
 
-    <div class="door-panel-list choice-list">
-      <% @door_panels.each do |door_panel| %>
-        <div class="choice door-panel <%= 'selected' if door_panel.id == @door_line.door_panel_id %>" id="dp-<%= door_panel.id %>">
-          <div class="preview-image">
-            <%= image_tag 'door_panels/' + door_panel.preview_image_name %>
-          </div>
-          <div class="label">
-            <%= door_panel.tr_name %>
-          </div>
-        </div>
-      <% end %>
+    <div id="door-panels-configuration">
     </div>
   </div>
 

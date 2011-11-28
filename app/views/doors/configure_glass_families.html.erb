@@ -1,0 +1,4 @@
+<%= select_tag "door_glass_family", options_for_select([[trn_get('NO_GLASS'), '0']] + @door_glass_families.map { |dgf| [dgf.tr_name, dgf.id] }, @door_glass_family_id) %>
+<% unless @door_glass_families.empty? %>
+  <div class="selection-door-glass"></div>
+<% end %>
