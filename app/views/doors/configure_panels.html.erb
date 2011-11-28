@@ -9,6 +9,7 @@
     <%= hidden_field_tag "door_line_sections[][door_panel_id]", door_line_section[:door_line_section].door_panel_id, :id => 'door-panel-id' %>
     <%= hidden_field_tag "door_line_sections[][door_glass_id]", door_line_section[:door_line_section].door_glass_id, :id => 'door-glass-id' %>
     <% unless door_line_section[:door_panels].blank? %>
+      <div class="section-label"><%= trn_get('LABEL_DOOR_PANEL') %><%= trn_geth('LABEL_SEMICOLON') %></div>
       <div class="selection-door-panel">
         <div class="selected-door-panel"></div>
         <div class="door-panels-list choice-list door-popup">
@@ -24,6 +25,7 @@
           <% end %>
         </div>
       </div>
+      <div class="section-label"><%= trn_get('LABEL_DOOR_GLASS') %><%= trn_geth('LABEL_SEMICOLON') %></div>
       <div class="selection-door-glass-family"></div>
     <% end %>
   </div>
