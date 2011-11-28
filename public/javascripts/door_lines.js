@@ -39,13 +39,14 @@ $j(document).ready(function(){
   var attach_door_glass_families_configuration_events = function(section){
     section.find('#door_glass_family').change(function(){
       var id = $j(this).val();
+      var door_glass_id = section.find('#door-glass-id').val();
 
       if(id == '0') {
         section.find('#door-glass-id').val('');
         section.find('.selection-door-glass').html('');
       } else {
         // load the interface to configure glasses
-        $j.get('/doors/configure_glasses', {door_glass_family_id: id}, function(response) {
+        $j.get('/doors/configure_glasses', {door_glass_family_id: id, door_glass_id: door_glass_id}, function(response) {
           section.find('.selection-door-glass').html(response);
           attach_door_glasses_configuration_events(section);
           section.find('.door-glass.selected').click();
