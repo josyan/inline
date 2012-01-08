@@ -30,6 +30,7 @@ GlassVision::Application.routes.draw do
   resources :door_combinations
   resources :frame_profiles
   resources :door_panels
+  resources :door_openings
   resources :door_glass_families do
     resources :door_glasses
   end
