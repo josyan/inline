@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120108213351) do
+ActiveRecord::Schema.define(:version => 20120108222551) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -123,6 +123,7 @@ ActiveRecord::Schema.define(:version => 20120108213351) do
     t.integer  "door_combination_id"
     t.integer  "frame_profile_id"
     t.integer  "slab_material_id"
+    t.integer  "door_opening_id"
   end
 
   create_table "door_openings", :force => true do |t|
