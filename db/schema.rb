@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120108192844) do
+ActiveRecord::Schema.define(:version => 20120108212908) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -67,6 +67,11 @@ ActiveRecord::Schema.define(:version => 20120108192844) do
     t.integer  "door_frame_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "door_combinations_door_openings", :id => false, :force => true do |t|
+    t.integer "door_combination_id"
+    t.integer "door_opening_id"
   end
 
   create_table "door_frames", :force => true do |t|
