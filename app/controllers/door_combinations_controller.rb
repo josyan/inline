@@ -6,6 +6,7 @@ class DoorCombinationsController < ApplicationController
 
   def new
     @door_combination = DoorCombination.new
+    @door_openings = DoorOpening.all(:order => :id)
   end
 
   def create
@@ -20,6 +21,7 @@ class DoorCombinationsController < ApplicationController
 
   def edit
     @door_combination = DoorCombination.find(params[:id])
+    @door_openings = DoorOpening.all(:order => :id)
   end
 
   def update
