@@ -24,12 +24,14 @@ GlassVision::Application.routes.draw do
       get 'configure_panels'
       get 'configure_glass_families'
       get 'configure_glasses'
+      get 'configure_openings'
     end
   end
   resources :door_frames
   resources :door_combinations
   resources :frame_profiles
   resources :door_panels
+  resources :door_openings
   resources :door_glass_families do
     resources :door_glasses
   end

@@ -80,6 +80,13 @@ class DoorsController < ApplicationController
     @door_glass_id = params[:door_glass_id].to_i if params[:door_glass_id] and @door_glasses.map(&:id).include?(params[:door_glass_id].to_i)
   end
 
+  def configure_openings
+    door_combination = DoorCombination.find(params[:door_combination_id])
+    @door_opening_id = params[:door_opening_id]
+    @door_openings = door_combination.door_openings(:order => :id)
+    @door_opening_id = @door_openings.first.id unless @door_openings.map(&:id).include?(@door_opening_id)
+  end
+
   def create
 
   end
