@@ -5,6 +5,7 @@
   <%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
   <%= hidden_field_tag 'door_line[door_combination_id]', @door_line.door_combination_id %>
   <%= hidden_field_tag 'door_line[frame_profile_id]', @door_line.frame_profile_id %>
+  <%= hidden_field_tag 'door_line[door_opening_id]', @door_line.door_opening_id %>
 
   <div id="door-frame-selection" class="section">
     <div class="intro">
@@ -79,6 +80,15 @@
     </div>
 
     <div id="door-panels-configuration">
+    </div>
+  </div>
+
+  <div id="door-opening-selection" class="section">
+    <div class="intro">
+      <%= trn_get('DOOR_OPENING_INTRO') %>
+    </div>
+
+    <div id="door-openings-configuration">
     </div>
   </div>
 

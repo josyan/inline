@@ -116,6 +116,12 @@ $j(document).ready(function(){
       attach_door_panels_configuration_events();
       $j('#door-panels-configuration .door-panel.selected').click();
     });
+
+    // load the corresponding openings
+    $j.get('/doors/configure_openings', 'door_combination_id=' + id + '&door_opening_id=' + $j('#door_line_door_opening_id').val(), function(response) {
+      $j('#door-openings-configuration').html(response);
+
+    });
   });
 
   // frame profile interraction
