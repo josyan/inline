@@ -1,17 +1,17 @@
 // this ugly hack because something somewhere conflict with the $ object from jQuery
 var $j = jQuery;
-$j(document).ready(function(){
+$j(document).ready(function() {
 
-  var attach_door_panels_configuration_events = function(){
+  var attach_door_panels_configuration_events = function() {
     // selected door panel interraction
-    $j('#door-panels-configuration .selected-door-panel').click(function(e){
+    $j('#door-panels-configuration .selected-door-panel').click(function(e) {
       e.stopPropagation();
 
       $j(this).parent().find('.door-panels-list').show();
     });
 
     // door panel interraction
-    $j('#door-panels-configuration .door-panel').click(function(){
+    $j('#door-panels-configuration .door-panel').click(function() {
       var selected_panel = $j(this);
       var section = selected_panel.closest('.door-line-section');
       var id = selected_panel.attr('id').replace('dp-', '');
@@ -36,8 +36,8 @@ $j(document).ready(function(){
     });
   };
 
-  var attach_door_glass_families_configuration_events = function(section){
-    section.find('#door_glass_family').change(function(){
+  var attach_door_glass_families_configuration_events = function(section) {
+    section.find('#door_glass_family').change(function() {
       var id = $j(this).val();
       var door_glass_id = section.find('#door-glass-id').val();
 
@@ -55,16 +55,16 @@ $j(document).ready(function(){
     });
   };
 
-  var attach_door_glasses_configuration_events = function(section){
+  var attach_door_glasses_configuration_events = function(section) {
     // selected door glass interraction
-    section.find('.selected-door-glass').click(function(e){
+    section.find('.selected-door-glass').click(function(e) {
       e.stopPropagation();
 
       $j(this).parent().find('.door-glasses-list').show();
     });
 
     // door glass interraction
-    section.find('.door-glass').click(function(){
+    section.find('.door-glass').click(function() {
       var selected_glass = $j(this);
       var id = selected_glass.attr('id').replace('dg-', '');
 
@@ -80,8 +80,21 @@ $j(document).ready(function(){
     });
   };
 
+  var attach_door_openings_configuration_events = function() {
+    $j('#door-openings-configuration .door-opening').click(function() {
+      var id = $j(this).attr('id').replace('do-', '');
+
+      // highlight the selection
+      $j('#door-openings-configuration .door-opening').removeClass('selected');
+      $j(this).addClass('selected');
+
+      // save the selection
+      $j('#door_line_door_opening_id').val(id);
+    });
+  };
+
   // door frame interraction
-  $j('#door-frame-selection .door-frame').click(function(){
+  $j('#door-frame-selection .door-frame').click(function() {
     var id = $j(this).attr('id').replace('df-', '');
 
     // highlight the selection
@@ -100,7 +113,7 @@ $j(document).ready(function(){
   });
 
   // door combination interraction
-  $j('#door-combination-selection .door-combination').click(function(){
+  $j('#door-combination-selection .door-combination').click(function() {
     var id = $j(this).attr('id').replace('dc-', '');
 
     // highlight the selection
@@ -120,12 +133,13 @@ $j(document).ready(function(){
     // load the corresponding openings
     $j.get('/doors/configure_openings', 'door_combination_id=' + id + '&door_opening_id=' + $j('#door_line_door_opening_id').val(), function(response) {
       $j('#door-openings-configuration').html(response);
-
+      attach_door_openings_configuration_events();
+      $j('#door-openings-configuration .door-opening.selected').click();
     });
   });
 
   // frame profile interraction
-  $j('#frame-profile-selection .frame-profile').click(function(){
+  $j('#frame-profile-selection .frame-profile').click(function() {
     var id = $j(this).attr('id').replace('fp-', '');
 
     // highlight the selection
@@ -137,7 +151,7 @@ $j(document).ready(function(){
   });
 
   // ensure click anywhere hide popups
-  $j('body').click(function(){
+  $j('body').click(function() {
     $j('.door-popup').hide();
   });
 

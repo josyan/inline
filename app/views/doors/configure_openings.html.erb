@@ -1,0 +1,13 @@
+<div class="door-opening-list choice-list">
+  <% @door_openings.each do |door_opening| %>
+    <div class="choice door-opening <%= 'selected' if door_opening.id == @door_opening_id %>" id="do-<%= door_opening.id %>">
+      <div class="preview-image">
+        <%= image_tag 'door_openings/' + door_opening.preview_image_name %>
+      </div>
+      <div class="label">
+        <%= door_opening.tr_name %>
+      </div>
+    </div>
+  <% end %>
+</div>
+

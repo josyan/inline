@@ -84,6 +84,7 @@ class DoorsController < ApplicationController
     door_combination = DoorCombination.find(params[:door_combination_id])
     @door_opening_id = params[:door_opening_id]
     @door_openings = door_combination.door_openings(:order => :id)
+    @door_opening_id = @door_openings.first.id unless @door_openings.map(&:id).include?(@door_opening_id)
   end
 
   def create
