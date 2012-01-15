@@ -35,6 +35,7 @@ GlassVision::Application.routes.draw do
   resources :door_glass_families do
     resources :door_glasses
   end
+  resources :door_borings
 
   resource :session, :controller => :session
   resource :passwords

@@ -1,0 +1,23 @@
+<h2><%= trn_geth('TITLE_DOOR_BORING_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_door_boring_path %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_PREVIEW') %></th>
+    <th></th>
+  </tr>
+<% for door_boring in @door_borings %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= door_boring.tr_name %></td>
+    <td>
+      <%= image_tag door_boring.photo.url(:thumb), :class => "#{ 'popup' unless door_boring.photo.original_filename.blank? }" %>
+    </td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_door_boring_path(door_boring) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), door_boring_path(door_boring), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
