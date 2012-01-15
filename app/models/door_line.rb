@@ -6,4 +6,5 @@ class DoorLine < ActiveRecord::Base
   belongs_to :slab_material
   has_many :door_line_sections, :order => 'order'
   belongs_to :door_opening
+  belongs_to :door_boring
 end

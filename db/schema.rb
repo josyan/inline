@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120108222551) do
+ActiveRecord::Schema.define(:version => 20120115195020) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -58,6 +58,15 @@ ActiveRecord::Schema.define(:version => 20120108222551) do
     t.integer "serie_id",              :default => 0,   :null => false
     t.float   "value",                 :default => 0.0, :null => false
     t.string  "type",     :limit => 6, :default => "",  :null => false
+  end
+
+  create_table "door_borings", :force => true do |t|
+    t.string   "name"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "door_combinations", :force => true do |t|
@@ -124,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20120108222551) do
     t.integer  "frame_profile_id"
     t.integer  "slab_material_id"
     t.integer  "door_opening_id"
+    t.integer  "door_boring_id"
   end
 
   create_table "door_openings", :force => true do |t|
