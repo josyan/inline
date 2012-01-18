@@ -1,0 +1,19 @@
+<h2><%= trn_geth('TITLE_DOOR_SECTION_LIST') %></h2>
+
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_CODE') %></th>
+    <th></th>
+  </tr>
+<% for door_section in @door_sections %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= door_section.tr_name %></td>
+    <td><%= door_section.code %></td>
+    <td>
+      <%= link_to trn_geth('BUTTON_DIMENSIONS'), door_section_door_section_dimensions_path(door_section) %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
