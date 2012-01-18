@@ -150,6 +150,18 @@ $j(document).ready(function() {
     $j('#door_line_frame_profile_id').val(id);
   });
 
+  // door boring interraction
+  $j('#door-boring-selection .door-boring').click(function() {
+    var id = $j(this).attr('id').replace('db-', '');
+
+    // highlight the selection
+    $j('#door-boring-selection .door-boring').removeClass('selected');
+    $j(this).addClass('selected');
+
+    // save the selection
+    $j('#door_line_door_boring_id').val(id);
+  });
+
   // ensure click anywhere hide popups
   $j('body').click(function() {
     $j('.door-popup').hide();

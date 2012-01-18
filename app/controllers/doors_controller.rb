@@ -16,6 +16,9 @@ class DoorsController < ApplicationController
 
     @slab_materials = SlabMaterial.all(:order => :name)
     @door_line.slab_material = @slab_materials.first
+
+    @door_borings = DoorBoring.all(:order => :name)
+    @door_line.door_boring = @door_borings.first
   end
 
   def configure_panels
