@@ -4,3 +4,5 @@ Notes:
  * remettre le bon chemin dans l'initializer de paperclip
  * ajouter le répertoire des frame_profiles dans public/system
  * ajouter le répertoire des door_glasses dans public/system
+ * ajouter le répertoire des door_borings dans public/system
+

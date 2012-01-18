@@ -6,6 +6,7 @@
   <%= hidden_field_tag 'door_line[door_combination_id]', @door_line.door_combination_id %>
   <%= hidden_field_tag 'door_line[frame_profile_id]', @door_line.frame_profile_id %>
   <%= hidden_field_tag 'door_line[door_opening_id]', @door_line.door_opening_id %>
+  <%= hidden_field_tag 'door_line[door_boring_id]', @door_line.door_boring_id %>
 
   <div id="door-frame-selection" class="section">
     <div class="intro">
@@ -89,6 +90,25 @@
     </div>
 
     <div id="door-openings-configuration">
+    </div>
+  </div>
+
+  <div id="door-boring-selection" class="section">
+    <div class="intro">
+      <%= trn_get('DOOR_BORING_INTRO') %>
+    </div>
+
+    <div class="door-boring-list choice-list">
+      <% @door_borings.each do |door_boring| %>
+        <div class="choice door-boring <%= 'selected' if door_boring.id == @door_line.door_boring_id %>" id="db-<%= door_boring.id %>">
+          <div class="preview-image">
+            <%= image_tag door_boring.photo.url(:normal) %>
+          </div>
+          <div class="label">
+            <%= door_boring.tr_name %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 
