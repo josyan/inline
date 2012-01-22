@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120115195020) do
+ActiveRecord::Schema.define(:version => 20120118022200) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -153,6 +153,13 @@ ActiveRecord::Schema.define(:version => 20120115195020) do
   create_table "door_panels_door_sections", :id => false, :force => true do |t|
     t.integer "door_panel_id"
     t.integer "door_section_id"
+  end
+
+  create_table "door_section_dimensions", :force => true do |t|
+    t.integer  "door_section_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "door_sections", :force => true do |t|
