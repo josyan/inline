@@ -34,6 +34,13 @@ $j(document).ready(function() {
         section.find('#door_glass_family').change();
       });
     });
+
+    // section dimensions interraction
+    $j('#door-panels-configuration #door_section_dimension').change(function(){
+      var id = $j(this).val();
+      var section = $j(this).closest('.door-line-section');
+      section.find('#door-section_dimension-id').val(id);
+    });
   };
 
   var attach_door_glass_families_configuration_events = function(section) {

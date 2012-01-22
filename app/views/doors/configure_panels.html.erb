@@ -26,12 +26,12 @@
           <% end %>
         </div>
       </div>
-      <div class="section-label"><%= trn_get('LABEL_DOOR_SECTION_DIMENSION') %><%= trn_geth('LABEL_SEMICOLON') %></div>
-      <div class="selection-door-section-dimensions">
-        <%= select_tag "door_section_dimension", options_for_select(door_line_section[:door_section_dimensions].map { |dsd| [dsd.value, dsd.id] }, door_line_section[:door_line_section].door_section_dimension_id) %>
-      </div>
       <div class="section-label"><%= trn_get('LABEL_DOOR_GLASS') %><%= trn_geth('LABEL_SEMICOLON') %></div>
       <div class="selection-door-glass-family"></div>
     <% end %>
+    <div class="section-label"><%= trn_get('LABEL_DOOR_SECTION_DIMENSION') %><%= trn_geth('LABEL_SEMICOLON') %></div>
+    <div class="selection-door-section-dimensions">
+      <%= select_tag "door_section_dimension", options_for_select(door_line_section[:door_section_dimensions].map { |dsd| [dsd.value, dsd.id] }, door_line_section[:door_line_section].door_section_dimension_id) %>
+    </div>
   </div>
 <% end %>
