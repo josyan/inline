@@ -1,6 +1,6 @@
-<h2><%= trn_geth('TITLE_OPTION_LIST') %></h2>
+<h2><%= trn_geth('TITLE_OPTION_LIST') %> - <%= @module_type.tr_name %></h2>
 
-<%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<%= link_to trn_geth('BUTTON_ADD'), :action => 'add', :mt => @module_type.id %>
 <table cellspacing="0">
   <tr class="header">
     <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
