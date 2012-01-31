@@ -134,10 +134,6 @@ class QuotationLineController < ApplicationController
   end
 
   def edit
-
-    #    @quotation_line = QuotationLine.find(params[:id], :include => [:shape,  {:serie => {:options => [:pricing_method, :options_minimum_unit]}},
-    #                                                                  {:options_quotation_lines => [:option=> [:pricing_method, :options_minimum_unit]]}])
-
     @quotation_line = QuotationLine.includes(:serie => [:options => [:pricing_method, :options_minimum_unit]], :options_quotation_lines => :option).find(params[:id])
     @openings = {}
     @quotation_line.quotation_lines_openings.each do |o|
@@ -159,7 +155,7 @@ class QuotationLineController < ApplicationController
     @lower_transom_index = lower_transom_index(shape) if shape.has_lower_transom
 
 
-    @options = @serie.options #.sort_by {|o| o.tr_description }
+    @options = @serie.options
     @options.each do |option|
       if option.pricing_method.quantifiable
         oli_index = @quotation_line.options_quotation_lines.index {|o| o.option_id == option.id}
