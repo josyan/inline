@@ -4,4 +4,4 @@
   <%= render :partial => 'form', :locals => { :f => f } %>
   <%= submit_tag trn_geth('BUTTON_ADD') %>
 <% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list', :mt => @module_type.id %>

@@ -19,6 +19,9 @@ class DoorsController < ApplicationController
 
     @door_borings = DoorBoring.all(:order => :name)
     @door_line.door_boring = @door_borings.first
+
+    @options = Option.find(:all, :conditions => { :module_type_id => 2 }).sort_by { |o| o.tr_description }
+    @selected_options = []
   end
 
   def configure_panels

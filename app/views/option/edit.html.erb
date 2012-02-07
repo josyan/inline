@@ -4,6 +4,6 @@
   <%= render :partial => 'form', :locals => { :f => f } %>
   <%= submit_tag trn_geth('BUTTON_EDIT') %>
 <% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list', :mt => @module_type.id %> |
 <%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @option %> |
 <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @option}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

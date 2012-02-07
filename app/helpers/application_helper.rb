@@ -66,7 +66,9 @@ module ApplicationHelper
     </div>".html_safe
   end
 
-  def menu_item(image, link_label, link)
-    "<a href=#{url_for link}>#{image_tag(image + '.png', :size => "32x32", :border => 0)}<label>#{trn_geth(link_label)}</label></a>".html_safe
+  def menu_item(image, link_label, link, options = {})
+    display_label = trn_geth(link_label)
+    display_label += ' - ' + options[:label] if options[:label]
+    "<a href=#{url_for link}>#{image_tag(image + '.png', :size => "32x32", :border => 0)}<label>#{display_label}</label></a>".html_safe
   end
 end

@@ -32,7 +32,7 @@
     <td><%= image_tag @option.photo.url, :class => "#{ 'popup' unless @option.photo.original_filename.blank? }"%></td>
   </tr>
 </table>
-<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list', :mt => @module_type.id %> |
 <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @option %> |
 <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @option}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
 

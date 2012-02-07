@@ -112,6 +112,50 @@
     </div>
   </div>
 
+  <div class="door-option-list section">
+    <div class="intro">
+      <%= trn_get('OPTIONS_INTRO') %>
+    </div>
+
+    <div class="options-list">
+      <% categorized_options = Serie.categorize_options(@options) %>
+      <% categorized_options.keys.sort.each do |i| %>
+        <% categorized_options[i].each do |category, options| %>
+          <span class="section-title"><%= h category.tr_name %></span><br />
+          <% for option in options %>
+            <% if category.multiselect %>
+              <%= check_box_tag 'options[]', option.id, @selected_options.include?(option.id) %>
+            <% else %>
+              <%= radio_button_tag "options_category_#{category.id}[]", option.id, @selected_options.include?(option.id) %>
+            <% end %>
+            <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
+            <%= option.tr_description %>
+            (<%= option.pricing_method.tr_description %><%= trn_geth('LABEL_SEMICOLON') %>
+            <%= option.price %>
+            <% if option.minimum_quantity != 0 and (option.pricing_method_id == 1 or option.pricing_method_id == 2) %>
+              , <%= trn_get('LABEL_MINIMUM_QUANTITY') %>
+              <%= option.minimum_quantity %>
+              <%= option.options_minimum_unit.tr_description %>
+            <% end %>
+            )
+            <% if option.pricing_method.quantifiable %>
+              <%= trn_get('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %>
+              <%= text_field_tag "option_quantity_#{option.id}", 0, :size => 6 %>
+            <% end %>
+            <br/>
+          <% end %>
+          <% if !category.multiselect %>
+            <%= radio_button_tag "options_category_#{category.id}[]", -1, false %>
+            <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
+            <%= trn_get("NONE_MSG") %>
+            <br/>
+          <% end %>
+        <% end %>
+        <br/>
+      <% end %>
+    </div>
+  </div>
+
   <%= submit_tag trn_geth('BUTTON_ADD') %>
   <%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @door_line.quotation_id %>
 <% end %>

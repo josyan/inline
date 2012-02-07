@@ -1,6 +1,6 @@
 class SerieController < ApplicationController
     before_filter :check_administrator_role
-    
+
   def list
     @series = Serie.order("name")
   end
@@ -51,7 +51,7 @@ class SerieController < ApplicationController
     # should probably delete all existing dimensions and sizes first...
 
     Dimension.delete_all.where(:serie_id => @serie.id)
-    
+
     # TODO: need to make sure starting value is even
     # next, generate all the widths and heights
     curr_width = min_w
@@ -59,17 +59,17 @@ class SerieController < ApplicationController
       Width.create :serie_id => params[:id], :value => curr_width
       curr_width += 2;
     end
-    
+
     curr_height = min_h;
     while curr_height <= max_h do
       Height.create :serie_id => params[:id], :value => curr_height
       curr_height += 2;
-    end    
+    end
 
     # given all the above params, generate w,h dimension every 2 inches and set price.
     redirect_to :action => 'show', :id => params[:id]
   end
-  
+
   def generate_prices
     # given a series id, opening id, and price, fill in the prices
     @serie = Serie.find(params[:id])
@@ -85,7 +85,7 @@ class SerieController < ApplicationController
          value = w.value.to_f * h.value.to_f * price_per_sq_ft / 144.0
          value = value.ceil
          SeriePrice.create :width_id => w.id, :height_id => h.id, :opening_id => @opening.id, :price => value
-        } 
+        }
     }
     flash[:notice] = trn_get('MSG_PRICES_GENERATED')
 
@@ -120,13 +120,13 @@ class SerieController < ApplicationController
         end
       end
     }
-    
+
     redirect_to :action => 'show', :id => params[:id]
   end
 
   def edit_options
     @serie = Serie.find(params[:id])
-    @options = Option.includes(:option_categories).order('option_categories.display_order asc, options.description asc')
+    @options = Option.includes(:option_categories).order('option_categories.display_order asc, options.description asc').where(:module_type_id => 1)
     # take the list of options, and rearrange it to be organized by category.
     # lets do this with a hash of hashes
     @categorized_options = Serie.categorize_options(@options)
@@ -137,9 +137,6 @@ class SerieController < ApplicationController
     new_selected_options = params[:options] ? params[:options].map(&:to_i) : []
     old_selected_options = @serie.options.collect(&:id)
     @serie.options.concat(Option.find((new_selected_options - old_selected_options)))
-#    (new_selected_options - old_selected_options).each { |o|
-#      @serie.options << Option.find(o)
-#    }
     (old_selected_options - new_selected_options).each { |o|
       @serie.options.delete Option.find(o)
     }
@@ -203,13 +200,10 @@ class SerieController < ApplicationController
     new_selected_openings = params[:openings] ? params[:openings].map{ |o| o.to_i } : []
     old_selected_openings = @serie.openings.map{ |o| o.id }
     @serie.openings.concat(Opening.find(new_selected_openings - old_selected_openings))
-#    (new_selected_openings - old_selected_openings).each { |o|
-#      @serie.openings << Opening.find(o)
-#    }
     (old_selected_openings - new_selected_openings).each { |o|
       @serie.openings.delete Opening.find(o)
     }
     redirect_to :action => 'show', :id => @serie
   end
- 
+
 end
