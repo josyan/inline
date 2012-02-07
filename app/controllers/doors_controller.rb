@@ -22,6 +22,8 @@ class DoorsController < ApplicationController
 
     @options = Option.find(:all, :conditions => { :module_type_id => 2 }).sort_by { |o| o.tr_description }
     @selected_options = []
+
+    @door_line.quantity = 1
   end
 
   def configure_panels

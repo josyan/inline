@@ -156,6 +156,14 @@
     </div>
   </div>
 
+  <div id="door-quantity" class="section">
+    <div class="intro">
+      <%= trn_get('QUANTITY_INTRO') %>
+    </div>
+
+    <%= text_field_tag 'door_line[quantity]', @door_line.quantity %>
+  </div>
+
   <%= submit_tag trn_geth('BUTTON_ADD') %>
   <%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @door_line.quotation_id %>
 <% end %>
