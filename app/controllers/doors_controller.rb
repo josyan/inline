@@ -90,6 +90,8 @@ class DoorsController < ApplicationController
 
   def create
     @door_line = DoorLine.new(params[:door_line])
+    # TODO remove later
+    params[:price] = 0
     if @door_line.save
       params[:door_line_sections].each_with_index do |line_section, index|
         line_section.each do |key, value|
