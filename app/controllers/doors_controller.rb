@@ -1,27 +1,19 @@
 class DoorsController < ApplicationController
 
   def new
+    init_variables
 
     # create new door line with default settings
     @door_line = DoorLine.new
     @door_line.quotation_id = params[:id]
-
-    @door_frames = DoorFrame.all(:order => 'sections')
     @door_line.door_frame = @door_frames.first
-
     @door_line.door_combination = DoorCombination.first(:conditions => { :door_frame_id => @door_line.door_frame_id })
-
-    @frame_profiles = FrameProfile.all(:order => :name)
     @door_line.frame_profile = @frame_profiles.first
-
-    @slab_materials = SlabMaterial.all(:order => :name)
     @door_line.slab_material = @slab_materials.first
-
-    @door_borings = DoorBoring.all(:order => :name)
     @door_line.door_boring = @door_borings.first
+    @door_line.quantity = 1
 
-    @options = Option.find(:all, :conditions => { :module_type_id => 2 }).sort_by { |o| o.tr_description }
-    @selected_options = []
+    init_options
   end
 
   def configure_panels
@@ -97,7 +89,55 @@ class DoorsController < ApplicationController
   end
 
   def create
+    @door_line = DoorLine.new(params[:door_line])
+    if @door_line.save
+      params[:door_line_sections].each_with_index do |line_section, index|
+        line_section.each do |key, value|
+          line_section.delete key if value.blank?
+        end
+        line_section[:order] = index
+        @door_line.door_line_sections << DoorLineSection.new(line_section)
+      end
+      get_options_from_params(params).each do |o|
+        @door_line.door_line_options << DoorLineOption.new(:option_id => o,
+                                                           :quantity => (params["option_quantity_#{o}"] || 1).to_f)
+      end
+      redirect_to quotation_path(@door_line.quotation_id)
+    else
+      init_variables
+      init_options
+      render :action => 'new'
+    end
+  end
 
+  private ####################################################################
+
+  def init_variables
+    @door_frames = DoorFrame.all(:order => 'sections')
+    @frame_profiles = FrameProfile.all(:order => :name)
+    @slab_materials = SlabMaterial.all(:order => :name)
+    @door_borings = DoorBoring.all(:order => :name)
+    @options = Option.find(:all, :conditions => { :module_type_id => 2 }).sort_by { |o| o.tr_description }
+  end
+
+  def init_options
+    if @door_line.new_record?
+      @selected_options = []
+    else
+      @selected_options = []
+    end
+  end
+
+  def get_options_from_params(params)
+    new_selected_options = params[:options] ? params[:options].map { |o| o.to_i } : []
+
+    # we have params[:option_category_<id>] that hold a single option id for single-select categories
+    # we can take those id's and merge them into new_selected_options
+    more_options = params.keys.grep(/options_category_[0-9]+/).map { |k| params[k].to_i }.flatten
+    new_selected_options += more_options
+    # remove any options with index of -1, those are the special "None" options
+    new_selected_options.reject! { |i| i == -1 }
+    new_selected_options
   end
 
 end

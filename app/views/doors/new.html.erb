@@ -126,7 +126,7 @@
             <% if category.multiselect %>
               <%= check_box_tag 'options[]', option.id, @selected_options.include?(option.id) %>
             <% else %>
-              <%= radio_button_tag "options_category_#{category.id}[]", option.id, @selected_options.include?(option.id) %>
+              <%= radio_button_tag "options_category_#{category.id}", option.id, @selected_options.include?(option.id) %>
             <% end %>
             <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
             <%= option.tr_description %>
@@ -154,6 +154,14 @@
         <br/>
       <% end %>
     </div>
+  </div>
+
+  <div id="door-quantity" class="section">
+    <div class="intro">
+      <%= trn_get('QUANTITY_INTRO') %>
+    </div>
+
+    <%= text_field_tag 'door_line[quantity]', @door_line.quantity %>
   </div>
 
   <%= submit_tag trn_geth('BUTTON_ADD') %>
