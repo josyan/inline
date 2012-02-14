@@ -1,6 +1,6 @@
 class CreateDoorLinesOptions < ActiveRecord::Migration
   def self.up
-    create_table :door_lines_options do |t|
+    create_table :door_line_options do |t|
       t.integer :door_line_id
       t.integer :option_id
       t.float :quantity
@@ -9,6 +9,6 @@ class CreateDoorLinesOptions < ActiveRecord::Migration
   end
 
   def self.down
-    drop_table :door_lines_options
+    drop_table :door_line_options
   end
 end

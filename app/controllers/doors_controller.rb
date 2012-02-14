@@ -12,6 +12,8 @@ class DoorsController < ApplicationController
     @door_line.slab_material = @slab_materials.first
     @door_line.door_boring = @door_borings.first
     @door_line.quantity = 1
+
+    init_options
   end
 
   def configure_panels
@@ -93,9 +95,12 @@ class DoorsController < ApplicationController
         line_section.each do |key, value|
           line_section.delete key if value.blank?
         end
-        line_section[:door_line_id] = @door_line.id
         line_section[:order] = index
-        DoorLineSection.new(line_section).save
+        @door_line.door_line_sections << DoorLineSection.new(line_section)
+      end
+      get_options_from_params(params).each do |o|
+        @door_line.door_line_options << DoorLineOption.new(:option_id => o,
+                                                           :quantity => (params["option_quantity_#{o}"] || 1).to_f)
       end
       redirect_to quotation_path(@door_line.quotation_id)
     else
@@ -122,4 +127,17 @@ class DoorsController < ApplicationController
       @selected_options = []
     end
   end
+
+  def get_options_from_params(params)
+    new_selected_options = params[:options] ? params[:options].map { |o| o.to_i } : []
+
+    # we have params[:option_category_<id>] that hold a single option id for single-select categories
+    # we can take those id's and merge them into new_selected_options
+    more_options = params.keys.grep(/options_category_[0-9]+/).map { |k| params[k].to_i }.flatten
+    new_selected_options += more_options
+    # remove any options with index of -1, those are the special "None" options
+    new_selected_options.reject! { |i| i == -1 }
+    new_selected_options
+  end
+
 end

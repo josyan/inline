@@ -7,4 +7,5 @@ class DoorLine < ActiveRecord::Base
   has_many :door_line_sections, :order => 'order'
   belongs_to :door_opening
   belongs_to :door_boring
+  has_many :door_line_options
 end

@@ -126,7 +126,7 @@
             <% if category.multiselect %>
               <%= check_box_tag 'options[]', option.id, @selected_options.include?(option.id) %>
             <% else %>
-              <%= radio_button_tag "options_category_#{category.id}[]", option.id, @selected_options.include?(option.id) %>
+              <%= radio_button_tag "options_category_#{category.id}", option.id, @selected_options.include?(option.id) %>
             <% end %>
             <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
             <%= option.tr_description %>
