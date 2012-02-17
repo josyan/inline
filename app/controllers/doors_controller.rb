@@ -112,6 +112,13 @@ class DoorsController < ApplicationController
     end
   end
 
+  def destroy
+    door_line = DoorLine.find(params[:id])
+    door_line.destroy
+    flash[:notice] = trn_geth('LABEL_DOOR_LINE') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    redirect_to quotation_path(door_line.quotation_id)
+  end
+
   private ####################################################################
 
   def init_variables
