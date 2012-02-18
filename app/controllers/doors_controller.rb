@@ -91,13 +91,13 @@ class DoorsController < ApplicationController
   def create
     @door_line = DoorLine.new(params[:door_line])
     # TODO remove later
-    params[:price] = 0
+    @door_line.price = 0
     if @door_line.save
       params[:door_line_sections].each_with_index do |line_section, index|
         line_section.each do |key, value|
           line_section.delete key if value.blank?
         end
-        line_section[:order] = index
+        line_section[:sort_order] = index
         @door_line.door_line_sections << DoorLineSection.new(line_section)
       end
       get_options_from_params(params).each do |o|
