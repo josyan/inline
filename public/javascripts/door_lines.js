@@ -116,7 +116,10 @@ $j(document).ready(function() {
     $j('#door-combination-selection #dcl-' + id).show();
 
     // launch click on first door combination
-    $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
+    if($j('#door-combination-selection #dcl-' + id + ' .door-combination.selected').length == 1)
+      $j('#door-combination-selection #dcl-' + id + ' .door-combination.selected').click();
+    else
+      $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
   });
 
   // door combination interraction

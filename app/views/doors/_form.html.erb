@@ -32,7 +32,7 @@
   <% @door_frames.each do |door_frame| %>
     <div id="dcl-<%= door_frame.id %>" class="door-combination-list choice-list" style="<%= 'display: none;' if door_frame != @door_line.door_frame %>">
       <% door_frame.door_combinations.each do |door_combination| %>
-        <div class="choice door-combination <%= 'selected' if door_combination.id == @door_line.door_combination_id %>" id="dc-<%= door_combination.id %>">
+        <div class="choice door-combination <%= 'selected' if door_combination == @door_line.door_combination %>" id="dc-<%= door_combination.id %>">
           <div class="preview-image">
             <%= image_tag 'door_combinations/' + door_combination.preview_image_name %>
           </div>
