@@ -112,6 +112,12 @@ class DoorsController < ApplicationController
     end
   end
 
+  def edit
+    init_variables
+    @door_line = DoorLine.find(params[:id])
+    init_options
+  end
+
   def destroy
     door_line = DoorLine.find(params[:id])
     door_line.destroy
