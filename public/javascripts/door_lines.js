@@ -126,6 +126,7 @@ $j(document).ready(function() {
   // door combination interraction
   $j('#door-combination-selection .door-combination').click(function() {
     var id = $j(this).attr('id').replace('dc-', '');
+    var door_line_id = $j('#door_line_id').val();
 
     // highlight the selection
     $j('#door-combination-selection .door-combination').removeClass('selected');
@@ -135,7 +136,7 @@ $j(document).ready(function() {
     $j('#door_line_door_combination_id').val(id);
 
     // load the interface to configure panels
-    $j.get('/doors/configure_panels', $j('#door-panels-configuration input').serialize() + '&door_combination_id=' + id, function(response) {
+    $j.get('/doors/configure_panels', $j('#door-panels-configuration input,#door-panels-configuration select').serialize() + '&door_combination_id=' + id + '&door_line_id=' + door_line_id, function(response) {
       $j('#door-panels-configuration').html(response);
       attach_door_panels_configuration_events();
       $j('#door-panels-configuration .door-panel.selected').click();
