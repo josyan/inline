@@ -117,8 +117,9 @@ $j(document).ready(function() {
 
     // launch click on selected or first door combination
     var selected_door_combination_id = $j('#door_line_door_combination_id').val();
-    if($j('#dc-' + selected_door_combination_id).length == 1)
-      $j('#dc-' + selected_door_combination_id).click();
+    console.log(selected_door_combination_id);
+    if($j('#door-combination-selection #dcl-' + id + ' #dc-' + selected_door_combination_id).length == 1)
+      $j('#door-combination-selection #dcl-' + id + ' #dc-' + selected_door_combination_id).click();
     else
       $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
   });
