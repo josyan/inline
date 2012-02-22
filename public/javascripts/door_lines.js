@@ -115,9 +115,10 @@ $j(document).ready(function() {
     $j('#door-combination-selection .door-combination-list').hide();
     $j('#door-combination-selection #dcl-' + id).show();
 
-    // launch click on first door combination
-    if($j('#door-combination-selection #dcl-' + id + ' .door-combination.selected').length == 1)
-      $j('#door-combination-selection #dcl-' + id + ' .door-combination.selected').click();
+    // launch click on selected or first door combination
+    var selected_door_combination_id = $j('#door_line_door_combination_id').val();
+    if($j('#dc-' + selected_door_combination_id).length == 1)
+      $j('#dc-' + selected_door_combination_id).click();
     else
       $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
   });
@@ -144,7 +145,13 @@ $j(document).ready(function() {
     $j.get('/doors/configure_openings', 'door_combination_id=' + id + '&door_opening_id=' + $j('#door_line_door_opening_id').val(), function(response) {
       $j('#door-openings-configuration').html(response);
       attach_door_openings_configuration_events();
-      $j('#door-openings-configuration .door-opening.selected').click();
+
+      // lauch click on selected or first opening
+      var selected_door_opening_id = $j('#door_line_door_opening_id').val();
+      if($j('#do-' + selected_door_opening_id).length == 1)
+        $j('#do-' + selected_door_opening_id).click();
+      else
+        $j('#door-openings-configuration .door-opening:first').click();
     });
   });
 
