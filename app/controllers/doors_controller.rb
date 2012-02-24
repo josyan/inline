@@ -20,7 +20,7 @@ class DoorsController < ApplicationController
     door_combination = DoorCombination.find(params[:door_combination_id])
 
     # create and populate each section of the door
-    previous_sections = params[:door_line_sections] ? params[:door_line_sections].dup : []
+    previous_sections = init_previous_sections
     @door_line_sections = door_combination.sections.split(';').map do |door_section_code|
       door_line_section = { :door_section => DoorSection.find_by_code(door_section_code) }
       door_line_section[:door_panels] = door_line_section[:door_section].door_panels
@@ -46,7 +46,7 @@ class DoorsController < ApplicationController
     end
 
     # assign the glasses if possible
-    previous_sections = params[:door_line_sections] ? params[:door_line_sections].dup : []
+    previous_sections = init_previous_sections
     @door_line_sections.each do |door_line_section|
       # check if we had a similar panel
       possible_choices = previous_sections.select { |s| s[:door_panel_id] == door_line_section[:door_line_section].door_panel_id.to_s }
@@ -112,6 +112,12 @@ class DoorsController < ApplicationController
     end
   end
 
+  def edit
+    init_variables
+    @door_line = DoorLine.find(params[:id])
+    init_options
+  end
+
   def destroy
     door_line = DoorLine.find(params[:id])
     door_line.destroy
@@ -133,7 +139,18 @@ class DoorsController < ApplicationController
     if @door_line.new_record?
       @selected_options = []
     else
-      @selected_options = []
+      @options.each do |option|
+        if option.pricing_method.quantifiable
+          oli_index = @door_line.door_line_options.index { |o| o.option_id == option.id }
+          if oli_index.nil?
+            qty = option.minimum_quantity
+          else
+            qty = @door_line.door_line_options[oli_index].quantity
+          end
+          instance_variable_set "@option_quantity_#{option.id}".to_sym, qty
+        end
+      end
+      @selected_options = @door_line.door_line_options.map { |o| o.option.id }
     end
   end
 
@@ -147,6 +164,23 @@ class DoorsController < ApplicationController
     # remove any options with index of -1, those are the special "None" options
     new_selected_options.reject! { |i| i == -1 }
     new_selected_options
+  end
+
+  def init_previous_sections
+    # if we get settings for sections, use them as a base, else load them from the edited door line if any
+    if params[:door_line_sections]
+      return params[:door_line_sections].dup
+    elsif !params[:door_line_id].blank?
+      door_line = DoorLine.find(params[:door_line_id])
+      return door_line.door_line_sections.map do |door_line_section|
+        { :door_glass_id => door_line_section.door_glass_id.to_s,
+          :door_panel_id => door_line_section.door_panel_id.to_s,
+          :door_section_id => door_line_section.door_section_id.to_s,
+          :door_section_dimension_id => door_line_section.door_section_dimension_id.to_s }
+      end
+    else
+      return []
+    end
   end
 
 end

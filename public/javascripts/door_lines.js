@@ -115,13 +115,19 @@ $j(document).ready(function() {
     $j('#door-combination-selection .door-combination-list').hide();
     $j('#door-combination-selection #dcl-' + id).show();
 
-    // launch click on first door combination
-    $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
+    // launch click on selected or first door combination
+    var selected_door_combination_id = $j('#door_line_door_combination_id').val();
+    console.log(selected_door_combination_id);
+    if($j('#door-combination-selection #dcl-' + id + ' #dc-' + selected_door_combination_id).length == 1)
+      $j('#door-combination-selection #dcl-' + id + ' #dc-' + selected_door_combination_id).click();
+    else
+      $j('#door-combination-selection #dcl-' + id + ' .door-combination:first').click();
   });
 
   // door combination interraction
   $j('#door-combination-selection .door-combination').click(function() {
     var id = $j(this).attr('id').replace('dc-', '');
+    var door_line_id = $j('#door_line_id').val();
 
     // highlight the selection
     $j('#door-combination-selection .door-combination').removeClass('selected');
@@ -131,7 +137,7 @@ $j(document).ready(function() {
     $j('#door_line_door_combination_id').val(id);
 
     // load the interface to configure panels
-    $j.get('/doors/configure_panels', $j('#door-panels-configuration input').serialize() + '&door_combination_id=' + id, function(response) {
+    $j.get('/doors/configure_panels', $j('#door-panels-configuration input,#door-panels-configuration select').serialize() + '&door_combination_id=' + id + '&door_line_id=' + door_line_id, function(response) {
       $j('#door-panels-configuration').html(response);
       attach_door_panels_configuration_events();
       $j('#door-panels-configuration .door-panel.selected').click();
@@ -141,7 +147,13 @@ $j(document).ready(function() {
     $j.get('/doors/configure_openings', 'door_combination_id=' + id + '&door_opening_id=' + $j('#door_line_door_opening_id').val(), function(response) {
       $j('#door-openings-configuration').html(response);
       attach_door_openings_configuration_events();
-      $j('#door-openings-configuration .door-opening.selected').click();
+
+      // lauch click on selected or first opening
+      var selected_door_opening_id = $j('#door_line_door_opening_id').val();
+      if($j('#do-' + selected_door_opening_id).length == 1)
+        $j('#do-' + selected_door_opening_id).click();
+      else
+        $j('#door-openings-configuration .door-opening:first').click();
     });
   });
 
