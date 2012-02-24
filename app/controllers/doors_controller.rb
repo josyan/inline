@@ -139,7 +139,18 @@ class DoorsController < ApplicationController
     if @door_line.new_record?
       @selected_options = []
     else
-      @selected_options = []
+      @options.each do |option|
+        if option.pricing_method.quantifiable
+          oli_index = @door_line.door_line_options.index { |o| o.option_id == option.id }
+          if oli_index.nil?
+            qty = option.minimum_quantity
+          else
+            qty = @door_line.door_line_options[oli_index].quantity
+          end
+          instance_variable_set "@option_quantity_#{option.id}".to_sym, qty
+        end
+      end
+      @selected_options = @door_line.door_line_options.map { |o| o.option.id }
     end
   end
 
