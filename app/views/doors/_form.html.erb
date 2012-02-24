@@ -138,7 +138,7 @@
           )
           <% if option.pricing_method.quantifiable %>
             <%= trn_get('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %>
-            <%= text_field_tag "option_quantity_#{option.id}", 0, :size => 6 %>
+            <%= text_field_tag "option_quantity_#{option.id}", instance_variable_get("@option_quantity_#{option.id}".to_sym), :size => 6 %>
           <% end %>
           <br/>
         <% end %>
