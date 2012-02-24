@@ -93,17 +93,7 @@ class DoorsController < ApplicationController
     # TODO remove later
     @door_line.price = 0
     if @door_line.save
-      params[:door_line_sections].each_with_index do |line_section, index|
-        line_section.each do |key, value|
-          line_section.delete key if value.blank?
-        end
-        line_section[:sort_order] = index
-        @door_line.door_line_sections << DoorLineSection.new(line_section)
-      end
-      get_options_from_params(params).each do |o|
-        @door_line.door_line_options << DoorLineOption.new(:option_id => o,
-                                                           :quantity => (params["option_quantity_#{o}"] || 1).to_f)
-      end
+      save_sections_and_options
       redirect_to quotation_path(@door_line.quotation_id)
     else
       init_variables
@@ -116,6 +106,16 @@ class DoorsController < ApplicationController
     init_variables
     @door_line = DoorLine.find(params[:id])
     init_options
+  end
+
+  def update
+    @door_line = DoorLine.find(params[:id])
+    if @door_line.update_attributes(params[:door_line])
+      @door_line.door_line_sections.clear
+      @door_line.door_line_options.clear
+      save_sections_and_options
+      redirect_to quotation_path(@door_line.quotation_id)
+    end
   end
 
   def destroy
@@ -180,6 +180,20 @@ class DoorsController < ApplicationController
       end
     else
       return []
+    end
+  end
+
+  def save_sections_and_options
+    params[:door_line_sections].each_with_index do |line_section, index|
+      line_section.each do |key, value|
+        line_section.delete key if value.blank?
+      end
+      line_section[:sort_order] = index
+      @door_line.door_line_sections << DoorLineSection.new(line_section)
+    end
+    get_options_from_params(params).each do |o|
+      @door_line.door_line_options << DoorLineOption.new(:option_id => o,
+                                                         :quantity => (params["option_quantity_#{o}"] || 1).to_f)
     end
   end
 
