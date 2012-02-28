@@ -8,4 +8,10 @@ class DoorLine < ActiveRecord::Base
   belongs_to :door_opening
   belongs_to :door_boring
   has_many :door_line_options, :dependent => :destroy
+
+  def update_price
+    self.price = 0
+    self.save
+  end
+
 end
