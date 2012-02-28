@@ -15,6 +15,9 @@ class DoorLine < ActiveRecord::Base
     # door frame
     self.price += door_frame.price
 
+    # door combination
+    self.price += door_combination.price
+
     self.save
   end
 
