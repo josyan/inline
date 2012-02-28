@@ -11,6 +11,10 @@ class DoorLine < ActiveRecord::Base
 
   def update_price
     self.price = 0
+
+    # door frame
+    self.price += door_frame.price
+
     self.save
   end
 
