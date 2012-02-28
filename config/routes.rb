@@ -30,6 +30,7 @@ GlassVision::Application.routes.draw do
   resources :door_frames
   resources :door_combinations
   resources :frame_profiles
+  resources :slab_materials
   resources :door_panels
   resources :door_openings
   resources :door_glass_families do

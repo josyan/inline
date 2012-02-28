@@ -21,6 +21,9 @@ class DoorLine < ActiveRecord::Base
     # frame profile
     self.price += frame_profile.price
 
+    # slab material
+    self.price += slab_material.price
+
     self.save
   end
 
