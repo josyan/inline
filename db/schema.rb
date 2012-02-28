@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(:version => 20120228003825) do
     t.string   "preview_image_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "price"
+    t.float    "price",              :default => 0.0
   end
 
   create_table "door_glass_families", :force => true do |t|

@@ -1,6 +1,6 @@
 class AddPriceToDoorFrames < ActiveRecord::Migration
   def self.up
-    add_column :door_frames, :price, :float
+    add_column :door_frames, :price, :float, :default => 0.0
   end
 
   def self.down
