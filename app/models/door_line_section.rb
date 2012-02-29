@@ -8,6 +8,9 @@ class DoorLineSection < ActiveRecord::Base
   def price
     p = 0
 
+    # door section
+    p += door_section.price
+
     p
   end
 
