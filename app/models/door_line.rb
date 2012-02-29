@@ -27,6 +27,9 @@ class DoorLine < ActiveRecord::Base
     # door opening
     self.price += door_opening.price
 
+    # door boring
+    self.price += door_boring.price
+
     self.save
   end
 
