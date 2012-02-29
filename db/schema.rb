@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120228013710) do
+ActiveRecord::Schema.define(:version => 20120229005947) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(:version => 20120228013710) do
     t.string   "preview_image_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
   end
 
   create_table "door_panels", :force => true do |t|
