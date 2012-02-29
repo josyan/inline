@@ -11,6 +11,9 @@ class DoorLineSection < ActiveRecord::Base
     # door section
     p += door_section.price
 
+    # door panel
+    p += door_panel.price if door_panel
+
     p
   end
 
