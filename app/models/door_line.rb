@@ -24,6 +24,9 @@ class DoorLine < ActiveRecord::Base
     # slab material
     self.price += slab_material.price
 
+    # door opening
+    self.price += door_opening.price
+
     self.save
   end
 
