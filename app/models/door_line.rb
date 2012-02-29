@@ -30,6 +30,11 @@ class DoorLine < ActiveRecord::Base
     # door boring
     self.price += door_boring.price
 
+    # door line sections
+    door_line_sections.each do |door_line_section|
+      self.price += door_line_section.price
+    end
+
     self.save
   end
 
