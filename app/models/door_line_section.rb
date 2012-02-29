@@ -17,6 +17,9 @@ class DoorLineSection < ActiveRecord::Base
     # door glass
     p += door_glass.price if door_glass
 
+    # section dimension
+    p += door_section_dimension.price
+
     p
   end
 
