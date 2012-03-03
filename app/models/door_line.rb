@@ -43,4 +43,12 @@ class DoorLine < ActiveRecord::Base
     self.save
   end
 
+  def total_width
+    width = 0
+    door_line_sections.each do |door_line_section|
+      width += door_line_section.door_section_dimension.value
+    end
+    width
+  end
+
 end
