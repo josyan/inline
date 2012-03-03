@@ -143,7 +143,7 @@
           <br/>
         <% end %>
         <% if !category.multiselect %>
-          <%= radio_button_tag "options_category_#{category.id}[]", -1, false %>
+          <%= radio_button_tag "options_category_#{category.id}", -1, false %>
           <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
           <%= trn_get("NONE_MSG") %>
           <br/>

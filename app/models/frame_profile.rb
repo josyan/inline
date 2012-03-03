@@ -1,5 +1,6 @@
 class FrameProfile < ActiveRecord::Base
   include Translatable
+  include Priceable
 
   has_attached_file :photo,
                     :url => "/system/:class/:attachment/:id/:style_:basename.:extension",

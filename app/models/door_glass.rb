@@ -1,4 +1,6 @@
 class DoorGlass < ActiveRecord::Base
+  include Priceable
+
   belongs_to :door_glass_family
   has_and_belongs_to_many :door_panels
 

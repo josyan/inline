@@ -90,10 +90,9 @@ class DoorsController < ApplicationController
 
   def create
     @door_line = DoorLine.new(params[:door_line])
-    # TODO remove later
-    @door_line.price = 0
     if @door_line.save
       save_sections_and_options
+      @door_line.update_price
       redirect_to quotation_path(@door_line.quotation_id)
     else
       init_variables
@@ -114,6 +113,7 @@ class DoorsController < ApplicationController
       @door_line.door_line_sections.clear
       @door_line.door_line_options.clear
       save_sections_and_options
+      @door_line.update_price
       redirect_to quotation_path(@door_line.quotation_id)
     end
   end

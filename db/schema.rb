@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120208012743) do
+ActiveRecord::Schema.define(:version => 20120229023057) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.integer  "photo_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
   end
 
   create_table "door_combinations", :force => true do |t|
@@ -76,6 +77,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.integer  "door_frame_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
   end
 
   create_table "door_combinations_door_openings", :id => false, :force => true do |t|
@@ -89,6 +91,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.string   "preview_image_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
   end
 
   create_table "door_glass_families", :force => true do |t|
@@ -105,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.integer  "photo_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",                :default => 0.0
   end
 
   create_table "door_glasses_door_panels", :id => false, :force => true do |t|
@@ -122,7 +126,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
 
   create_table "door_line_sections", :force => true do |t|
     t.integer  "door_line_id"
-    t.integer  "order"
+    t.integer  "sort_order"
     t.integer  "door_section_id"
     t.integer  "door_panel_id"
     t.integer  "door_glass_id"
@@ -150,6 +154,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.string   "preview_image_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
   end
 
   create_table "door_panels", :force => true do |t|
@@ -157,6 +162,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.string   "preview_image_name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
   end
 
   create_table "door_panels_door_sections", :id => false, :force => true do |t|
@@ -169,6 +175,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.float    "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",           :default => 0.0
   end
 
   create_table "door_sections", :force => true do |t|
@@ -176,6 +183,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.string   "code"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",      :default => 0.0
   end
 
   create_table "emails", :force => true do |t|
@@ -193,6 +201,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.integer  "photo_file_size"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
   end
 
   create_table "module_types", :force => true do |t|
@@ -386,6 +395,7 @@ ActiveRecord::Schema.define(:version => 20120208012743) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "price",      :default => 0.0
   end
 
   create_table "translations", :force => true do |t|
