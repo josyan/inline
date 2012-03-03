@@ -46,8 +46,10 @@ class OptionController < ApplicationController
   end
 
   def delete
-    Option.find(params[:id]).destroy
+    @option = Option.find(params[:id])
+    @module_type = @option.module_type
+    @option.destroy
     flash[:notice] = trn_geth('LABEL_OPTION') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
-    redirect_to :action => 'list'
+    redirect_to :action => 'list', :mt => @module_type.id
   end
 end
