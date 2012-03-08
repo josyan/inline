@@ -1,3 +1,4 @@
+<% discount_percent = (1 - @quotation.discount / 100.0) %>
 <table cellpadding="5" width="100%">
   <tr valign="top" width="1%">
     <td rowspan="2">
@@ -90,128 +91,249 @@
 <% print_header = true %>
 <table width="100%" cellspacing="0" cellpadding="3">
   <% total = 0 %>
+
+  <!-- fenetres -->
   <% for ql in @quotation.quotation_lines %>
-      <% if print_header %>
-          <tr bgcolor="#b2b2b2">
-            <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
-            <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
-            <th><%= trn_get('PRINT_HEADER_UNIT_PRICE') %></th>
-            <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
-            <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+    <% if print_header %>
+      <tr bgcolor="#b2b2b2">
+        <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
+        <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+        <th><%= trn_get('PRINT_HEADER_UNIT_PRICE') %></th>
+        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+        <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+      </tr>
+      <% print_header = false %>
+    <% end %>
+    <tr valign="top">
+      <%
+         dims = ql.get_image_size
+         options = {:style => "margin-top: 3px;"}
+         if dims[0] > dims[1]
+             options[:width] = 175
+         else
+             options[:height] = 175
+         end
+      %>
+      <td width="1%" valign="top"><%= image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
+      <td>
+
+        <table width="100%">
+          <% if ql.label and !ql.label.empty? %>
+            <tr>
+              <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+              <td><%= ql.label %></td>
+            </tr>
+          <% end %>
+          <tr>
+            <td width="1%" nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.serie.tr_name %></td>
           </tr>
-          <% print_header = false %>
-      <% end %>
-      <tr valign="top">
-        <%
-           dims = ql.get_image_size
-           options = {:style => "margin-top: 3px;"}
-           if dims[0] > dims[1]
-               options[:width] = 175
-           else
-               options[:height] = 175
-           end
-        %>
-        <td width="1%" valign="top"><%= image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
-        <td>
-          <table width="100%">
-            <% if ql.label and !ql.label.empty? %>
-                <tr>
-                  <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-                  <td><%= ql.label %></td>
-                </tr>
-            <% end %>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.shape.tr_name %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation }.join %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= number_with_precision ql.width %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= number_with_precision ql.height %></td>
+          </tr>
+          <% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
             <tr>
-              <td width="1%" nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-              <td><%= ql.serie.tr_name %></td>
+              <td><%= trn_get('LABEL_INTERIOR_COLOR') %></td>
+              <td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
             </tr>
-            <tr>
-              <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-              <td><%= ql.shape.tr_name %></td>
-            </tr>
-            <tr>
-              <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-              <td><%= ql.quotation_lines_openings.map { |o| o.opening.tr_abbreviation }.join %></td>
-            </tr>
-            <tr>
-              <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-              <td><%= number_with_precision ql.width %></td>
-            </tr>
-            <tr>
-              <td nowrap="nowrap"><%= trn_geth('PRINT_HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-              <td><%= number_with_precision ql.height %></td>
-            </tr>
-            <% if !ql.interior_color.blank? || !ql.standard_interior_color.blank? %>
-                <tr>
-                  <td><%= trn_get('LABEL_INTERIOR_COLOR') %></td>
-                  <td><%= h ql.interior_color.blank? ? ql.standard_interior_color.tr_name : ql.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
-                </tr>
-            <% end %>
-            <% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank? %>
-                <tr>
-                  <td><%= trn_get('LABEL_EXTERIOR_COLOR') %></td>
-                  <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM") %> </td>
-                </tr>
-            <% end %>
-          </table>
-        </td>
-        <%
-           calculate_dimensions(ql)
-           discount_percent = (1 - @quotation.discount / 100.0)
-           ql_price = ql.price * (1 - @quotation.discount / 100.0)
-
-           # compute the option prices
-           total_option_prices = 0
-           option_string = ""
-
-           first_time = true
-           ql.options_quotation_lines.each { |opt|
-               option_price = calculate_one_option_price(opt.option, @openings, Shape.find(ql.shape_id)) * discount_percent
-               total_option_prices += option_price
-
-               option_string += ', ' unless first_time
-               option_string += opt.option.tr_description
-               option_string += "x #{opt.quantity}" if opt.quantity != 1
-               option_string += "(#{number_to_currency(option_price)})"
-
-               first_time = false
-           }
-
-        %>
-
-        <td width="10%" align="right">
-          <%= trn_geth('LABEL_OPENING') %><%= trn_geth('LABEL_SEMICOLON') %> <%= number_to_currency(ql_price - total_option_prices) %>
-          <br/>
-          <% if total_option_prices > 0 %>
-            <%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %> <%= number_to_currency(total_option_prices) %>
           <% end %>
-        </td>
-        <td width="10%" align="center"><%= ql.quantity %></td>
-        <td width="10%" align="right"><%= number_to_currency(ql_price * ql.quantity) %></td>
-      </tr>
-      <tr valign="top">
-        <td style="border-bottom: 2px dotted #808080;">
-          <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
-        </td>
-        <td colspan="3" style="border-bottom: 2px dotted #808080;">
-          <% if ql.options_quotation_lines.length > 0 %>
-              <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
-              <%= option_string %>
-          <%else %>
-              &nbsp;
+          <% if !ql.exterior_color.blank? || !ql.standard_exterior_color.blank? %>
+            <tr>
+              <td><%= trn_get('LABEL_EXTERIOR_COLOR') %></td>
+              <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM") %> </td>
+            </tr>
           <% end %>
-        </td>
-        <td style="border-bottom: 2px dotted #808080;">&nbsp;</td>
-      </tr>
-      <% total += ql_price * ql.quantity %>
-      <% printed_line += 1
-         if printed_line == 3
-             printed_line = 0
-             print_header = true %>
-          </table>
-          <div style="page-break-before: always;">&nbsp;</div>
-          <table width="100%" cellspacing="0" cellpadding="3">
-      <% end %>
+        </table>
+
+      </td>
+      <%
+        calculate_dimensions(ql)
+        ql_price = ql.price * discount_percent
+
+         # compute the option prices
+         total_option_prices = 0
+         option_string = ""
+
+         first_time = true
+         ql.options_quotation_lines.each do |opt|
+           option_price = calculate_one_option_price(opt.option, @openings, Shape.find(ql.shape_id)) * discount_percent
+           total_option_prices += option_price
+
+           option_string += ', ' unless first_time
+           option_string += opt.option.tr_description
+           option_string += " x #{opt.quantity}" if opt.quantity != 1
+           option_string += " (#{number_to_currency(option_price)})"
+
+           first_time = false
+        end
+      %>
+      <td width="10%" align="right">
+        <%= trn_geth('LABEL_OPENING') %><%= trn_geth('LABEL_SEMICOLON') %> <%= number_to_currency(ql_price - total_option_prices) %>
+        <br/>
+        <% if total_option_prices > 0 %>
+          <%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %> <%= number_to_currency(total_option_prices) %>
+        <% end %>
+      </td>
+      <td width="10%" align="center"><%= ql.quantity %></td>
+      <td width="10%" align="right"><%= number_to_currency(ql_price * ql.quantity) %></td>
+    </tr>
+    <tr valign="top">
+      <td style="border-bottom: 2px dotted #808080;">
+        <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
+      </td>
+      <td colspan="3" style="border-bottom: 2px dotted #808080;">
+        <% if ql.options_quotation_lines.length > 0 %>
+            <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
+            <%= option_string %>
+        <% else %>
+            &nbsp;
+        <% end %>
+      </td>
+      <td style="border-bottom: 2px dotted #808080;">&nbsp;</td>
+    </tr>
+    <% total += ql_price * ql.quantity %>
+    <% printed_line += 1 %>
+    <% if printed_line == 3
+         printed_line = 0
+         print_header = true %>
+  </table>
+  <div style="page-break-before: always;">&nbsp;</div>
+  <table width="100%" cellspacing="0" cellpadding="3">
+    <% end %>
   <% end %>
+
+  <!-- portes -->
+  <% for dl in @quotation.door_lines %>
+    <% if print_header %>
+      <tr bgcolor="#b2b2b2">
+        <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
+        <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+        <th><%= trn_get('PRINT_HEADER_UNIT_PRICE') %></th>
+        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+        <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+      </tr>
+      <% print_header = false %>
+    <% end %>
+    <tr valign="top">
+      <%#
+         dims = ql.get_image_size
+         options = {:style => "margin-top: 3px;"}
+         if dims[0] > dims[1]
+             options[:width] = 175
+         else
+             options[:height] = 175
+         end
+      %>
+      <td width="1%" valign="top"><%#= image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
+      <td>
+
+        <table>
+          <tr>
+            <td><%= trn_geth('HEADER_DOOR_COMBINATION') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.door_combination.tr_name %></td>
+          </tr>
+          <tr>
+            <td><%= trn_geth('HEADER_FRAME_PROFILE') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.frame_profile.tr_name %></td>
+          </tr>
+          <tr>
+            <td><%= trn_geth('HEADER_SLAB_MATERIAL') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.slab_material.tr_name %></td>
+          </tr>
+          <tr>
+            <td><%= trn_geth('HEADER_DOOR_OPENING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.door_opening.tr_name %></td>
+          </tr>
+          <tr>
+            <td><%= trn_geth('HEADER_DOOR_BORING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.door_boring.tr_name %></td>
+          </tr>
+          <% dl.door_line_sections.each_with_index do |section, index| %>
+          <tr>
+            <td valign="top"><%= trn_geth('HEADER_DOOR_SECTION') %> <%= index + 1 %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td>
+              <%= section.door_section.tr_name %>,
+              <% if section.door_panel %>
+                <%= section.door_panel.tr_name %>,
+              <% end %>
+              <% if section.door_glass %>
+                <%= section.door_glass.door_glass_family.tr_name %> / <%= section.door_glass.tr_name %>,
+              <% end %>
+              <%= section.door_section_dimension.value %>"
+            </td>
+          </tr>
+          <% end %>
+        </table>
+
+      </td>
+      <%
+        dl_price = dl.price * discount_percent
+
+        # compute the option prices
+        total_option_prices = 0
+        option_string = ""
+
+        first_time = true
+        dl.door_line_options.each do |opt|
+          option_price = opt.price * discount_percent
+          total_option_prices += option_price
+
+          option_string += ', ' unless first_time
+          option_string += opt.option.tr_description
+          option_string += " x #{opt.quantity}" if opt.quantity != 1
+          option_string += " (#{number_to_currency(option_price)})"
+
+          first_time = false
+        end
+      %>
+      <td width="10%" align="right">
+        <%= trn_geth('LABEL_OPENING') %><%= trn_geth('LABEL_SEMICOLON') %> <%= number_to_currency(dl_price - total_option_prices) %>
+        <br/>
+        <% if total_option_prices > 0 %>
+          <%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %> <%= number_to_currency(total_option_prices) %>
+        <% end %>
+      </td>
+      <td width="10%" align="center"><%= dl.quantity %></td>
+      <td width="10%" align="right"><%= number_to_currency(dl_price * dl.quantity) %></td>
+    </tr>
+    <tr valign="top">
+      <td style="border-bottom: 2px dotted #808080;">
+        <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
+      </td>
+      <td colspan="3" style="border-bottom: 2px dotted #808080;">
+        <% if dl.door_line_options.length > 0 %>
+            <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
+            <%= option_string %>
+        <% else %>
+            &nbsp;
+        <% end %>
+      </td>
+      <td style="border-bottom: 2px dotted #808080;">&nbsp;</td>
+    </tr>
+    <% total += dl_price * dl.quantity %>
+    <% printed_line += 1 %>
+    <% if printed_line == 3
+         printed_line = 0
+         print_header = true %>
+  </table>
+  <div style="page-break-before: always;">&nbsp;</div>
+  <table width="100%" cellspacing="0" cellpadding="3">
+    <% end %>
+  <% end %>
+
   <!-- options -->
   <% print_header = true if @quotation.options_quotations.length > 0 %>
   <% for option in @quotation.options_quotations %>
