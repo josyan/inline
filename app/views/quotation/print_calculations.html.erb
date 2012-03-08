@@ -240,43 +240,43 @@
       <td width="1%" valign="top"><%#= image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
       <td>
 
-      <table>
-        <tr>
-          <td><%= trn_geth('HEADER_DOOR_COMBINATION') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= dl.door_combination.tr_name %></td>
-        </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_FRAME_PROFILE') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= dl.frame_profile.tr_name %></td>
-        </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_SLAB_MATERIAL') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= dl.slab_material.tr_name %></td>
-        </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_DOOR_OPENING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= dl.door_opening.tr_name %></td>
-        </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_DOOR_BORING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= dl.door_boring.tr_name %></td>
-        </tr>
-        <% dl.door_line_sections.each_with_index do |section, index| %>
-        <tr>
-          <td valign="top"><%= trn_geth('HEADER_DOOR_SECTION') %> <%= index + 1 %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td>
-            <%= section.door_section.tr_name %>,
-            <% if section.door_panel %>
-              <%= section.door_panel.tr_name %>,
-            <% end %>
-            <% if section.door_glass %>
-              <%= section.door_glass.door_glass_family.tr_name %> / <%= section.door_glass.tr_name %>,
-            <% end %>
-            <%= section.door_section_dimension.value %>"
-          </td>
-        </tr>
-        <% end %>
-      </table>
+        <table>
+          <tr>
+            <td><%= trn_geth('HEADER_DOOR_COMBINATION') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.door_combination.tr_name %></td>
+          </tr>
+          <tr>
+            <td><%= trn_geth('HEADER_FRAME_PROFILE') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.frame_profile.tr_name %></td>
+          </tr>
+          <tr>
+            <td><%= trn_geth('HEADER_SLAB_MATERIAL') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.slab_material.tr_name %></td>
+          </tr>
+          <tr>
+            <td><%= trn_geth('HEADER_DOOR_OPENING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.door_opening.tr_name %></td>
+          </tr>
+          <tr>
+            <td><%= trn_geth('HEADER_DOOR_BORING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.door_boring.tr_name %></td>
+          </tr>
+          <% dl.door_line_sections.each_with_index do |section, index| %>
+          <tr>
+            <td valign="top"><%= trn_geth('HEADER_DOOR_SECTION') %> <%= index + 1 %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td>
+              <%= section.door_section.tr_name %>,
+              <% if section.door_panel %>
+                <%= section.door_panel.tr_name %>,
+              <% end %>
+              <% if section.door_glass %>
+                <%= section.door_glass.door_glass_family.tr_name %> / <%= section.door_glass.tr_name %>,
+              <% end %>
+              <%= section.door_section_dimension.value %>"
+            </td>
+          </tr>
+          <% end %>
+        </table>
 
       </td>
       <%
