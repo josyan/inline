@@ -93,6 +93,7 @@ class DoorLine < ActiveRecord::Base
 
       # paint the image on canvas
       canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
+      section_image.destroy!
 
       # update coordinates
       currentx += door_line_section.door_section_dimension.value + FRAME_THICKNESS
@@ -124,6 +125,7 @@ class DoorLine < ActiveRecord::Base
 
     # write final image
     canvas.write final_file_name
+    canvas.destroy!
 
     # delete temp file
     begin
@@ -152,6 +154,7 @@ class DoorLine < ActiveRecord::Base
 
     # paint the image on canvas
     canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
+    size_image.destroy!
   end
 
   def draw_horizontal_measurement(canvas, section_width, currentx)
@@ -173,6 +176,7 @@ class DoorLine < ActiveRecord::Base
 
     # paint the image on canvas
     canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
+    size_image.destroy!
   end
 
 end
