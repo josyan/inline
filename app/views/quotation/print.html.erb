@@ -209,8 +209,8 @@
       <% print_header = false %>
     <% end %>
     <tr valign="top">
-      <%#
-        dims = ql.get_image_size
+      <%
+        dims = dl.get_image_size
         options = {:style => "margin-top: 3px;"}
         if dims[0] > dims[1]
           options[:width] = 175
@@ -218,7 +218,7 @@
           options[:height] = 175
         end
       %>
-      <td width="1%" valign="top"><%#= image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
+      <td width="1%" valign="top"><%= image_tag "/system/images/doors/preview_#{dl.id}.png", options %></td>
       <td >
 
         <table>
