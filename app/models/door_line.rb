@@ -135,6 +135,12 @@ class DoorLine < ActiveRecord::Base
     end
   end
 
+  def get_image_size
+    return (total_width + 30 + (door_line_sections.length + 1) * FRAME_THICKNESS) * PIXELS_PER_INCH, (DoorSection::DEFAULT_HEIGHT + 20 + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH
+  end
+
+  private ####################################################################
+
   def draw_vertical_measurement(canvas, section_height, currenty)
     # binding for erb file
     # constants
