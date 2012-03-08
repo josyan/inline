@@ -56,7 +56,7 @@
               <%= @quotation.customer_phone %>
               <br />
             <% end %>
-            
+
             <% if !@quotation.customer_fax.blank? %>
               <%= trn_geth('PRINT_LABEL_FAX') %><%= trn_geth('LABEL_SEMICOLON') %>
               <%= @quotation.customer_fax %>
@@ -74,7 +74,7 @@
 			  <%= @quotation.customer_address.html_safe.gsub("\n", '<br/>') %>
 			<% else %>
 			  &nbsp;<br />
-      
+
 			<% end%>
     </td>
   </tr>
@@ -87,6 +87,8 @@
 <% print_header = true %>
 <table width="100%" cellspacing="0" cellpadding="3">
   <% total = 0 %>
+
+  <!-- fenetres -->
   <% for ql in @quotation.quotation_lines %>
     <% if print_header %>
       <tr bgcolor="#b2b2b2">
@@ -99,8 +101,8 @@
       <% print_header = false %>
     <% end %>
     <tr valign="top">
-      <% 
-        dims = ql.get_image_size 
+      <%
+        dims = ql.get_image_size
         options = {:style => "margin-top: 3px;"}
         if dims[0] > dims[1]
           options[:width] = 100
@@ -164,7 +166,7 @@
             <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
         </td>
         <td colspan="3"  style="border-bottom: 2px dotted #808080;">
-	
+
             <% if ql.options_quotation_lines.length > 0 %>
                 <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
                 <%
@@ -185,15 +187,114 @@
         </td>
         <td  style="border-bottom: 2px dotted #808080;">&nbsp;</td>
     </tr>
-    <% printed_line += 1
-      if printed_line == 3
-        printed_line = 0
-        print_header = true %>
-        </table>
-        <div style="page-break-before: always;">&nbsp;</div>
-        <table width="100%" cellspacing="0" cellpadding="3">
+    <% printed_line += 1 %>
+    <% if printed_line == 3
+         printed_line = 0
+         print_header = true %>
+  </table>
+  <div style="page-break-before: always;">&nbsp;</div>
+  <table width="100%" cellspacing="0" cellpadding="3">
     <% end %>
   <% end %>
+
+  <!-- portes -->
+  <% for dl in @quotation.door_lines %>
+    <% if print_header %>
+      <tr bgcolor="#b2b2b2">
+        <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
+        <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+        <th></th>
+        <th></th>
+        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+      </tr>
+      <% print_header = false %>
+    <% end %>
+    <tr valign="top">
+      <%#
+        dims = ql.get_image_size
+        options = {:style => "margin-top: 3px;"}
+        if dims[0] > dims[1]
+          options[:width] = 100
+        else
+          options[:height] = 100
+        end
+      %>
+      <td width="<%#=options[:width]%>" valign="top"><%#= image_tag "/system/images/previews/preview_#{ql.id}.png", options %></td>
+      <td >
+        <table width="100%">
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('HEADER_DOOR_COMBINATION') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td width="45%"><%= dl.door_combination.tr_name %></td>
+            <td nowrap="nowrap"><%= trn_geth('HEADER_FRAME_PROFILE') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.frame_profile.tr_name %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('HEADER_SLAB_MATERIAL') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td width="45%"><%= dl.slab_material.tr_name %></td>
+            <td nowrap="nowrap"><%= trn_geth('HEADER_DOOR_OPENING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td><%= dl.door_opening.tr_name %></td>
+          </tr>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('HEADER_DOOR_BORING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td width="45%"><%= dl.door_boring.tr_name %></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <% dl.door_line_sections.each_with_index do |section, index| %>
+          <tr>
+            <td nowrap="nowrap"><%= trn_geth('HEADER_DOOR_SECTION') %> <%= index + 1 %><%= trn_geth('LABEL_SEMICOLON') %></td>
+            <td colspan="3">
+              <%= section.door_section.tr_name %>,
+              <% if section.door_panel %>
+                <%= section.door_panel.tr_name %>,
+              <% end %>
+              <% if section.door_glass %>
+                <%= section.door_glass.door_glass_family.tr_name %> / <%= section.door_glass.tr_name %>,
+              <% end %>
+              <%= section.door_section_dimension.value %>"
+            </td>
+          </tr>
+          <% end %>
+        </table>
+      </td>
+      <td width="10%" align="right"></td>
+      <td width="10%" align="right"></td>
+      <td width="10%" align="center"><%= dl.quantity %></td>
+    </tr>
+    <tr valign="top" >
+        <td  style="border-bottom: 2px dotted #808080;">
+            <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
+        </td>
+        <td colspan="3"  style="border-bottom: 2px dotted #808080;">
+            <% if dl.door_line_options.length > 0 %>
+                <%= trn_geth('PRINT_HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %>
+                <%
+                  first = true
+                  dl.door_line_options.each { |opt| %>
+                    <%= ', ' if !first %>
+                    <%= opt.option.tr_description %>
+                    <% if opt.quantity != 1 %>
+                      x <%= opt.quantity %>
+                    <% end %>
+                <%
+                    first = false
+                  } %>
+            <% else %>
+              &nbsp;
+            <% end %>
+        </td>
+        <td  style="border-bottom: 2px dotted #808080;">&nbsp;</td>
+    </tr>
+    <% printed_line += 1 %>
+    <% if printed_line == 3
+         printed_line = 0
+         print_header = true %>
+  </table>
+  <div style="page-break-before: always;">&nbsp;</div>
+  <table width="100%" cellspacing="0" cellpadding="3">
+    <% end %>
+  <% end %>
+
   <!-- options -->
   <% print_header = true if @quotation.options_quotations.length > 0 %>
   <% for option in @quotation.options_quotations %>
