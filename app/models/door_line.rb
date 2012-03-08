@@ -12,7 +12,7 @@ class DoorLine < ActiveRecord::Base
   belongs_to :door_boring
   has_many :door_line_options, :dependent => :destroy
 
-  FRAME_THICKNESS = 3.0
+  FRAME_THICKNESS = 1.0
   ARROW_SIZE = 5.0
   PIXELS_PER_INCH = 2
 
@@ -62,19 +62,14 @@ class DoorLine < ActiveRecord::Base
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'doors', "preview_#{id}.png")
 
-    # binding for erb file
-    # constants
-    frame_thickness = FRAME_THICKNESS
-    arrow_size = ARROW_SIZE
-
     # define canvas for final image
-    image_width = (total_width + 30) * PIXELS_PER_INCH
-    image_height = (DoorSection::DEFAULT_HEIGHT + 20) * PIXELS_PER_INCH
+    image_width = (total_width + 30 + (door_line_sections.length + 1) * FRAME_THICKNESS) * PIXELS_PER_INCH
+    image_height = (DoorSection::DEFAULT_HEIGHT + 20 + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH
     canvas = Image.new(image_width, image_height)
 
     # intialize coordinates
-    currentx = 0
-    currenty = 0
+    currentx = FRAME_THICKNESS
+    currenty = FRAME_THICKNESS
 
     # loop on sections
     door_line_sections.each do |door_line_section|
@@ -94,14 +89,22 @@ class DoorLine < ActiveRecord::Base
 
       # define offset to paint section
       offsetx_px = currentx * PIXELS_PER_INCH
-      offsety_px = 0
+      offsety_px = currenty * PIXELS_PER_INCH
 
       # paint the image on canvas
       canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
 
       # update coordinates
-      currentx += door_line_section.door_section_dimension.value
+      currentx += door_line_section.door_section_dimension.value + FRAME_THICKNESS
     end
+
+    # global frame
+    frame = Draw.new
+    frame.fill_opacity 0
+    frame.stroke_width 1
+    frame.stroke 'black'
+    frame.rectangle 0, 0, (total_width + (door_line_sections.length + 1) * FRAME_THICKNESS) * PIXELS_PER_INCH - 1, (DoorSection::DEFAULT_HEIGHT + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH - 1
+    frame.draw canvas
 
     # print vertical sizes
     # define values for binding
@@ -109,14 +112,14 @@ class DoorLine < ActiveRecord::Base
     draw_vertical_measurement(canvas, section_height, currenty)
 
     # initialize offset
-    currentx = 0
+    currentx = FRAME_THICKNESS
     # print horizontal sizes
     door_line_sections.each do |door_line_section|
       # define values for binding
       section_width = door_line_section.door_section_dimension.value
       draw_horizontal_measurement(canvas, section_width, currentx)
       # update coordinates
-      currentx += door_line_section.door_section_dimension.value
+      currentx += door_line_section.door_section_dimension.value + FRAME_THICKNESS
     end
 
     # write final image
@@ -144,7 +147,7 @@ class DoorLine < ActiveRecord::Base
     size_image = Image.read(temp_file_name)[0]
 
     # define offset to paint section
-    offsetx_px = (total_width + 1) * PIXELS_PER_INCH
+    offsetx_px = (total_width + (door_line_sections.count + 1) * FRAME_THICKNESS + 1) * PIXELS_PER_INCH
     offsety_px = currenty * PIXELS_PER_INCH
 
     # paint the image on canvas
@@ -166,7 +169,7 @@ class DoorLine < ActiveRecord::Base
 
     # define offset to paint section
     offsetx_px = currentx * PIXELS_PER_INCH
-    offsety_px = (DoorSection::DEFAULT_HEIGHT + 1) * PIXELS_PER_INCH
+    offsety_px = (DoorSection::DEFAULT_HEIGHT + 2 * FRAME_THICKNESS + 1) * PIXELS_PER_INCH
 
     # paint the image on canvas
     canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
