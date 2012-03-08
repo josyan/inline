@@ -93,6 +93,7 @@ class DoorsController < ApplicationController
     if @door_line.save
       save_sections_and_options
       @door_line.update_price
+      @door_line.create_image
       redirect_to quotation_path(@door_line.quotation_id)
     else
       init_variables
@@ -114,6 +115,7 @@ class DoorsController < ApplicationController
       @door_line.door_line_options.clear
       save_sections_and_options
       @door_line.update_price
+      @door_line.create_image
       redirect_to quotation_path(@door_line.quotation_id)
     end
   end
