@@ -1,3 +1,6 @@
+require 'erb'
+include Magick
+
 class DoorLine < ActiveRecord::Base
   belongs_to :quotation
   belongs_to :door_frame
@@ -8,6 +11,10 @@ class DoorLine < ActiveRecord::Base
   belongs_to :door_opening
   belongs_to :door_boring
   has_many :door_line_options, :dependent => :destroy
+
+  FRAME_THICKNESS = 3.0
+  ARROW_SIZE = 5.0
+  PIXELS_PER_INCH = 2
 
   def update_price
     self.price = 0
@@ -53,7 +60,7 @@ class DoorLine < ActiveRecord::Base
 
   def create_image
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
-    final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
+    final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'doors', "preview_#{id}.png")
 
     # binding for erb file
     # constants
@@ -61,122 +68,55 @@ class DoorLine < ActiveRecord::Base
     arrow_size = ARROW_SIZE
 
     # define canvas for final image
-    image_width = (width + 30) * PIXELS_PER_INCH
-    image_height = (height + 20) * PIXELS_PER_INCH
+    image_width = (total_width + 30) * PIXELS_PER_INCH
+    image_height = (DoorSection::DEFAULT_HEIGHT + 20) * PIXELS_PER_INCH
     canvas = Image.new(image_width, image_height)
 
-    # coordinates
+    # intialize coordinates
+    currentx = 0
     currenty = 0
 
-    if (shape.has_upper_transom)
-      # intialize coordinates
-      currentx = 0
+    # loop on sections
+    door_line_sections.each do |door_line_section|
 
-      # define section dimensions for binding in erb
-      section_width = get_transom_width(upper_transom_index(shape)) #section_widths[shape.sections_width].value
-      section_height = get_transom_height(upper_transom_index(shape)) #section_heights[shape.sections_height].value
-
-      # load svg file
-      section_image = get_section_image(upper_transom_index(shape), section_height, section_width)
-
-      # define offset to paint section
-      offsetx_px = currentx * PIXELS_PER_INCH
-      offsety_px = currenty * PIXELS_PER_INCH
-
-      # paint the image on canvas
-      canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
-      # update coordinates
-      currenty += section_height
-    end
-
-    # loop on rows
-    0.upto(shape.sections_height - 1) do |h|
-
-      # intialize coordinates
-      currentx = 0
-
-      # loop on columns
-      0.upto(shape.sections_width - 1) do |w|
-
-        # define section dimensions for binding in erb
-        section_width = get_section_width(w+1)
-        section_height = get_section_height(h+1)
-
-        # load svg file
-        section_image = get_section_image(h * shape.sections_width + w + 1, section_height, section_width)
-
-        # define offset to paint section
-        offsetx_px = currentx * PIXELS_PER_INCH
-        offsety_px = currenty * PIXELS_PER_INCH
-
-        # paint the image on canvas
-        canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
-
-        # update coordinates
-        currentx += section_width
+      # get the file to be painted
+      if door_line_section.door_panel
+        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name, '.png') + '.svg')
+      else
+        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', door_line_section.door_section.code + '.svg')
       end
 
-      # update coordinates
-      currenty += section_height
+      # load section image
+      section_image = Image.read(src_image)[0]
 
-    end
-
-    if (shape.has_lower_transom)
-      # intialize coordinates
-      currentx = 0
-
-      # define section dimensions for binding in erb
-      section_width = get_transom_width(lower_transom_index(shape))
-      section_height = get_transom_height(lower_transom_index(shape))
-
-      # load svg file
-      section_image = get_section_image(lower_transom_index(shape), section_height, section_width)
+      # resize the section image to fit the dimensions
+      section_image.resize! door_line_section.door_section_dimension.value * PIXELS_PER_INCH, DoorSection::DEFAULT_HEIGHT * PIXELS_PER_INCH
 
       # define offset to paint section
       offsetx_px = currentx * PIXELS_PER_INCH
-      offsety_px = currenty * PIXELS_PER_INCH
+      offsety_px = 0
 
       # paint the image on canvas
       canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
+
       # update coordinates
-      currenty += section_height
+      currentx += door_line_section.door_section_dimension.value
     end
 
-    # initialize offset
-    currenty = 0
-    if (shape.has_upper_transom)
-      # define values for binding
-      section_height = get_transom_height(upper_transom_index(shape))
-      draw_vertical_measurement(canvas, section_height, currenty)
-      # update coordinates
-      currenty += section_height
-    end
     # print vertical sizes
-    1.upto(shape.sections_height) do |h|
-      # define values for binding
-      section_height = get_section_height(h)
-      draw_vertical_measurement(canvas, section_height, currenty)
-      # update coordinates
-      currenty += section_height
-    end
-    if (shape.has_lower_transom)
-      # define values for binding
-      section_height = get_transom_height(lower_transom_index(shape))
-      draw_vertical_measurement(canvas, section_height, currenty)
-      # update coordinates
-      currenty += section_height
-    end
+    # define values for binding
+    section_height = DoorSection::DEFAULT_HEIGHT
+    draw_vertical_measurement(canvas, section_height, currenty)
 
     # initialize offset
     currentx = 0
-
     # print horizontal sizes
-    1.upto(shape.sections_width) do |w|
+    door_line_sections.each do |door_line_section|
       # define values for binding
-      section_width = get_section_width(w)
+      section_width = door_line_section.door_section_dimension.value
       draw_horizontal_measurement(canvas, section_width, currentx)
       # update coordinates
-      currentx += section_width
+      currentx += door_line_section.door_section_dimension.value
     end
 
     # write final image
@@ -188,6 +128,48 @@ class DoorLine < ActiveRecord::Base
     rescue
       # don't care
     end
+  end
+
+  def draw_vertical_measurement(canvas, section_height, currenty)
+    # binding for erb file
+    # constants
+    arrow_size = ARROW_SIZE
+    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
+    # load erb file and generate svg
+    File.open(temp_file_name, 'w') do |f|
+      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'vertical_size.svg'))).result(binding)
+    end
+
+    #load svg file
+    size_image = Image.read(temp_file_name)[0]
+
+    # define offset to paint section
+    offsetx_px = (total_width + 1) * PIXELS_PER_INCH
+    offsety_px = currenty * PIXELS_PER_INCH
+
+    # paint the image on canvas
+    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
+  end
+
+  def draw_horizontal_measurement(canvas, section_width, currentx)
+    # binding for erb file
+    # constants
+    arrow_size = ARROW_SIZE
+    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
+    # load erb file and generate svg
+    File.open(temp_file_name, 'w') do |f|
+      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'horizontal_size.svg'))).result(binding)
+    end
+
+    #load svg file
+    size_image = Image.read(temp_file_name)[0]
+
+    # define offset to paint section
+    offsetx_px = currentx * PIXELS_PER_INCH
+    offsety_px = (DoorSection::DEFAULT_HEIGHT + 1) * PIXELS_PER_INCH
+
+    # paint the image on canvas
+    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
   end
 
 end
