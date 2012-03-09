@@ -10,7 +10,7 @@
 <% for dbtf in @dbtfs %>
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%= dbtf.table %></td>
-    <td><%= dbtf.field %></td>
+    <td><%= dbtf.translation_field_name %></td>
     <td>
       <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => dbtf %> |
       <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => dbtf}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

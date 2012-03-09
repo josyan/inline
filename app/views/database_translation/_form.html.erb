@@ -5,7 +5,7 @@
     <td align="right"><%= trn_geth('LABEL_NATIVE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td>
       <% begin %>
-        <%= @dbt.table.singularize.camelize.constantize.find(@dbt.record_id).send(@dbt.field) %>
+        <%= @dbt.table.singularize.camelize.constantize.find(@dbt.record_id).send(@dbt.translation_field_name) %>
       <% rescue %>
         ## <%= trn_get('MSG_DELETED') %> ##
       <% end %>

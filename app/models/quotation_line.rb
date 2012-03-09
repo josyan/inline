@@ -40,15 +40,15 @@ class QuotationLine < ActiveRecord::Base
     arrow_size = ARROW_SIZE
 
     # define canvas for final image
-    image_width = (width + 30) * PIXELS_PER_INCH
-    image_height = (height + 20) * PIXELS_PER_INCH
+    image_width = (width + 40) * PIXELS_PER_INCH
+    image_height = (height + 30) * PIXELS_PER_INCH
     canvas = Image.new(image_width, image_height)
 
     # coordinates
     currenty = 0
 
     if (shape.has_upper_transom)
-      # intialize coordinates
+      # initialize coordinates
       currentx = 0
 
       # define section dimensions for binding in erb
@@ -258,7 +258,7 @@ class QuotationLine < ActiveRecord::Base
     offsety_px = (height + 1) * PIXELS_PER_INCH
 
     # paint the image on canvas
-    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp    
+    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
   end
 
   def delete_previeww_image

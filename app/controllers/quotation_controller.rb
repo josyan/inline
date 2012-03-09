@@ -25,7 +25,11 @@ class QuotationController < ApplicationController
   end
 
   def create
+    set_taxes_if_not_present()
+
     @quotation = Quotation.new(params[:quotation])
+    #@quotation.taxes ||= 0.0
+    #@quotation.taxes_pst || 0.0
     @quotation.user_id = @current_user.id
     customer_msg = ""
     if Customer.create_from_quotation_if_new(@quotation)
@@ -47,7 +51,10 @@ class QuotationController < ApplicationController
   end
 
   def update
-    @quotation = Quotation.find(params[:id])  
+    set_taxes_if_not_present()
+
+    @quotation = Quotation.find(params[:id])
+
     if @quotation.update_attributes(params[:quotation])
       flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
       redirect_to :action => 'show', :id => @quotation
@@ -86,4 +93,10 @@ protected
   def find_quotation
     @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])  
   end
+
+  def set_taxes_if_not_present
+    params[:quotation]['taxes']     = 0.0 if params[:quotation]['taxes'].blank?
+    params[:quotation]['taxes_pst'] = 0.0 if params[:quotation]['taxes_pst'].blank?
+  end
+
 end

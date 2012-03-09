@@ -22,7 +22,7 @@ class DatabaseTranslationController < ApplicationController
         new_items += 1
       }
 #      (old_ids - new_ids).each { |id|
-#        DatabaseTranslation.first.where("record_id = #{id} AND `table` = '#{dbtf.table}' AND `translation_field_name` = '#{dbtf.translation_field_name}'").destroy
+#        DatabaseTranslation.where("record_id = #{id} AND `table` = '#{dbtf.table}' AND `translation_field_name` = '#{dbtf.translation_field_name}'").first().destroy
 #        old_items += 1
 #      }
       ids_to_destroy = (old_ids - new_ids)

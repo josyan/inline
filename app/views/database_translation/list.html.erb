@@ -4,7 +4,7 @@
   <tr>
     <td>
       <%= form_tag :action => 'list' do %>
-        <%= select_tag "dbtf", options_for_select(@dbtfs.collect{ |d| [d.table + " / " + d.field, d.id]}, @dbtf ? @dbtf.id : nil) %>
+        <%= select_tag "dbtf", options_for_select(@dbtfs.collect{ |d| [d.table + " / " + d.translation_field_name, d.id]}, @dbtf ? @dbtf.id : nil) %>
         <%= submit_tag trn_geth('BUTTON_LIST') %>
       <% end %>
     </td>
@@ -42,7 +42,7 @@
   <tr class="<%= cycle('odd', 'even') %>">
     <td>
       <% begin %>
-        <%= dbt.table.singularize.camelize.constantize.find(dbt.record_id).send(dbt.field) %>
+        <%= dbt.table.singularize.camelize.constantize.find(dbt.record_id).send(dbt.translation_field_name) %>
       <% rescue %>
         ## <%= trn_get('MSG_DELETED') %> ##
       <% end %>
