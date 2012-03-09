@@ -26,6 +26,7 @@ class User < ActiveRecord::Base
   has_many :quotations
   has_many :customers
   has_and_belongs_to_many :companies
+  has_and_belongs_to_many :module_types
    
   # prevents a user from submitting a crafted form that bypasses activation
   # anything else you want your user to change should be added here.

@@ -1,0 +1,7 @@
+<h2><%= trn_get('TITLE_DOOR_SECTION_EDIT') %></h2>
+
+<%= form_for @door_section do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag trn_geth('BUTTON_EDIT') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), door_sections_path %>

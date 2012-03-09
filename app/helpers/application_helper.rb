@@ -22,7 +22,7 @@ module ApplicationHelper
       value == selected
     end
   end
-  
+
   def option_text_and_value(option)
     # Options are [text, value] pairs or strings used for both.
     if !option.is_a?(String) and option.respond_to?(:first) and option.respond_to?(:last)
@@ -61,9 +61,14 @@ module ApplicationHelper
 
   def css_button_to(object_name, options, html_options = {})
     html_options.merge!({:class => "css_button"})
-    "<div class=\"css_button\"> 
+    "<div class=\"css_button\">
       #{link_to object_name,  options, html_options}
     </div>".html_safe
   end
-  
+
+  def menu_item(image, link_label, link, options = {})
+    display_label = trn_geth(link_label)
+    display_label += ' - ' + options[:label] if options[:label]
+    "<a href=#{url_for link}>#{image_tag(image + '.png', :size => "32x32", :border => 0)}<label>#{display_label}</label></a>".html_safe
+  end
 end

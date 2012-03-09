@@ -1,0 +1,43 @@
+<%= error_messages_for "door_combination" %>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_combination", "name", :size => 30 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_SECTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_combination", "sections", :size => 10 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DOOR_FRAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select "door_combination", "door_frame_id", DoorFrame.all(:order => 'sections').map { |df| [df.name, df.id] } %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PREVIEW_IMAGE_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_combination", "preview_image_name", :size => 20 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_combination", "price", :size => 20 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_SELECT_DOOR_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td>
+      <table>
+        <% @door_openings.each do |door_opening| %>
+          <tr class="<%= cycle('odd', 'even') %>">
+            <td>
+              <%= check_box_tag "door_combination[door_opening_ids][]", door_opening.id, @door_combination.door_openings.exists?(:id => door_opening.id) %> <%= door_opening.tr_name %><br/>
+            </td>
+            <td>
+              <% unless door_opening.preview_image_name.blank? %>
+                <%= image_tag 'door_openings/' + door_opening.preview_image_name %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
+    </td>
+  </tr>
+</table>

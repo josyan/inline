@@ -1,0 +1,8 @@
+<h2><%= trn_get('TITLE_DOOR_BORING_EDIT') %></h2>
+
+<%= form_for @door_boring, :html => {:multipart => true} do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag trn_geth('BUTTON_EDIT') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), door_borings_path %> |
+<%= link_to trn_geth('BUTTON_DELETE'), door_boring_path(@door_boring), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>

@@ -1,0 +1,20 @@
+<h2><%= trn_geth('TITLE_DOOR_GLASS_FAMILY_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_door_glass_family_path %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th></th>
+  </tr>
+<% for door_glass_family in @door_glass_families %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= door_glass_family.tr_name %></td>
+    <td>
+      <%= link_to trn_geth('BUTTON_GLASSES'), door_glass_family_door_glasses_path(door_glass_family) %> |
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_door_glass_family_path(door_glass_family) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), door_glass_family_path(door_glass_family), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+

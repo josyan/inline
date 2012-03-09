@@ -1,0 +1,7 @@
+<h2><%= trn_get('TITLE_DOOR_LINE_EDIT') %></h2>
+
+<% form_tag door_path(@door_line), :id => 'door-submit', :method => :put do %>
+  <%= render :partial => 'form' %>
+<% end %>
+
+<div class="clear"></div>

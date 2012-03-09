@@ -1,0 +1,27 @@
+  <tr valign="top" class="quotation-line">
+    <td colspan="1" style="border-bottom: 2px dotted #808080;">
+      <%= image_tag(option.option.photo.url(:normal)) %>
+    </td>
+    <td>
+      <table>
+        <tr>
+          <td><%= trn_geth('HEADER_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= option.option.tr_description %> </td>
+        </tr>
+        <tr>
+          <td><%= trn_geth('HEADER_UNIT_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= format('%.2f',  option_price) %>$</td>
+        </tr>
+        <tr>
+          <td><%= trn_geth('HEADER_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+          <td><%= option.quantity %></td>
+        </tr>
+      </table>
+    </td>
+    <td align="right" style="border-bottom: 2px dotted #808080;"><%= format('%.2f', option.quantity * option_price) %>$</td>
+    <td nowrap="nowrap" style="border-bottom: 2px dotted #808080;">
+      <%= link_to trn_geth('BUTTON_EDIT'), :controller => 'option_quotation', :action => 'edit', :id => option.id %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), {:controller => 'option_quotation', :action => 'delete', :id => option.id}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    </td>
+  </tr>
+

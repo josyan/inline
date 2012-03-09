@@ -98,7 +98,7 @@
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_DEPOSIT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= number_to_currency(@quotation.deposit || 0, :format => "%n%u")%></td>
-  </tr>  
+  </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_QUOTE_READY_TO_SIGN') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @quotation.ready_to_sign ? trn_geth('MSG_YES') : trn_geth('MSG_NO') %></td>
@@ -118,8 +118,8 @@
 <div class="form_button_bar" >
   <%= css_button_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'index' %> 
   <%= css_button_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
-  <%= css_button_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation %> 
-  <%= css_button_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation %> 
+  <%= css_button_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @quotation %>
+  <%= css_button_to trn_geth('BUTTON_PRINT'), :action => 'print', :id => @quotation %>
   <% if current_user.has_role?('administrator') %>
     <%= css_button_to trn_geth('BUTTON_PRINT_INVOICE'), :action => 'print_invoice', :id => @quotation %>
     <%= css_button_to trn_geth('BUTTON_PRINT_MANIFEST'), :action => 'print_manifest', :id => @quotation %>
@@ -129,8 +129,10 @@
 <br/>
 
 <h3><%= trn_geth('HEADER_LINES')%></h3>
-<%= link_to trn_geth('BUTTON_ADD'), :controller => 'quotation_line', :action => 'add', :id => @quotation %>
-| <%= link_to trn_geth('BUTTON_ADD_OPTION'), :controller => 'option_quotation', :action => 'add', :id => @quotation %>
+<% @current_user.module_types.each do |mt| %>
+  <%= link_to "#{trn_geth('BUTTON_ADD')} #{trn_geth("LABEL_ONE_#{mt.gender.upcase}").downcase} #{mt.tr_name.downcase}", :controller => 'quotation_line', :action => 'add', :id => @quotation, :mt => mt.id %> |
+<% end %>
+<%= link_to trn_geth('BUTTON_ADD_OPTION'), :controller => 'option_quotation', :action => 'add', :id => @quotation %>
 <table class="quotation">
   <tr>
     <th><%= trn_geth('HEADER_PREVIEW') %></th>
@@ -142,112 +144,17 @@
   <% for line in @quotation.quotation_lines %>
     <% line_price = line.price * (1 - @quotation.discount / 100) * (1 + @quotation.markup / 100)%>
     <%   total += line.quantity * line_price %>
-  <tr valign="top" class="quotation-line">
-    <td width="1%" style="border-bottom: 2px dotted #808080;"><%= image_tag "/system/images/previews/preview_#{line.id}.png" %></td>
-    <td style="border-bottom: 2px dotted #808080;">
-
-      <table>
-        <% if line.label and !line.label.empty? %>
-        <tr>
-          <td><%= trn_geth('HEADER_LABEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= line.label %></td>
-        </tr>
-        <% end %>
-        <tr>
-          <td><%= trn_geth('HEADER_SERIE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= line.serie.tr_name %></td>
-        </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_SHAPE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= line.shape.tr_name %></td>
-        </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_OPENINGS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= line.quotation_lines_openings.map { |o| o.opening.tr_abbreviation}.join %></td>
-        </tr>
-
-				<% if !line.interior_color.blank? || !line.standard_interior_color.blank? %>
-					<tr>
-						<td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
-						<td><%= h line.interior_color.blank? ? line.standard_interior_color.tr_name : line.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
-					</tr>
-			  <% end %>
-				<% if !line.exterior_color.blank?  || !line.standard_exterior_color.blank?%>
-					<tr>
-						<td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
-						<td><%= h line.exterior_color.blank? ? line.standard_exterior_color.tr_name : line.tr_exterior_color + trn_get("LABEL_CUSTOM") %> </td>
-						</tr>
-				<% end %>
-				
-        <% if line.options_quotation_lines.length > 0 %>
-        <tr>
-          <td valign="top"><%= trn_geth('HEADER_OPTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td>
-            <% for option in line.options_quotation_lines %>
-              <%= option.option.tr_description %>
-              <% if option.quantity != 1 %>
-                x <%= option.quantity %>
-              <% end %>
-              <br/>
-            <% end %>
-          </td>
-        </tr>
-        <% end %>
-        <tr>
-          <td><%= trn_geth('HEADER_HEIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= format('%.3f', line.height) %></td>
-        </tr>
-          <tr>
-            <td><%= trn_geth('HEADER_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-            <td><%= format('%.3f', line.width) %></td>
-          </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_UNIT_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= format('%.2f', line_price) %>$</td>
-        </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= line.quantity %></td>
-        </tr>
-      </table>
-
-    </td>
-    <td align="right" style="border-bottom: 2px dotted #808080;"><%= format('%.2f', line.quantity * line.price) %>$</td>
-    <td nowrap="nowrap" style="border-bottom: 2px dotted #808080;">
-      <%= link_to trn_geth('BUTTON_EDIT'), :controller => 'quotation_line', :action => 'edit', :id => line %> |
-      <%= link_to trn_geth('BUTTON_DELETE'), {:controller => 'quotation_line', :action => 'delete', :id => line}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
-    </td>
-  </tr>
+    <%= render :partial => 'quotation_line', :locals => { :line => line, :line_price => line_price } %>
+  <% end %>
+  <% for door in @quotation.door_lines %>
+    <% door_price = door.price * (1 - @quotation.discount / 100) * (1 + @quotation.markup / 100)%>
+    <%   total += door.quantity * door_price %>
+    <%= render :partial => 'door_line', :locals => { :door => door, :door_price => door_price } %>
   <% end %>
   <% for option in @quotation.options_quotations %>
       <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
     <%   total += option.quantity * option_price %>
-  <tr valign="top" class="quotation-line">
-    <td colspan="1" style="border-bottom: 2px dotted #808080;">
-      <%= image_tag(option.option.photo.url(:normal)) %> 
-    </td>
-    <td>
-      <table>
-        <tr>
-          <td><%= trn_geth('HEADER_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= option.option.tr_description %> </td>
-        </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_UNIT_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= format('%.2f',  option_price) %>$</td>
-        </tr>
-        <tr>
-          <td><%= trn_geth('HEADER_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-          <td><%= option.quantity %></td>
-        </tr>
-      </table>
-    </td>
-    <td align="right" style="border-bottom: 2px dotted #808080;"><%= format('%.2f', option.quantity * option_price) %>$</td>
-    <td nowrap="nowrap" style="border-bottom: 2px dotted #808080;">
-      <%= link_to trn_geth('BUTTON_EDIT'), :controller => 'option_quotation', :action => 'edit', :id => option.id %> |
-      <%= link_to trn_geth('BUTTON_DELETE'), {:controller => 'option_quotation', :action => 'delete', :id => option.id}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
-    </td>
-  </tr>
+    <%= render :partial => 'option', :locals => { :option => option, :option_price => option_price } %>
   <% end %>
   <tr>
     <td align="right" colspan="2">Total</td>

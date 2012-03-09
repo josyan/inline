@@ -1,0 +1,99 @@
+.clear {
+  clear: both;
+}
+.section {
+  float: left;
+  margin-bottom: 20px;
+  width: 100%;
+}
+.choice-list {
+  margin: 20px;
+}
+.choice-list .choice {
+  display: block;
+  float: left;
+  margin: 10px;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  border: 4px solid #C7BD93;
+  width: 150px;
+  height: 120px;
+}
+.choice-list .choice.door-panel{
+  height: 210px;
+}
+.choice-list .choice.selected {
+  border: 4px solid #3F3C2F;
+}
+.choice-list .choice:hover {
+  background-color: #948B6D;
+}
+
+/* door configuration section */
+#door-panels-configuration .section-label {
+  margin:2px 0;
+  padding-top: 2px;
+  border-top: 1px solid #3F3C2F;
+}
+#door-panels-configuration .door-line-section {
+  display: table-cell;
+  border-top: 4px solid #3F3C2F;
+  border-bottom: 4px solid #3F3C2F;
+  border-left: 4px solid #3F3C2F;
+  min-width: 50px;
+  padding: 4px;
+  background-color: #C7BD93;
+  position: relative;
+}
+#door-panels-configuration .door-line-section.last {
+  border-right: 4px solid #3F3C2F;
+}
+
+/* label */
+#door-panels-configuration .door-line-section .label {
+  text-align: center;
+  padding: 3px;
+}
+
+/* door panel */
+#door-panels-configuration .selected-door-panel,
+#door-panels-configuration .selected-door-glass{
+  padding: 5px;
+  background: #FFFFFF;
+  text-align: center;
+  cursor: pointer;
+}
+#door-panels-configuration .selected-door-panel:hover,
+#door-panels-configuration .selected-door-glass:hover {
+  background-color: #948B6D;
+}
+
+/* door panel list */
+#door-panels-configuration .door-panels-list,
+#door-panels-configuration .door-glasses-list {
+  display: none;
+  position: absolute;
+  overflow: auto;
+  height: 500px;
+  width: 650px;
+  background: #FFFFFF;
+  border: 1px solid #3F3C2F;
+  margin: 0px;
+  top: 0px;
+  left: 0px;
+  z-index: 1;
+}
+
+/* door family list */
+#door-panels-configuration select {
+  width: 100%;
+}
+
+/* options list */
+.options-list{
+  margin: 10px 0 0 16px;
+}
+.section-title{
+  font-style: italic;
+}

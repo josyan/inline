@@ -1,0 +1,20 @@
+<%= error_messages_for "door_frame" %>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_frame", "name", :size => 30 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_SECTIONS_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_frame", "sections", :size => 10 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PREVIEW_IMAGE_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_frame", "preview_image_name", :size => 20 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_frame", "price", :size => 20 %></td>
+  </tr>
+</table>

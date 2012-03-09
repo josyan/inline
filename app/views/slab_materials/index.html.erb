@@ -1,0 +1,17 @@
+<h2><%= trn_geth('TITLE_SLAB_MATERIALS_LIST') %></h2>
+
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th></th>
+  </tr>
+<% for slab_material in @slab_materials %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= slab_material.tr_name %></td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_slab_material_path(slab_material) %>
+    </td>
+  </tr>
+<% end %>
+</table>
+

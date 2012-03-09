@@ -1,0 +1,13 @@
+<div class="selected-door-glass"></div>
+<div class="door-glasses-list choice-list door-popup">
+  <% @door_glasses.each do |door_glass| %>
+    <div class="choice door-glass <%= 'selected' if door_glass.id == @door_glass_id %>" id="dg-<%= door_glass.id %>">
+      <div class="preview-image">
+        <%= image_tag door_glass.photo.url(:normal) %>
+      </div>
+      <div class="label">
+        <%= door_glass.tr_name %>
+      </div>
+    </div>
+  <% end %>
+</div>

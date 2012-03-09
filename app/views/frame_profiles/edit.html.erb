@@ -1,0 +1,8 @@
+<h2><%= trn_get('TITLE_FRAME_PROFILE_EDIT') %></h2>
+
+<%= form_for @frame_profile, :html => {:multipart => true} do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag trn_geth('BUTTON_EDIT') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), frame_profiles_path %> |
+<%= link_to trn_geth('BUTTON_DELETE'), frame_profile_path(@frame_profile), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>

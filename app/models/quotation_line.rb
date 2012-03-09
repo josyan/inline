@@ -1,4 +1,3 @@
-require 'RMagick'
 require 'erb'
 include Magick
 
@@ -10,9 +9,9 @@ class QuotationLine < ActiveRecord::Base
   has_many :options_quotation_lines, :dependent => :destroy
   has_many :section_heights, :dependent => :destroy
   has_many :section_widths, :dependent => :destroy
-  
-  belongs_to :standard_interior_color, :class_name => "ProductColor" 
-  belongs_to :standard_exterior_color, :class_name => "ProductColor" 
+
+  belongs_to :standard_interior_color, :class_name => "ProductColor"
+  belongs_to :standard_exterior_color, :class_name => "ProductColor"
 
   validates_presence_of :width, :height, :serie_id, :quantity
   validates_numericality_of :width, :height, :quantity
@@ -64,10 +63,11 @@ class QuotationLine < ActiveRecord::Base
 
       # paint the image on canvas
       canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
+      section_image.destroy!
       # update coordinates
-      currenty += section_height        
+      currenty += section_height
     end
-    
+
     # loop on rows
     0.upto(shape.sections_height - 1) do |h|
 
@@ -90,14 +90,14 @@ class QuotationLine < ActiveRecord::Base
 
         # paint the image on canvas
         canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
-        
+
         # update coordinates
         currentx += section_width
       end
 
       # update coordinates
       currenty += section_height
-      
+
     end
 
     if (shape.has_lower_transom)
@@ -118,7 +118,7 @@ class QuotationLine < ActiveRecord::Base
       # paint the image on canvas
       canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
       # update coordinates
-      currenty += section_height        
+      currenty += section_height
     end
 
     # initialize offset
@@ -145,7 +145,7 @@ class QuotationLine < ActiveRecord::Base
       # update coordinates
       currenty += section_height
     end
-    
+
     # initialize offset
     currentx = 0
 
@@ -160,6 +160,7 @@ class QuotationLine < ActiveRecord::Base
 
     # write final image
     canvas.write final_file_name
+    canvas.destroy!
 
     # delete temp file
     begin
@@ -190,14 +191,14 @@ class QuotationLine < ActiveRecord::Base
   def get_section_height(idx)
     section_heights.select {|t| t.sort_order == idx}.first.value
   end
-  
+
   def get_transom_width(idx)
     section_widths.select {|t| t.sort_order == idx}.first.value
-  end  
-  
+  end
+
   def get_transom_height(idx)
     section_heights.select {|t| t.sort_order == idx}.first.value
-  end  
+  end
 
   def get_opening(idx)
     quotation_lines_openings.select {|o| o.sort_order == idx}.first.opening
@@ -238,8 +239,9 @@ class QuotationLine < ActiveRecord::Base
 
     # paint the image on canvas
     canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
+    size_image.destroy!
   end
-  
+
   def draw_horizontal_measurement(canvas, section_width, currentx)
     # binding for erb file
     # constants
@@ -259,6 +261,7 @@ class QuotationLine < ActiveRecord::Base
 
     # paint the image on canvas
     canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
+    size_image.destroy!
   end
 
   def delete_previeww_image
