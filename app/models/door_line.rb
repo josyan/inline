@@ -54,8 +54,17 @@ class DoorLine < ActiveRecord::Base
     width = 0
     door_line_sections.each do |door_line_section|
       width += door_line_section.door_section_dimension.value
+      width += frame_profile.gap if door_line_section.door_section.openable?
     end
+    width += 2 * frame_profile.width
+    width += (door_line_sections.count - 1) * frame_profile.separator_width
     width
+  end
+
+  def total_height
+    height = 0
+    height = DoorSection.DEFAULT_HEIGHT + 2 * frame_profile.width + frame_profile.gap
+    height
   end
 
   def create_image
@@ -64,7 +73,7 @@ class DoorLine < ActiveRecord::Base
 
     # define canvas for final image
     image_width = (total_width + 30 + (door_line_sections.length + 1) * FRAME_THICKNESS) * PIXELS_PER_INCH
-    image_height = (DoorSection::DEFAULT_HEIGHT + 20 + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH
+    image_height = (DoorSection::DEFAULT_HEIGHT + 35 + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH
     canvas = Image.new(image_width, image_height)
 
     # intialize coordinates
@@ -104,7 +113,7 @@ class DoorLine < ActiveRecord::Base
     frame.fill_opacity 0
     frame.stroke_width 1
     frame.stroke 'black'
-    frame.rectangle 0, 0, (total_width + (door_line_sections.length + 1) * FRAME_THICKNESS) * PIXELS_PER_INCH - 1, (DoorSection::DEFAULT_HEIGHT + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH - 1
+    frame.rectangle 0, 0, (currentx + FRAME_THICKNESS) * PIXELS_PER_INCH - 3, (DoorSection::DEFAULT_HEIGHT + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH - 1
     frame.draw canvas
 
     # print vertical sizes
