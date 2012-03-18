@@ -12,7 +12,6 @@ class DoorLine < ActiveRecord::Base
   belongs_to :door_boring
   has_many :door_line_options, :dependent => :destroy
 
-  FRAME_THICKNESS = 1.0
   ARROW_SIZE = 5.0
   PIXELS_PER_INCH = 3
 
@@ -139,7 +138,7 @@ class DoorLine < ActiveRecord::Base
   end
 
   def get_image_size
-    return (total_width + 30 + (door_line_sections.length + 1) * FRAME_THICKNESS) * PIXELS_PER_INCH, (DoorSection::DEFAULT_HEIGHT + 20 + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH
+    return (total_width + 30) * PIXELS_PER_INCH, (total_height + 35) * PIXELS_PER_INCH
   end
 
   private ####################################################################
