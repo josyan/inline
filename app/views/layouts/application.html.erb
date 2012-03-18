@@ -76,7 +76,9 @@
             <li><%= menu_item 'process', 'TITLE_OPTION_LIST', { :controller => 'option', :action => 'list', :mt => mt.id }, :label => mt.tr_name.downcase %></li>
           <% end %>
           <li><%= menu_item 'process', 'TITLE_OPTION_CATEGORY_LIST', :controller => 'option_category', :action => 'list' %></li>
-          <li><%= menu_item 'colors', 'TITLE_PRODUCT_COLORS_LIST', product_colors_path %></li>
+          <% ModuleType.all.each do |mt| %>
+            <li><%= menu_item 'colors', 'TITLE_PRODUCT_COLORS_LIST', product_colors_path(:mt => mt.id), :label => mt.tr_name.downcase %></li>
+          <% end %>
           <li><%= menu_item 'comment', 'TITLE_TRANSLATION_LIST', :controller => 'translation', :action => 'list' %></li>
           <li><%= menu_item 'comment', 'TITLE_DBTF_LIST', :controller => 'database_translation_field', :action => 'list' %></li>
           <li><%= menu_item 'comment', 'TITLE_DBT_LIST', :controller => 'database_translation', :action => 'list' %></li>
