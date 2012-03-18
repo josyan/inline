@@ -73,6 +73,36 @@
   <%= select 'door_line', 'slab_material_id', @slab_materials.map { |sm| [sm.tr_name, sm.id] } %>
 </div>
 
+<div id="slab-material-selection" class="section">
+  <% colors = ProductColor.all(:conditions => { :module_type_id => 2 }) %>
+  <div class="intro">
+    <%= trn_get('COLORS_INTRO') %>
+  </div>
+
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><%= trn_get('LABEL_CUSTOM_INTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+          <%= text_field :door_line, :interior_color %>
+      </td>
+      <td><%= trn_get('LABEL_STANDARD_INTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+        <%= color_picker('door_line[standard_interior_color_id]', colors, "door_line_interior_color", @door_line.standard_interior_color) %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= trn_get('LABEL_CUSTOM_EXTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+        <%= text_field :door_line, :exterior_color %>
+      </td>
+      <td><%= trn_get('LABEL_STANDARD_EXTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+        <%= color_picker('door_line[standard_exterior_color_id]', colors, "door_line_exterior_color", @door_line.standard_exterior_color) %>
+      </td>
+    </tr>
+  </table>
+</div>
+
 <div id="door-panel-selection" class="section">
   <div class="intro">
     <%= trn_get('DOOR_PANEL_INTRO') %>
