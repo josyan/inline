@@ -11,6 +11,8 @@ class DoorLine < ActiveRecord::Base
   belongs_to :door_opening
   belongs_to :door_boring
   has_many :door_line_options, :dependent => :destroy
+  belongs_to :standard_interior_color, :class_name => "ProductColor"
+  belongs_to :standard_exterior_color, :class_name => "ProductColor"
 
   ARROW_SIZE = 5.0
   PIXELS_PER_INCH = 3
