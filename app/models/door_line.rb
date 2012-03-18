@@ -121,9 +121,11 @@ class DoorLine < ActiveRecord::Base
     frame.rectangle 0, 0, total_width * PIXELS_PER_INCH - 1, total_height * PIXELS_PER_INCH - 1
     frame.draw canvas
 
-    # print vertical sizes
-    # define values for binding
+    # print vertical size
     draw_vertical_measurement(canvas, total_height, 0)
+
+    # print total horizontal size
+    draw_horizontal_measurement(canvas, total_width, 0, 50)
 
     # write final image
     canvas.write final_file_name
@@ -165,7 +167,7 @@ class DoorLine < ActiveRecord::Base
     size_image.destroy!
   end
 
-  def draw_horizontal_measurement(canvas, section_width, currentx)
+  def draw_horizontal_measurement(canvas, section_width, currentx, extra_offset = 0)
     # binding for erb file
     # constants
     arrow_size = ARROW_SIZE
@@ -180,7 +182,7 @@ class DoorLine < ActiveRecord::Base
 
     # define offset to paint section
     offsetx_px = currentx * PIXELS_PER_INCH
-    offsety_px = total_height * PIXELS_PER_INCH
+    offsety_px = total_height * PIXELS_PER_INCH + extra_offset
 
     # paint the image on canvas
     canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
