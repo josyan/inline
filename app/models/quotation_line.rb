@@ -22,7 +22,7 @@ class QuotationLine < ActiveRecord::Base
   # constants for drawing
   FRAME_THICKNESS = 3.0
   ARROW_SIZE = 5.0
-  PIXELS_PER_INCH = 2
+  PIXELS_PER_INCH = 3
 
   # returns an array of the options of the quotation line
   def options

@@ -14,7 +14,7 @@ class DoorLine < ActiveRecord::Base
 
   FRAME_THICKNESS = 1.0
   ARROW_SIZE = 5.0
-  PIXELS_PER_INCH = 2
+  PIXELS_PER_INCH = 3
 
   def update_price
     self.price = 0
@@ -63,7 +63,7 @@ class DoorLine < ActiveRecord::Base
 
   def total_height
     height = 0
-    height = DoorSection.DEFAULT_HEIGHT + 2 * frame_profile.width + frame_profile.gap
+    height = DoorSection::DEFAULT_HEIGHT + 2 * frame_profile.width + frame_profile.gap
     height
   end
 
@@ -72,16 +72,17 @@ class DoorLine < ActiveRecord::Base
     final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'doors', "preview_#{id}.png")
 
     # define canvas for final image
-    image_width = (total_width + 30 + (door_line_sections.length + 1) * FRAME_THICKNESS) * PIXELS_PER_INCH
-    image_height = (DoorSection::DEFAULT_HEIGHT + 35 + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH
+    image_width = (total_width + 30) * PIXELS_PER_INCH
+    image_height = (total_height + 35) * PIXELS_PER_INCH
     canvas = Image.new(image_width, image_height)
 
     # intialize coordinates
-    currentx = FRAME_THICKNESS
-    currenty = FRAME_THICKNESS
+    currentx = frame_profile.width
+    currenty = frame_profile.width + frame_profile.gap / 2
 
     # loop on sections
     door_line_sections.each do |door_line_section|
+      currentx += frame_profile.gap / 2 if door_line_section.door_section.openable?
 
       # get the file to be painted
       if door_line_section.door_panel
@@ -104,8 +105,13 @@ class DoorLine < ActiveRecord::Base
       canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
       section_image.destroy!
 
+      # print horizontal size
+      draw_horizontal_measurement(canvas, door_line_section.door_section_dimension.value, currentx)
+
       # update coordinates
-      currentx += door_line_section.door_section_dimension.value + FRAME_THICKNESS
+      currentx += door_line_section.door_section_dimension.value
+      currentx += frame_profile.gap / 2 if door_line_section.door_section.openable?
+      currentx += (door_line_section.id == door_line_sections.last.id ? frame_profile.width : frame_profile.separator_width)
     end
 
     # global frame
@@ -113,24 +119,12 @@ class DoorLine < ActiveRecord::Base
     frame.fill_opacity 0
     frame.stroke_width 1
     frame.stroke 'black'
-    frame.rectangle 0, 0, (currentx + FRAME_THICKNESS) * PIXELS_PER_INCH - 3, (DoorSection::DEFAULT_HEIGHT + 2 * FRAME_THICKNESS) * PIXELS_PER_INCH - 1
+    frame.rectangle 0, 0, total_width * PIXELS_PER_INCH - 1, total_height * PIXELS_PER_INCH - 1
     frame.draw canvas
 
     # print vertical sizes
     # define values for binding
-    section_height = DoorSection::DEFAULT_HEIGHT
-    draw_vertical_measurement(canvas, section_height, currenty)
-
-    # initialize offset
-    currentx = FRAME_THICKNESS
-    # print horizontal sizes
-    door_line_sections.each do |door_line_section|
-      # define values for binding
-      section_width = door_line_section.door_section_dimension.value
-      draw_horizontal_measurement(canvas, section_width, currentx)
-      # update coordinates
-      currentx += door_line_section.door_section_dimension.value + FRAME_THICKNESS
-    end
+    draw_vertical_measurement(canvas, total_height, 0)
 
     # write final image
     canvas.write final_file_name
@@ -164,7 +158,7 @@ class DoorLine < ActiveRecord::Base
     size_image = Image.read(temp_file_name)[0]
 
     # define offset to paint section
-    offsetx_px = (total_width + (door_line_sections.count + 1) * FRAME_THICKNESS + 1) * PIXELS_PER_INCH
+    offsetx_px = total_width * PIXELS_PER_INCH
     offsety_px = currenty * PIXELS_PER_INCH
 
     # paint the image on canvas
@@ -187,7 +181,7 @@ class DoorLine < ActiveRecord::Base
 
     # define offset to paint section
     offsetx_px = currentx * PIXELS_PER_INCH
-    offsety_px = (DoorSection::DEFAULT_HEIGHT + 2 * FRAME_THICKNESS + 1) * PIXELS_PER_INCH
+    offsety_px = total_height * PIXELS_PER_INCH
 
     # paint the image on canvas
     canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
