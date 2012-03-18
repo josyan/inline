@@ -32,7 +32,7 @@
 					<tr>
 						<td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
 						<td><%= h line.exterior_color.blank? ? line.standard_exterior_color.tr_name : line.tr_exterior_color + trn_get("LABEL_CUSTOM") %> </td>
-						</tr>
+					</tr>
 				<% end %>
 
         <% if line.options_quotation_lines.length > 0 %>
