@@ -149,7 +149,7 @@
             <tr>
               <td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
               <td><%= h ql.exterior_color.blank? ? ql.standard_exterior_color.tr_name : ql.tr_exterior_color + trn_get("LABEL_CUSTOM")%> </td>
-              </tr>
+            </tr>
           <% end %>
         </table>
       </td>
@@ -233,6 +233,18 @@
             <td><%= trn_geth('HEADER_SLAB_MATERIAL') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
             <td><%= dl.slab_material.tr_name %></td>
           </tr>
+          <% if !dl.interior_color.blank? || !dl.standard_interior_color.blank? %>
+            <tr>
+              <td><%= trn_get('LABEL_INTERIOR_COLOR')%></td>
+              <td><%= h dl.interior_color.blank? ? dl.standard_interior_color.tr_name : dl.tr_interior_color + trn_get("LABEL_CUSTOM") %></td>
+            </tr>
+          <% end %>
+          <% if !dl.exterior_color.blank? || !dl.standard_exterior_color.blank?%>
+            <tr>
+              <td><%= trn_get('LABEL_EXTERIOR_COLOR')%></td>
+              <td><%= h dl.exterior_color.blank? ? dl.standard_exterior_color.tr_name : dl.tr_exterior_color + trn_get("LABEL_CUSTOM")%> </td>
+            </tr>
+          <% end %>
           <tr>
             <td><%= trn_geth('HEADER_DOOR_OPENING') %> <%= trn_geth('LABEL_SEMICOLON') %></td>
             <td><%= dl.door_opening.tr_name %></td>
