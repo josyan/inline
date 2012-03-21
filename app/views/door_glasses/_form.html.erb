@@ -12,8 +12,11 @@
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_SELECT_DOOR_PANELS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td>
-      <% @door_panels.each do |door_panel| %>
-        <%= check_box_tag "door_glass[door_panel_ids][]", door_panel.id, @door_glass.door_panels.exists?(:id => door_panel.id) %> <%= door_panel.tr_name %><br/>
+      <% @door_panel_families.each do |door_panel_family| %>
+        <h4><%= door_panel_family.tr_name %></h4>
+        <% door_panel_family.door_panels.each do |door_panel| %>
+          <%= check_box_tag "door_glass[door_panel_ids][]", door_panel.id, @door_glass.door_panels.exists?(:id => door_panel.id) %> <%= door_panel.tr_name %><br/>
+        <% end %>
       <% end %>
     </td>
   </tr>
