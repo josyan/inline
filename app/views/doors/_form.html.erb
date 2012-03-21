@@ -73,7 +73,7 @@
   <%= select 'door_line', 'slab_material_id', @slab_materials.map { |sm| [sm.tr_name, sm.id] } %>
 </div>
 
-<div id="slab-material-selection" class="section">
+<div id="color-selection" class="section">
   <% colors = ProductColor.all(:conditions => { :module_type_id => 2 }) %>
   <div class="intro">
     <%= trn_get('COLORS_INTRO') %>

@@ -29,6 +29,12 @@
 .choice-list .choice:hover {
   background-color: #948B6D;
 }
+.choice-list .family-name {
+  background-color: #C7BD93;
+  padding: 4px;
+  float: left;
+  width: 620px;
+}
 
 /* door configuration section */
 #door-panels-configuration .section-label {
