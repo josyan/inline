@@ -31,10 +31,12 @@ GlassVision::Application.routes.draw do
   resources :door_combinations
   resources :frame_profiles
   resources :slab_materials
-  resources :door_panels
   resources :door_openings
   resources :door_glass_families do
     resources :door_glasses
+  end
+  resources :door_panel_families do
+    resources :door_panels
   end
   resources :door_borings
   resources :door_sections do

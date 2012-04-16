@@ -117,7 +117,6 @@ $j(document).ready(function() {
 
     // launch click on selected or first door combination
     var selected_door_combination_id = $j('#door_line_door_combination_id').val();
-    console.log(selected_door_combination_id);
     if($j('#door-combination-selection #dcl-' + id + ' #dc-' + selected_door_combination_id).length == 1)
       $j('#door-combination-selection #dcl-' + id + ' #dc-' + selected_door_combination_id).click();
     else
@@ -127,7 +126,6 @@ $j(document).ready(function() {
   // door combination interraction
   $j('#door-combination-selection .door-combination').click(function() {
     var id = $j(this).attr('id').replace('dc-', '');
-    var door_line_id = $j('#door_line_id').val();
 
     // highlight the selection
     $j('#door-combination-selection .door-combination').removeClass('selected');
@@ -136,12 +134,8 @@ $j(document).ready(function() {
     // save the selection
     $j('#door_line_door_combination_id').val(id);
 
-    // load the interface to configure panels
-    $j.get('/doors/configure_panels', $j('#door-panels-configuration input,#door-panels-configuration select').serialize() + '&door_combination_id=' + id + '&door_line_id=' + door_line_id, function(response) {
-      $j('#door-panels-configuration').html(response);
-      attach_door_panels_configuration_events();
-      $j('#door-panels-configuration .door-panel.selected').click();
-    });
+    // triggers change on slab material list
+    $j('#door_line_slab_material_id').trigger('change');
 
     // load the corresponding openings
     $j.get('/doors/configure_openings', 'door_combination_id=' + id + '&door_opening_id=' + $j('#door_line_door_opening_id').val(), function(response) {
@@ -167,6 +161,21 @@ $j(document).ready(function() {
 
     // save the selection
     $j('#door_line_frame_profile_id').val(id);
+  });
+
+  // slab material interraction
+  $j('#door_line_slab_material_id').change(function() {
+    var door_combination_id = $j('#door_line_door_combination_id').val();
+    var door_line_id = $j('#door_line_id').val();
+    var slab_material_id = $j(this).val();
+
+    // load the interface to configure panels
+    $j.get('/doors/configure_panels', $j('#door-panels-configuration input,#door-panels-configuration select').serialize() + '&door_combination_id=' + door_combination_id + '&door_line_id=' + door_line_id + '&slab_material_id=' + slab_material_id, function(response) {
+      $j('#door-panels-configuration').html(response);
+      attach_door_panels_configuration_events();
+      $j('#door-panels-configuration .door-panel.selected').click();
+    });
+
   });
 
   // door boring interraction

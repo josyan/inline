@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120318012148) do
+ActiveRecord::Schema.define(:version => 20120321020700) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -161,12 +161,20 @@ ActiveRecord::Schema.define(:version => 20120318012148) do
     t.float    "price",              :default => 0.0
   end
 
+  create_table "door_panel_families", :force => true do |t|
+    t.string   "name"
+    t.integer  "slab_material_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "door_panels", :force => true do |t|
     t.string   "name"
     t.string   "preview_image_name"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.float    "price",              :default => 0.0
+    t.float    "price",                :default => 0.0
+    t.integer  "door_panel_family_id"
   end
 
   create_table "door_panels_door_sections", :id => false, :force => true do |t|

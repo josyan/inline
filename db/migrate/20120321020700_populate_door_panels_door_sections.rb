@@ -1,7 +1,7 @@
 class PopulateDoorPanelsDoorSections < ActiveRecord::Migration
   def self.up
-    1.upto(24) do |i|
-      execute "INSERT INTO door_panels_door_sections (door_panel_id, door_section_id) VALUES (#{i}, 3)"
+    DoorPanel.all.each do |dp|
+      execute "INSERT INTO door_panels_door_sections (door_panel_id, door_section_id) VALUES (#{dp.id}, 3)"
     end
   end
 

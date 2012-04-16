@@ -1,0 +1,22 @@
+<h2><%= trn_geth('TITLE_DOOR_PANEL_FAMILY_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_door_panel_family_path %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_MATERIAL') %></th>
+    <th></th>
+  </tr>
+<% for door_panel_family in @door_panel_families %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= door_panel_family.tr_name %></td>
+    <td><%= door_panel_family.slab_material.tr_name %></td>
+    <td>
+      <%= link_to trn_geth('BUTTON_PANELS'), door_panel_family_door_panels_path(door_panel_family) %> |
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_door_panel_family_path(door_panel_family) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), door_panel_family_path(door_panel_family), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+
