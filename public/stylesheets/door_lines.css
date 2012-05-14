@@ -52,6 +52,9 @@
   background-color: #C7BD93;
   position: relative;
 }
+#door-panels-configuration .door-line-section .selection-door-panel {
+  position: relative;
+}
 #door-panels-configuration .door-line-section.last {
   border-right: 4px solid #3F3C2F;
 }
