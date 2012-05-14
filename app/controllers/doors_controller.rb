@@ -29,7 +29,7 @@ class DoorsController < ApplicationController
       door_line_section[:door_line_section] = DoorLineSection.new(:door_section => door_line_section[:door_section],
                                                                   :door_section_dimension => door_line_section[:door_section_dimensions].first)
       unless door_line_section[:door_panel_families].blank?
-        door_line_section[:door_line_section].door_panel = door_line_section[:door_panel_families].first.door_panels.first
+        door_line_section[:door_line_section].door_panel = door_line_section[:door_section].door_panels.first
       end
 
       # check if we can somewhat recopy the previous configuration in the new one
