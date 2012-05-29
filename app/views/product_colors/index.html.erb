@@ -11,7 +11,7 @@
   <% @product_colors.each do |product_color| %>
       <tr style="height:32px;">
         <td><%= image_tag('transparent-block.png', :style => "background-color:#{product_color.value};") %></td>
-        <td><%= product_color.name %></td>
+        <td><%= product_color.tr_name %></td>
         <td><%= product_color.value %></td>
         <td><%= link_to trn_get('BUTTON_EDIT'), edit_product_color_path(product_color) %></td>
         <td><%= link_to trn_get('BUTTON_DELETE'), product_color, :confirm => trn_get('LABEL_DELETE_QUESTION'), :method => :delete %></td>

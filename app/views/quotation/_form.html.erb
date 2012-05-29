@@ -30,7 +30,7 @@
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_NAME_PICK') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= select("customer", "name", Customer.order(:name).all().collect(&:name)) %>
+    <td><%= select("customer", "name", Customer.all().collect(&:name)) %>
     </td>
     <%= observe_field :customer_name,
         :on => 'onchanged',

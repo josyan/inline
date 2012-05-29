@@ -12,12 +12,36 @@ class SerieController < ApplicationController
 
   def add
     @serie = Serie.new
+    @series = Serie.order("name")
   end
 
   def create
+    must_import_prices = false
+    orig_series = nil
     @serie = Serie.new(params[:serie])
+    unless params[:source_series].blank?
+      must_import_prices = true
+      # cloning a series....
+      orig_series = Serie.find(params[:source_series])
+      @serie.series_type = orig_series.series_type
+      # clone widths
+      @serie.widths << orig_series.widths.map { |w| w.clone }
+      # clone heights
+      @serie.heights << orig_series.heights.map { |h| h.clone }
+      # copy openings
+      @serie.openings = orig_series.openings
+      # copy options
+      @serie.options = orig_series.options
+    end
+
     if @serie.save
       flash[:notice] = trn_geth('LABEL_SERIE') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+      if must_import_prices && orig_series
+        @serie.openings.each do |opening|
+          # copy prices
+          copy_prices_from_series_and_opening(orig_series, opening, opening)
+        end
+      end
       redirect_to :action => 'list'
     else
       render :action => 'add'
@@ -164,36 +188,14 @@ class SerieController < ApplicationController
     @org_serie = Serie.find(params[:selected_serie_id])
     @org_opening = Opening.find(params[:selected_opening_id])
 
-    cpt = 0
-    # loop on widths and heights form source serie
-    @org_serie.widths.each { |ow|
-      @org_serie.heights.each { |oh|
-        # get the source price
-        op = SeriePrice.where('width_id = ? and height_id = ? and opening_id = ?', ow.id, oh.id, @org_opening.id).first
-        if op # if no price for this width and height, nothing to do
-          # get destination width and height with same values than the source width and height
-          dw = @serie.widths.where('value = ?', ow.value).first
-          dh = @serie.heights.where('value = ?', oh.value).first
-          # if the destination serie has same dimensions
-          if dw and dh
-            # get destination price
-            dp = SeriePrice.where('width_id = ? and height_id = ? and opening_id = ?', dw.id, dh.id, @opening.id).first
-            if dp # update existing price
-              dp.update_attribute :price, op.price
-            else # create new price
-              SeriePrice.create :width_id => dw.id, :height_id => dh.id, :opening_id => @opening.id, :price => op.price
-            end
-            cpt += 1
-          end
-        end
-      }
-    }
+    cpt = copy_prices_from_series_and_opening(@org_serie, @org_opening, @opening)
 
     flash[:notice] = trn_get('MSG_CPT_PRICES_IMPORTED').sub('#cpt#', cpt.to_s)
     redirect_to :action => 'edit_prices', :id => @serie, :opening_id => @opening.id
   end
 
-  def edit_openings
+
+    def edit_openings
     @serie = Serie.find(params[:id])
     @openings = Opening.all(:order => 'name')
   end
@@ -211,5 +213,34 @@ class SerieController < ApplicationController
     }
     redirect_to :action => 'show', :id => @serie
   end
- 
+
+private
+    def copy_prices_from_series_and_opening(orig_serie, orig_opening, opening)
+      cpt = 0
+      # loop on widths and heights form source serie
+      orig_serie.widths.each { |ow|
+        orig_serie.heights.each { |oh|
+          # get the source price
+          op = SeriePrice.where('width_id = ? and height_id = ? and opening_id = ?', ow.id, oh.id, orig_opening.id).first
+          if op # if no price for this width and height, nothing to do
+                # get destination width and height with same values than the source width and height
+            dw = @serie.widths.where('value = ?', ow.value).first
+            dh = @serie.heights.where('value = ?', oh.value).first
+            # if the destination serie has same dimensions
+            if dw and dh
+              # get destination price
+              dp = SeriePrice.where('width_id = ? and height_id = ? and opening_id = ?', dw.id, dh.id, opening.id).first
+              if dp # update existing price
+                dp.update_attribute :price, op.price
+              else # create new price
+                SeriePrice.create :width_id => dw.id, :height_id => dh.id, :opening_id => opening.id, :price => op.price
+              end
+              cpt += 1
+            end
+          end
+        }
+      }
+      cpt
+    end
+
 end

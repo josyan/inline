@@ -52,7 +52,7 @@ tr.even {
   padding: 5px;
 }
 
-table.dimensions td {
+table.dimensions td, table.dimensions th {
   padding: 10px;
   text-align: center;
 }
@@ -61,7 +61,7 @@ table.dimensions td {
   position: relative;
   left: 0px;
   right: 0px;
-  min-width: 200px;
+  min-width: 125px;
 }
 
 .opening_list_caller img {
@@ -69,7 +69,7 @@ table.dimensions td {
 }
 
 .opening_list {
-  width: 200px;
+  width: 125px;
   max-height: 250px;
   overflow: auto;
   position: absolute;

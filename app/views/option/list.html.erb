@@ -13,7 +13,7 @@
   <tr class="<%= cycle('odd', 'even') %>">
     <td><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %> <%= option.tr_description %></td>
     <td><%= option.pricing_method.tr_description %></td>
-    <td><%= option.price %></td>
+    <td><%= number_to_currency option.price %></td>
     <td>
       <% if option.minimum_quantity != 0 and (option.pricing_method_id == 1 or option.pricing_method_id == 2) %>
         <%= option.minimum_quantity %> <%= option.options_minimum_unit.description %>

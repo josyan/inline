@@ -250,7 +250,8 @@
   </tr>
   <% end %>
   <tr>
-    <td align="right" colspan="2">Total</td>
+    <td align="right"><%=trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%=  @quotation.quotation_lines.collect(&:quantity).sum %> </td>
+    <td align="right" colspan="1">Total</td>
     <td align="right"><%= format('%.2f', total) %>$</td>
     <td></td>
   </tr>

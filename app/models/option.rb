@@ -39,4 +39,15 @@ class Option < ActiveRecord::Base
     !option_categories.empty?
   end
   
+  def self.options_for_select
+    [[trn_get('LABEL_PRICING_METHOD_APPLIES_TO_ALL'), 2],
+                                   [trn_get('LABEL_PRICING_METHOD_APPLIES_TO_FIXED'), 0],          
+                                   [trn_get('LABEL_PRICING_METHOD_APPLIES_TO_OPENABLE'), 1]]
+  end
+  
+  def apply_to_value_string
+    [trn_get('LABEL_PRICING_METHOD_APPLIES_TO_FIXED'),          
+     trn_get('LABEL_PRICING_METHOD_APPLIES_TO_OPENABLE'),
+     trn_get('LABEL_PRICING_METHOD_APPLIES_TO_ALL')][self.apply_to]
+  end
 end

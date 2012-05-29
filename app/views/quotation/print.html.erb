@@ -226,9 +226,15 @@
   <% end %>
   <!-- total -->
   <tr>
+    <td><%= trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%=  @quotation.quotation_lines.collect(&:quantity).sum %> </td>
     <td><%= trn_get('LABEL_GST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.gst_number %></td>
     <td><%= trn_get('LABEL_PST')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
   </tr>
+  <% if @quotation.ready_to_sign %>
+</table>
+<div style="page-break-before:always;">
+<table >
+  <% end %>
   <tr >
     <td colspan="3" rowspan="4" style="border:1px solid #808080;" valign="top">
       <p>
@@ -319,3 +325,4 @@
   </tr>
   <% end %>
 </table>
+</div>

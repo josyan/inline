@@ -11,6 +11,7 @@ module Translatable
     if match = /tr_([a-zA-Z]\w*)/.match(method_id.to_s)
       field = match.to_a[1]
       table = self.class.to_s.pluralize.underscore
+      table = 'serie' if table == 'series'
       trans = DatabaseTranslation.where(:record_id => id, :table => table, :translation_field_name => field).first
       if !trans or !trans[lang] or trans[lang].empty?
         send field

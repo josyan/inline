@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110603121438) do
+ActiveRecord::Schema.define(:version => 20120526004135) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -103,6 +103,7 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
     t.string  "photo_file_name"
     t.string  "photo_content_type"
     t.integer "photo_file_size"
+    t.integer "apply_to",                              :default => 0,   :null => false
   end
 
   create_table "options_minimum_units", :force => true do |t|
@@ -185,7 +186,7 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
     t.string   "customer_email",   :limit => 50
     t.float    "transport",                       :default => 0.0,   :null => false
     t.float    "discount",                        :default => 0.0,   :null => false
-    t.float    "taxes",                           :default => 0.0,   :null => false
+    t.float    "taxes",                                              :null => false
     t.text     "notes"
     t.boolean  "ready_to_sign",                   :default => false
     t.integer  "user_id"
@@ -218,11 +219,10 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
   end
 
   create_table "series", :force => true do |t|
-    t.string  "name",             :limit => 50,  :default => "",    :null => false
-    t.string  "description",                     :default => "",    :null => false
-    t.text    "comments"
-    t.text    "series_type",      :limit => 255
-    t.boolean "fixed_sizes_only",                :default => false
+    t.string "name",        :limit => 50,  :default => "", :null => false
+    t.string "description",                :default => "", :null => false
+    t.text   "comments"
+    t.text   "series_type", :limit => 255
   end
 
   create_table "sessions", :force => true do |t|
@@ -235,12 +235,14 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "shapes", :force => true do |t|
-    t.string  "name",              :limit => 50, :default => "",    :null => false
-    t.integer "sections_width",                  :default => 0,     :null => false
-    t.integer "sections_height",                 :default => 0,     :null => false
-    t.integer "corners",                         :default => 4,     :null => false
-    t.boolean "has_upper_transom",               :default => false
-    t.boolean "has_lower_transom",               :default => false
+    t.string  "name",                :limit => 50, :default => "",    :null => false
+    t.integer "sections_width",                    :default => 0,     :null => false
+    t.integer "sections_height",                   :default => 0,     :null => false
+    t.integer "corners",                           :default => 4,     :null => false
+    t.boolean "has_upper_transom",                 :default => false
+    t.boolean "has_lower_transom",                 :default => false
+    t.boolean "has_left_sidelight",                :default => false
+    t.boolean "has_right_sidelight",               :default => false
   end
 
   create_table "translations", :force => true do |t|

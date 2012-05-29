@@ -13,6 +13,11 @@
     <td align="right"><%= trn_geth('LABEL_PRICING_METHOD') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @option.pricing_method.tr_description %></td>
   </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICING_METHOD_APPLIES_TO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @option.apply_to_value_string %>
+    </td>
+  </tr>
 	<tr valign="top">
 		<td align="right"><%= trn_geth('LABEL_CATEGORY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
 		<td><%= @option.option_categories[0].tr_name if @option.categorized? %></td>
@@ -29,9 +34,10 @@
   <% end %>
  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= image_tag @option.photo.url, :class => "#{ 'popup' unless @option.photo.original_filename.blank? }"%></td>
+    <td><%= image_tag(@option.photo.url, :class => 'popup') unless @option.photo.original_filename.blank?%></td>
   </tr>
 </table>
+<br />
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'list' %> |
 <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => @option %> |
 <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @option}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

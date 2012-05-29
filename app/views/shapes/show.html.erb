@@ -17,7 +17,25 @@
     <td align="right"><%= trn_geth('LABEL_CORNERS_NUMBER') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= @shape.corners %></td>
   </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_ALLOW_UPPER_TRANSOM') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= yes_or_no @shape.has_upper_transom %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_ALLOW_LOWER_TRANSOM') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= yes_or_no @shape.has_lower_transom %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_ALLOW_LEFT_SIDELIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= yes_or_no @shape.has_left_sidelight %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_ALLOW_RIGHT_SIDELIGHT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= yes_or_no @shape.has_right_sidelight %></td>
+  </tr>
+
 </table>
+<br />
 <%= link_to trn_geth('BUTTON_BACK_TO_LIST'), shapes_path %> |
 <%= link_to trn_geth('BUTTON_EDIT'), edit_shape_path(@shape)%> |
 <%= link_to trn_geth('BUTTON_DELETE'), @shape, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>

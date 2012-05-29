@@ -18,14 +18,20 @@
     <td><%= f.select :pricing_method_id, PricingMethod.all(:order => 'description').map { |p| [p.tr_description, p.id] } %></td>
   </tr>
   <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICING_METHOD_APPLIES_TO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.select :apply_to, Option.options_for_select, {},{ :disabled => @option.pricing_method_id != 1} %>
+    </td>
+  </tr>
+  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.text_field :price, :size => 5 %></td>
   </tr>
 	<tr>
 		<td align="right"><%= trn_geth('LABEL_MINIMUM_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
 		<td>
-			<%= f.text_field :minimum_quantity, :size => 5 %>
-			<%= f.select :options_minimum_unit_id, OptionsMinimumUnit.all(:order => 'description').map { |p| [p.tr_description, p.id] } %> <strong><%= trn_geth('LABEL_SIZABLE_ONLY') %></strong>
+			<%= f.text_field :minimum_quantity, :size => 5, :disabled => @option.pricing_method_id > 2  %>
+			<%= f.select :options_minimum_unit_id, OptionsMinimumUnit.all(:order => 'description').map { |p| [p.tr_description, p.id] }, {},
+			{:disabled => @option.pricing_method_id > 2 } %> <strong><%= trn_geth('LABEL_SIZABLE_ONLY') %></strong>
 		</td>
 	</tr>
   <tr valign="top">
@@ -34,7 +40,7 @@
   </tr>
   <tr valign="top">
     <td align="right"></td>
-    <td><%= image_tag @option.photo.url, :class => "#{ 'popup' unless @option.photo.original_filename.blank? }" %></td>
+    <td><%= image_tag(@option.photo.url, :class => 'popup') unless @option.photo.original_filename.blank?  %></td>
   </tr>
 </table>
 <p>
@@ -43,3 +49,37 @@
 
 <br/>
 </p>
+<script type="text/javascript" charset="utf-8">
+  function toggle_apply_to(el)
+  {
+    if (jQuery(el).val() == '1')
+      jQuery('#option_apply_to').removeAttr('disabled');
+    else {
+      jQuery('#option_apply_to').val('2');    
+      jQuery('#option_apply_to').attr('disabled', 'disabled');    
+    }
+  }
+  function toggle_min_quantity(el)
+  {
+    var val = jQuery(el).val();
+    if (val == '1' || val == '2')
+    {
+      jQuery('#option_minimum_quantity').removeAttr('disabled');
+      jQuery('#option_options_minimum_unit_id').removeAttr('disabled');
+    }
+    else
+    {
+      jQuery('#option_minimum_quantity').attr('disabled', 'disabled');        
+      jQuery('#option_options_minimum_unit_id').attr('disabled', 'disabled');
+    }
+  }
+  jQuery("#option_pricing_method_id").change(function(){
+    toggle_apply_to(this);
+    toggle_min_quantity(this);
+  });
+  jQuery("#option_pricing_method_id").keyup(function(){
+    toggle_apply_to(this);
+    toggle_min_quantity(this);
+  });
+
+</script>
