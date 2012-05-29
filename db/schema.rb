@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110603121438) do
+ActiveRecord::Schema.define(:version => 20120526004135) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -60,12 +60,175 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
     t.string  "type",     :limit => 6, :default => "",  :null => false
   end
 
+  create_table "door_borings", :force => true do |t|
+    t.string   "name"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
+  end
+
+  create_table "door_combinations", :force => true do |t|
+    t.string   "name"
+    t.string   "sections"
+    t.string   "preview_image_name"
+    t.integer  "door_frame_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
+  end
+
+  create_table "door_combinations_door_openings", :id => false, :force => true do |t|
+    t.integer "door_combination_id"
+    t.integer "door_opening_id"
+  end
+
+  create_table "door_frames", :force => true do |t|
+    t.string   "name"
+    t.integer  "sections"
+    t.string   "preview_image_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
+  end
+
+  create_table "door_glass_families", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "door_glasses", :force => true do |t|
+    t.string   "name"
+    t.integer  "door_glass_family_id"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",                :default => 0.0
+  end
+
+  create_table "door_glasses_door_panels", :id => false, :force => true do |t|
+    t.integer "door_glass_id"
+    t.integer "door_panel_id"
+  end
+
+  create_table "door_line_options", :force => true do |t|
+    t.integer  "door_line_id"
+    t.integer  "option_id"
+    t.float    "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "door_line_sections", :force => true do |t|
+    t.integer  "door_line_id"
+    t.integer  "sort_order"
+    t.integer  "door_section_id"
+    t.integer  "door_panel_id"
+    t.integer  "door_glass_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "door_section_dimension_id"
+  end
+
+  create_table "door_lines", :force => true do |t|
+    t.integer  "quotation_id"
+    t.integer  "door_frame_id"
+    t.integer  "quantity"
+    t.float    "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "door_combination_id"
+    t.integer  "frame_profile_id"
+    t.integer  "slab_material_id"
+    t.integer  "door_opening_id"
+    t.integer  "door_boring_id"
+    t.string   "exterior_color"
+    t.string   "interior_color"
+    t.integer  "standard_interior_color_id"
+    t.integer  "standard_exterior_color_id"
+  end
+
+  create_table "door_openings", :force => true do |t|
+    t.string   "name"
+    t.string   "preview_image_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
+  end
+
+  create_table "door_panel_families", :force => true do |t|
+    t.string   "name"
+    t.integer  "slab_material_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "door_panels", :force => true do |t|
+    t.string   "name"
+    t.string   "preview_image_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",                :default => 0.0
+    t.integer  "door_panel_family_id"
+  end
+
+  create_table "door_panels_door_sections", :id => false, :force => true do |t|
+    t.integer "door_panel_id"
+    t.integer "door_section_id"
+  end
+
+  create_table "door_section_dimensions", :force => true do |t|
+    t.integer  "door_section_id"
+    t.float    "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",           :default => 0.0
+  end
+
+  create_table "door_sections", :force => true do |t|
+    t.string   "name"
+    t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",      :default => 0.0
+  end
+
   create_table "emails", :force => true do |t|
     t.string   "subject"
     t.text     "body"
     t.boolean  "sent"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "frame_profiles", :force => true do |t|
+    t.string   "name"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",              :default => 0.0
+    t.float    "width",              :default => 0.0
+    t.float    "separator_width",    :default => 0.0
+    t.float    "gap",                :default => 0.0
+  end
+
+  create_table "module_types", :force => true do |t|
+    t.string   "name"
+    t.string   "gender"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "module_types_users", :id => false, :force => true do |t|
+    t.integer "module_type_id"
+    t.integer "user_id"
   end
 
   create_table "openings", :force => true do |t|
@@ -103,6 +266,8 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
     t.string  "photo_file_name"
     t.string  "photo_content_type"
     t.integer "photo_file_size"
+    t.integer "module_type_id",                        :default => 1
+    t.integer "apply_to",                              :default => 0,   :null => false
   end
 
   create_table "options_minimum_units", :force => true do |t|
@@ -151,6 +316,7 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
     t.string   "value"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "module_type_id", :default => 1
   end
 
   create_table "quotation_lines", :force => true do |t|
@@ -218,11 +384,10 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
   end
 
   create_table "series", :force => true do |t|
-    t.string  "name",             :limit => 50,  :default => "",    :null => false
-    t.string  "description",                     :default => "",    :null => false
-    t.text    "comments"
-    t.text    "series_type",      :limit => 255
-    t.boolean "fixed_sizes_only",                :default => false
+    t.string "name",        :limit => 50,  :default => "", :null => false
+    t.string "description",                :default => "", :null => false
+    t.text   "comments"
+    t.text   "series_type", :limit => 255
   end
 
   create_table "sessions", :force => true do |t|
@@ -235,12 +400,21 @@ ActiveRecord::Schema.define(:version => 20110603121438) do
   add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
 
   create_table "shapes", :force => true do |t|
-    t.string  "name",              :limit => 50, :default => "",    :null => false
-    t.integer "sections_width",                  :default => 0,     :null => false
-    t.integer "sections_height",                 :default => 0,     :null => false
-    t.integer "corners",                         :default => 4,     :null => false
-    t.boolean "has_upper_transom",               :default => false
-    t.boolean "has_lower_transom",               :default => false
+    t.string  "name",                :limit => 50, :default => "",    :null => false
+    t.integer "sections_width",                    :default => 0,     :null => false
+    t.integer "sections_height",                   :default => 0,     :null => false
+    t.integer "corners",                           :default => 4,     :null => false
+    t.boolean "has_upper_transom",                 :default => false
+    t.boolean "has_lower_transom",                 :default => false
+    t.boolean "has_left_sidelight",                :default => false
+    t.boolean "has_right_sidelight",               :default => false
+  end
+
+  create_table "slab_materials", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.float    "price",      :default => 0.0
   end
 
   create_table "translations", :force => true do |t|
