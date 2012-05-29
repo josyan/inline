@@ -1,0 +1,23 @@
+<h2><%= trn_geth('TITLE_FRAME_PROFILE_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_frame_profile_path %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_PREVIEW') %></th>
+    <th></th>
+  </tr>
+<% for frame_profile in @frame_profiles %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= frame_profile.tr_name %></td>
+    <td>
+      <%= image_tag frame_profile.photo.url(:thumb), :class => "#{ 'popup' unless frame_profile.photo.original_filename.blank? }" %>
+    </td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_frame_profile_path(frame_profile) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), frame_profile_path(frame_profile), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+

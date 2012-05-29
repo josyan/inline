@@ -1,11 +1,13 @@
 <script type="text/javascript" charset="utf-8">
+
 	function change_swatch() {
 		$('colorswatch').setStyle({backgroundColor:$('product_color_value').value });
 	}
-	
-jQuery(function($) {
+
+  jQuery(function($) {
 	  myColor = $('input#product_color_value').val();
 	  myColor = myColor.substring ( 1, myColor.length - 1 );
+
     $('input#product_color_value').ColorPicker({
         color: myColor,
         onShow: function(colpkr) {
@@ -23,19 +25,18 @@ jQuery(function($) {
 					$(el).ColorPickerHide();
 				}
     }).bind('keyup',
-    function() {
-        $(this).ColorPickerSetColor(this.value);
-    });
+      function() {
+          $(this).ColorPickerSetColor(this.value);
+      });
 });
 
-
 </script>
-
 
 <%= semantic_form_for @product_color do |form| %>
   <div><%= form.error_messages %></div><br/>
 	<div id="colorswatch" style="<%="float:right;background-color:#{@product_color.value};width:100px;height:100px;"%>"></div>
 	<%= form.inputs  do %>
+    <%= form.input :module_type_id, :as => :hidden %>
 		<%= form.input :name, :label => trn_geth('LABEL_NAME') %>
 		<%= form.input :value, :label => trn_geth('LABEL_COLOR_VALUE'), :input_html => {:onchange=> 'change_swatch();', :onkeyup=> 'change_swatch();'}%>
 	<% end %>

@@ -1,0 +1,27 @@
+<%= error_messages_for "door_glass" %>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field "name", :size => 30 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PREVIEW_IMAGE_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.file_field :photo %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_SELECT_DOOR_PANELS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td>
+      <% @door_panel_families.each do |door_panel_family| %>
+        <h4><%= door_panel_family.tr_name %></h4>
+        <% door_panel_family.door_panels.each do |door_panel| %>
+          <%= check_box_tag "door_glass[door_panel_ids][]", door_panel.id, @door_glass.door_panels.exists?(:id => door_panel.id) %> <%= door_panel.tr_name %><br/>
+        <% end %>
+      <% end %>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field "price", :size => 30 %></td>
+  </tr>
+</table>

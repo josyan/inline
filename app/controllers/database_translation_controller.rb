@@ -22,10 +22,9 @@ class DatabaseTranslationController < ApplicationController
                                    :translation_field_name => dbtf.translation_field_name
         new_items += 1
       }
-      (old_ids - new_ids).each { |id|
-        DatabaseTranslation.where("record_id = #{id} AND `table` = '#{dbtf.table}' AND `translation_field_name` = '#{dbtf.translation_field_name}'").first().destroy
-        old_items += 1
-      }
+      ids_to_destroy = (old_ids - new_ids)
+      old_items  = ids_to_destroy.length
+      DatabaseTranslation.where(:record_id => ids_to_destroy).where(:table=> dbtf.table).where(:translation_field_name => dbtf.translation_field_name).destroy_all
 
       @log << new_items.to_s + " " + dbtf.table + " / " + dbtf.translation_field_name + " " + trn_get('LABEL_CREATED') + "." if new_items > 0
       @log << old_items.to_s + " " + dbtf.table + " / " + dbtf.translation_field_name + " " + trn_get('LABEL_DELETED') + "." if old_items > 0

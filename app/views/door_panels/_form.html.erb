@@ -1,0 +1,24 @@
+<%= error_messages_for "door_panel" %>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_panel", "name", :size => 30 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PREVIEW_IMAGE_NAME') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_panel", "preview_image_name", :size => 20 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_SELECT_DOOR_SECTIONS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td>
+      <% @door_sections.each do |door_section| %>
+        <%= check_box_tag "door_panel[door_section_ids][]", door_section.id, @door_panel.door_sections.exists?(:id => door_section.id) %> <%= door_section.tr_name %><br/>
+      <% end %>
+    </td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= text_field "door_panel", "price", :size => 20 %></td>
+  </tr>
+</table>

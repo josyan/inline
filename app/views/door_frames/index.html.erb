@@ -1,0 +1,27 @@
+<h2><%= trn_geth('TITLE_DOOR_FRAME_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_door_frame_path %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_SECTIONS_WIDTH') %></th>
+    <th><%= trn_geth('HEADER_PREVIEW') %></th>
+    <th></th>
+  </tr>
+<% for door_frame in @door_frames %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= door_frame.tr_name %></td>
+    <td><%= door_frame.sections %></td>
+    <td>
+      <% unless door_frame.preview_image_name.blank? %>
+        <%= image_tag 'door_frames/' + door_frame.preview_image_name %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_door_frame_path(door_frame) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), door_frame_path(door_frame), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+

@@ -1,0 +1,33 @@
+<h2><%= trn_geth('TITLE_DOOR_PANEL_LIST') %></h2>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DOOR_PANEL_FAMILY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @door_panel_family.tr_name %></td>
+  </tr>
+</table>
+<br/>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_door_panel_family_door_panel_path(@door_panel_family) %> |
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), door_panel_families_path %>
+
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_PREVIEW') %></th>
+    <th></th>
+  </tr>
+<% for door_panel in @door_panel_family.door_panels %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= door_panel.tr_name %></td>
+    <td>
+      <%= image_tag 'door_panels/' + door_panel.preview_image_name unless door_panel.preview_image_name.blank? %>
+    </td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_door_panel_family_door_panel_path(@door_panel_family, door_panel) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), door_panel_family_door_panel_path(@door_panel_family, door_panel), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+

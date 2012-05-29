@@ -1,0 +1,16 @@
+<h2><%= trn_get('TITLE_DOOR_GLASS_EDIT') %></h2>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DOOR_GLASS_FAMILY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @door_glass_family.tr_name %></td>
+  </tr>
+</table>
+<br/>
+
+<%= form_for [@door_glass_family, @door_glass], :html => {:multipart => true} do |f| %>
+  <%= render :partial => 'form', :locals => { :f => f } %>
+  <%= submit_tag trn_geth('BUTTON_EDIT') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), door_glass_family_door_glasses_path(@door_glass_family) %> |
+<%= link_to trn_geth('BUTTON_DELETE'), door_glass_family_door_glass_path(@door_glass_family, @door_glass), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>

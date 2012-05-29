@@ -1,0 +1,196 @@
+<%= hidden_field_tag 'door_line[id]', @door_line.id %>
+<%= hidden_field_tag 'door_line[quotation_id]', @door_line.quotation_id %>
+<%= hidden_field_tag 'door_line[door_frame_id]', @door_line.door_frame_id %>
+<%= hidden_field_tag 'door_line[door_combination_id]', @door_line.door_combination_id %>
+<%= hidden_field_tag 'door_line[frame_profile_id]', @door_line.frame_profile_id %>
+<%= hidden_field_tag 'door_line[door_opening_id]', @door_line.door_opening_id %>
+<%= hidden_field_tag 'door_line[door_boring_id]', @door_line.door_boring_id %>
+
+<div id="door-frame-selection" class="section">
+  <div class="intro">
+    <%= trn_get('DOOR_FRAME_INTRO') %>
+  </div>
+
+  <div class="door-frame-list choice-list">
+    <% @door_frames.each do |door_frame| %>
+      <div class="choice door-frame <%= 'selected' if door_frame.id == @door_line.door_frame_id %>" id="df-<%= door_frame.id %>">
+        <div class="preview-image">
+          <%= image_tag 'door_frames/' + door_frame.preview_image_name %>
+        </div>
+        <div class="label">
+          <%= door_frame.tr_name %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div id="door-combination-selection" class="section">
+  <div class="intro">
+    <%= trn_get('DOOR_COMBINATION_INTRO') %>
+  </div>
+
+  <% @door_frames.each do |door_frame| %>
+    <div id="dcl-<%= door_frame.id %>" class="door-combination-list choice-list" style="<%= 'display: none;' if door_frame != @door_line.door_frame %>">
+      <% door_frame.door_combinations.each do |door_combination| %>
+        <div class="choice door-combination <%= 'selected' if door_combination == @door_line.door_combination %>" id="dc-<%= door_combination.id %>">
+          <div class="preview-image">
+            <%= image_tag 'door_combinations/' + door_combination.preview_image_name %>
+          </div>
+          <div class="label">
+            <%= door_combination.tr_name %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>
+
+<div id="frame-profile-selection" class="section">
+  <div class="intro">
+    <%= trn_get('FRAME_PROFILE_INTRO') %>
+  </div>
+
+  <div class="frame-profile-list choice-list">
+    <% @frame_profiles.each do |frame_profile| %>
+      <div class="choice frame-profile <%= 'selected' if frame_profile.id == @door_line.frame_profile_id %>" id="fp-<%= frame_profile.id %>">
+        <div class="preview-image">
+          <%= image_tag frame_profile.photo.url(:normal) %>
+        </div>
+        <div class="label">
+          <%= frame_profile.tr_name %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div id="slab-material-selection" class="section">
+  <div class="intro">
+    <%= trn_get('SLAB_MATERIAL_INTRO') %>
+  </div>
+
+  <%= select 'door_line', 'slab_material_id', @slab_materials.map { |sm| [sm.tr_name, sm.id] } %>
+</div>
+
+<div id="color-selection" class="section">
+  <% colors = ProductColor.all(:conditions => { :module_type_id => 2 }) %>
+  <div class="intro">
+    <%= trn_get('COLORS_INTRO') %>
+  </div>
+
+  <table border="0" cellspacing="0" cellpadding="0">
+    <tr>
+      <td><%= trn_get('LABEL_CUSTOM_INTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+          <%= text_field :door_line, :interior_color %>
+      </td>
+      <td><%= trn_get('LABEL_STANDARD_INTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+        <%= color_picker('door_line[standard_interior_color_id]', colors, "door_line_interior_color", @door_line.standard_interior_color) %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= trn_get('LABEL_CUSTOM_EXTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+        <%= text_field :door_line, :exterior_color %>
+      </td>
+      <td><%= trn_get('LABEL_STANDARD_EXTERIOR_COLOR')%><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td>
+        <%= color_picker('door_line[standard_exterior_color_id]', colors, "door_line_exterior_color", @door_line.standard_exterior_color) %>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div id="door-panel-selection" class="section">
+  <div class="intro">
+    <%= trn_get('DOOR_PANEL_INTRO') %>
+  </div>
+
+  <div id="door-panels-configuration">
+  </div>
+</div>
+
+<div id="door-opening-selection" class="section">
+  <div class="intro">
+    <%= trn_get('DOOR_OPENING_INTRO') %>
+  </div>
+
+  <div id="door-openings-configuration">
+  </div>
+</div>
+
+<div id="door-boring-selection" class="section">
+  <div class="intro">
+    <%= trn_get('DOOR_BORING_INTRO') %>
+  </div>
+
+  <div class="door-boring-list choice-list">
+    <% @door_borings.each do |door_boring| %>
+      <div class="choice door-boring <%= 'selected' if door_boring.id == @door_line.door_boring_id %>" id="db-<%= door_boring.id %>">
+        <div class="preview-image">
+          <%= image_tag door_boring.photo.url(:normal) %>
+        </div>
+        <div class="label">
+          <%= door_boring.tr_name %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class="door-option-list section">
+  <div class="intro">
+    <%= trn_get('OPTIONS_INTRO') %>
+  </div>
+
+  <div class="options-list">
+    <% categorized_options = Serie.categorize_options(@options) %>
+    <% categorized_options.keys.sort.each do |i| %>
+      <% categorized_options[i].each do |category, options| %>
+        <span class="section-title"><%= h category.tr_name %></span><br />
+        <% for option in options %>
+          <% if category.multiselect %>
+            <%= check_box_tag 'options[]', option.id, @selected_options.include?(option.id) %>
+          <% else %>
+            <%= radio_button_tag "options_category_#{category.id}", option.id, @selected_options.include?(option.id) %>
+          <% end %>
+          <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
+          <%= option.tr_description %>
+          (<%= option.pricing_method.tr_description %><%= trn_geth('LABEL_SEMICOLON') %>
+          <%= option.price %>
+          <% if option.minimum_quantity != 0 and (option.pricing_method_id == 1 or option.pricing_method_id == 2) %>
+            , <%= trn_get('LABEL_MINIMUM_QUANTITY') %>
+            <%= option.minimum_quantity %>
+            <%= option.options_minimum_unit.tr_description %>
+          <% end %>
+          )
+          <% if option.pricing_method.quantifiable %>
+            <%= trn_get('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %>
+            <%= text_field_tag "option_quantity_#{option.id}", instance_variable_get("@option_quantity_#{option.id}".to_sym), :size => 6 %>
+          <% end %>
+          <br/>
+        <% end %>
+        <% if !category.multiselect %>
+          <%= radio_button_tag "options_category_#{category.id}", -1, false %>
+          <%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;" %>
+          <%= trn_get("NONE_MSG") %>
+          <br/>
+        <% end %>
+      <% end %>
+      <br/>
+    <% end %>
+  </div>
+</div>
+
+<div id="door-quantity" class="section">
+  <div class="intro">
+    <%= trn_get('QUANTITY_INTRO') %>
+  </div>
+
+  <%= text_field_tag 'door_line[quantity]', @door_line.quantity %>
+</div>
+
+<%= submit_tag trn_geth(@door_line.new_record? ? 'BUTTON_ADD' : 'BUTTON_EDIT') %>
+<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @door_line.quotation_id %>

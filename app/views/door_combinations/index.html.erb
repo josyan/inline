@@ -1,0 +1,29 @@
+<h2><%= trn_geth('TITLE_DOOR_COMBINATION_LIST') %></h2>
+
+<%= link_to trn_geth('BUTTON_ADD'), new_door_combination_path %>
+<table cellspacing="0">
+  <tr class="header">
+    <th><%= trn_geth('HEADER_NAME') %></th>
+    <th><%= trn_geth('HEADER_SECTIONS') %></th>
+    <th><%= trn_geth('HEADER_DOOR_FRAME') %></th>
+    <th><%= trn_geth('HEADER_PREVIEW') %></th>
+    <th></th>
+  </tr>
+<% for door_combination in @door_combinations %>
+  <tr class="<%= cycle('odd', 'even') %>">
+    <td><%= door_combination.tr_name %></td>
+    <td><%= door_combination.sections %></td>
+    <td><%= door_combination.door_frame.tr_name %></td>
+    <td>
+      <% unless door_combination.preview_image_name.blank? %>
+        <%= image_tag 'door_combinations/' + door_combination.preview_image_name %>
+      <% end %>
+    </td>
+    <td>
+      <%= link_to trn_geth('BUTTON_EDIT'), edit_door_combination_path(door_combination) %> |
+      <%= link_to trn_geth('BUTTON_DELETE'), door_combination_path(door_combination), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
+    </td>
+  </tr>
+<% end %>
+</table>
+

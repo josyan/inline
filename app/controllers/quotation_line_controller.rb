@@ -2,10 +2,15 @@ class PriceError < RuntimeError
 end
 
 class QuotationLineController < ApplicationController
-  
+
   before_filter :prepare_vars, :only => {"edit", "print_calculations"}
 
   def add
+    # some ugly hardcoding, but hard to do without as doors are totally different from windows
+    # and the app has not been build around a common ground between doors and windows (like EasyQuote)
+    if params[:mt].to_i == 2
+      redirect_to :controller => 'doors', :action => 'new', :id => params[:id]
+    end
     @quotation_line = QuotationLine.new
     @quotation_line.quotation_id = params[:id]
   end
@@ -145,10 +150,6 @@ class QuotationLineController < ApplicationController
   end
 
   def edit
-
-    #    @quotation_line = QuotationLine.find(params[:id], :include => [:shape,  {:serie => {:options => [:pricing_method, :options_minimum_unit]}},
-    #                                                                  {:options_quotation_lines => [:option=> [:pricing_method, :options_minimum_unit]]}])
-
     @quotation_line = QuotationLine.includes(:serie => [:options => [:pricing_method, :options_minimum_unit]], :options_quotation_lines => :option).find(params[:id])
     @openings = {}
     @quotation_line.quotation_lines_openings.each do |o|
@@ -172,7 +173,7 @@ class QuotationLineController < ApplicationController
     @right_sidelight_index = right_sidelight_index(shape) if shape.has_right_sidelight?
 
 
-    @options = @serie.options #.sort_by {|o| o.tr_description }
+    @options = @serie.options
     @options.each do |option|
       if option.pricing_method.quantifiable
         oli_index = @quotation_line.options_quotation_lines.index {|o| o.option_id == option.id}
@@ -379,7 +380,6 @@ private
     # for shapes that have sidelights, price them here
     price += calculate_special_section_price(serie, openings, left_sidelight_index(shape)) if shape.has_left_sidelight?
     price += calculate_special_section_price(serie, openings, right_sidelight_index(shape)) if shape.has_right_sidelight?
-
 
     # calculate options price
     price += calculate_option_prices(options_ids, openings, shape)

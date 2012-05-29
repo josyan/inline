@@ -1,0 +1,8 @@
+<h2><%= trn_get('TITLE_DOOR_PANEL_FAMILY_ADD') %></h2>
+
+<%= form_for @door_panel_family do |f| %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag trn_geth('BUTTON_ADD') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), door_panel_families_path %>
+

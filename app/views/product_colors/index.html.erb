@@ -1,4 +1,4 @@
-<h1><%= trn_geth('TITLE_PRODUCT_COLOR_LIST') %></h1>
+<h1><%= trn_geth('TITLE_PRODUCT_COLORS_LIST') %> - <%= @module_type.tr_name %></h1>
 
 <table>
   <tr>
@@ -21,4 +21,4 @@
 
 <br/>
 
-<%= link_to trn_get('TITLE_PRODUCT_COLOR_CREATE'), new_product_color_path %>
+<%= link_to trn_get('TITLE_PRODUCT_COLOR_CREATE'), new_product_color_path(:mt => @module_type.id) %>
