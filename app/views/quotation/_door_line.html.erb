@@ -46,7 +46,8 @@
             <% if section.door_glass %>
               <%= trn_geth('HEADER_DOOR_GLASS') %> <%= trn_geth('LABEL_SEMICOLON') %> <%= section.door_glass.door_glass_family.tr_name %> / <%= section.door_glass.tr_name %><br/>
             <% end %>
-            <%= trn_geth('HEADER_DOOR_SECTION_WIDTH') %> <%= trn_geth('LABEL_SEMICOLON') %> <%= section.door_section_dimension.value %>"<br/>
+            <%= trn_geth('HEADER_DOOR_PANEL_HEIGHT') %> <%= trn_geth('LABEL_SEMICOLON') %> <%= section.door_panel_dimension.try(:height) %>" x
+            <%= trn_geth('HEADER_DOOR_PANEL_WIDTH') %> <%= trn_geth('LABEL_SEMICOLON') %> <%= section.door_panel_dimension.try(:width) %>"<br/>
           </td>
         </tr>
         <% end %>
