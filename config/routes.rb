@@ -36,12 +36,12 @@ GlassVision::Application.routes.draw do
     resources :door_glasses
   end
   resources :door_panel_families do
-    resources :door_panels
+    resources :door_panels do
+      resources :door_panel_dimensions
+    end
   end
   resources :door_borings
-  resources :door_sections do
-    resources :door_section_dimensions
-  end
+  resources :door_sections
 
   resource :session, :controller => :session
   resource :passwords

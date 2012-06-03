@@ -25,6 +25,7 @@
     </td>
     <td>
       <%= link_to trn_geth('BUTTON_EDIT'), edit_door_panel_family_door_panel_path(@door_panel_family, door_panel) %> |
+      <%= link_to trn_geth('BUTTON_DIMENSIONS'), door_panel_family_door_panel_door_panel_dimensions_path(@door_panel_family, door_panel) %> |
       <%= link_to trn_geth('BUTTON_DELETE'), door_panel_family_door_panel_path(@door_panel_family, door_panel), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>
     </td>
   </tr>
