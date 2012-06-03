@@ -187,7 +187,7 @@ class DoorsController < ApplicationController
         { :door_glass_id => door_line_section.door_glass_id.to_s,
           :door_panel_id => door_line_section.door_panel_id.to_s,
           :door_section_id => door_line_section.door_section_id.to_s,
-          :door_section_dimension_id => door_line_section.door_section_dimension_id.to_s }
+          :door_panel_dimension_id => door_line_section.door_panel_dimension_id.to_s }
       end
     else
       return []
