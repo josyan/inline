@@ -54,7 +54,7 @@ class DoorLine < ActiveRecord::Base
   def total_width
     width = 0
     door_line_sections.each do |door_line_section|
-      width += door_line_section.door_section_dimension.value
+      width += door_line_section.door_panel_dimension.width
       width += frame_profile.gap if door_line_section.door_section.openable?
     end
     width += 2 * frame_profile.width
@@ -64,7 +64,7 @@ class DoorLine < ActiveRecord::Base
 
   def total_height
     height = 0
-    height = DoorSection::DEFAULT_HEIGHT + 2 * frame_profile.width + frame_profile.gap
+    height = door_line_sections.first.door_panel_dimension.height + 2 * frame_profile.width + frame_profile.gap
     height
   end
 
@@ -96,7 +96,7 @@ class DoorLine < ActiveRecord::Base
       section_image = Image.read(src_image)[0]
 
       # resize the section image to fit the dimensions
-      section_image.resize! door_line_section.door_section_dimension.value * PIXELS_PER_INCH, DoorSection::DEFAULT_HEIGHT * PIXELS_PER_INCH
+      section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH, door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
 
       # define offset to paint section
       offsetx_px = currentx * PIXELS_PER_INCH
@@ -107,10 +107,10 @@ class DoorLine < ActiveRecord::Base
       section_image.destroy!
 
       # print horizontal size
-      draw_horizontal_measurement(canvas, door_line_section.door_section_dimension.value, currentx)
+      draw_horizontal_measurement(canvas, door_line_section.door_panel_dimension.width, currentx)
 
       # update coordinates
-      currentx += door_line_section.door_section_dimension.value
+      currentx += door_line_section.door_panel_dimension.width
       currentx += frame_profile.gap / 2 if door_line_section.door_section.openable?
       currentx += (door_line_section.id == door_line_sections.last.id ? frame_profile.width : frame_profile.separator_width)
     end

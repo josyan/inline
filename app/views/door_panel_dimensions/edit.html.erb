@@ -1,0 +1,20 @@
+<h2><%= trn_get('TITLE_DOOR_PANEL_DIMENSION_EDIT') %></h2>
+
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DOOR_PANEL_FAMILY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @door_panel_family.tr_name %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DOOR_PANEL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= @door_panel.tr_name %></td>
+  </tr>
+</table>
+<br/>
+
+<%= form_for [@door_panel_family, @door_panel, @door_panel_dimension] do |f| %>
+  <%= render :partial => 'form' %>
+  <%= submit_tag trn_geth('BUTTON_EDIT') %>
+<% end %>
+<%= link_to trn_geth('BUTTON_BACK_TO_LIST'), door_panel_family_door_panel_door_panel_dimensions_path(@door_panel_family, @door_panel) %> |
+<%= link_to trn_geth('BUTTON_DELETE'), door_panel_family_door_panel_door_panel_dimension_path(@door_panel_family, @door_panel, @door_panel_dimension), :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :delete %>

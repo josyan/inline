@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120526004135) do
+ActiveRecord::Schema.define(:version => 20120603194540) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -132,7 +132,7 @@ ActiveRecord::Schema.define(:version => 20120526004135) do
     t.integer  "door_glass_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "door_section_dimension_id"
+    t.integer  "door_panel_dimension_id"
   end
 
   create_table "door_lines", :force => true do |t|
@@ -161,6 +161,15 @@ ActiveRecord::Schema.define(:version => 20120526004135) do
     t.float    "price",              :default => 0.0
   end
 
+  create_table "door_panel_dimensions", :force => true do |t|
+    t.integer  "door_panel_id"
+    t.float    "width"
+    t.float    "height"
+    t.float    "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "door_panel_families", :force => true do |t|
     t.string   "name"
     t.integer  "slab_material_id"
@@ -180,14 +189,6 @@ ActiveRecord::Schema.define(:version => 20120526004135) do
   create_table "door_panels_door_sections", :id => false, :force => true do |t|
     t.integer "door_panel_id"
     t.integer "door_section_id"
-  end
-
-  create_table "door_section_dimensions", :force => true do |t|
-    t.integer  "door_section_id"
-    t.float    "value"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "price",           :default => 0.0
   end
 
   create_table "door_sections", :force => true do |t|

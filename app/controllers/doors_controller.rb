@@ -25,23 +25,36 @@ class DoorsController < ApplicationController
     @door_line_sections = door_combination.sections.split(';').map do |door_section_code|
       door_line_section = { :door_section => DoorSection.find_by_code(door_section_code) }
       door_line_section[:door_panel_families] = door_line_section[:door_section].door_panels.map { |dp| dp.door_panel_family.slab_material_id == slab_material.id ? dp.door_panel_family : nil }.compact.uniq
-      door_line_section[:door_section_dimensions] = door_line_section[:door_section].door_section_dimensions
-      door_line_section[:door_line_section] = DoorLineSection.new(:door_section => door_line_section[:door_section],
-                                                                  :door_section_dimension => door_line_section[:door_section_dimensions].first)
+      door_line_section[:door_line_section] = DoorLineSection.new(:door_section => door_line_section[:door_section])
       unless door_line_section[:door_panel_families].blank?
         door_line_section[:door_line_section].door_panel = door_line_section[:door_section].door_panels.first
+        door_line_section[:door_line_section].door_panel_dimension = door_line_section[:door_line_section].door_panel.door_panel_dimensions.first
       end
 
       # check if we can somewhat recopy the previous configuration in the new one
       possible_choices = previous_sections.select { |s| s[:door_section_id] == door_line_section[:door_section].id.to_s }
       if possible_choices.length >= 1
+
+        # same panel
         unless possible_choices[0][:door_panel_id].blank?
           dp = DoorPanel.first(:conditions => { :id => possible_choices[0][:door_panel_id] })
           if dp and dp.door_panel_family.slab_material_id == slab_material.id
             door_line_section[:door_line_section].door_panel_id = possible_choices[0][:door_panel_id].to_i
           end
         end
-        door_line_section[:door_line_section].door_section_dimension_id = possible_choices[0][:door_section_dimension_id].to_i unless possible_choices[0][:door_section_dimension_id].blank?
+
+        # same dimension
+        unless possible_choices[0][:door_panel_dimension_id].blank?
+          dpd = DoorPanelDimension.first(:conditions => { :id => possible_choices[0][:door_panel_dimension_id] })
+          door_line_section[:door_line_section].door_panel.door_panel_dimensions.each do |dim|
+            if dpd.width == dim.width and dpd.height == dim.height
+              door_line_section[:door_line_section].door_panel_dimension = dim
+              break
+            end
+          end
+        end
+
+        # some cleaning
         if possible_choices.length > 1
           previous_sections.each_with_index do |section, index|
             if section[:door_section_id] == possible_choices.first[:door_section_id]
@@ -51,6 +64,7 @@ class DoorsController < ApplicationController
           end
         end
       end
+
       door_line_section
     end
 
@@ -68,6 +82,20 @@ class DoorsController < ApplicationController
               break
             end
           end
+        end
+      end
+    end
+  end
+
+  def configure_panel_dimensions
+    door_panel = DoorPanel.find(params[:door_panel_id])
+    @door_panel_dimensions = door_panel.door_panel_dimensions
+    unless params[:door_panel_dimension_id].blank?
+      door_panel_dimension = DoorPanelDimension.find(params[:door_panel_dimension_id])
+      @door_panel_dimensions.each do |dpd|
+        if dpd.width == door_panel_dimension.width and dpd.height == door_panel_dimension.height
+          @door_panel_dimension_id = dpd.id
+          break
         end
       end
     end
@@ -187,7 +215,7 @@ class DoorsController < ApplicationController
         { :door_glass_id => door_line_section.door_glass_id.to_s,
           :door_panel_id => door_line_section.door_panel_id.to_s,
           :door_section_id => door_line_section.door_section_id.to_s,
-          :door_section_dimension_id => door_line_section.door_section_dimension_id.to_s }
+          :door_panel_dimension_id => door_line_section.door_panel_dimension_id.to_s }
       end
     else
       return []
