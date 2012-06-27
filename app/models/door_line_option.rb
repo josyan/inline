@@ -7,9 +7,9 @@ class DoorLineOption < ActiveRecord::Base
 
     factor = case option.pricing_method_id
              when 1 # prix au pied carré
-               DoorSection::DEFAULT_HEIGHT * door_line.total_width / 144
+               door_line.total_height * door_line.total_width / 144
              when 2 # prix au pied de périmètre
-               (DoorSection::DEFAULT_HEIGHT + door_line.total_width) * 2 / 12
+               (door_line.total_height + door_line.total_width) * 2 / 12
              when 3 # prix par section
                door_line.door_line_sections.length
              when 4 # prix par section ouvrante
