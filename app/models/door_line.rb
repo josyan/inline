@@ -96,7 +96,7 @@ class DoorLine < ActiveRecord::Base
       section_image = Image.read(src_image)[0]
 
       # resize the section image to fit the dimensions
-      section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH, door_line_section.door_panel_dimension.width * PIXELS_PER_INCH
+      section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH, door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
 
       # define offset to paint section
       offsetx_px = currentx * PIXELS_PER_INCH
