@@ -22,6 +22,7 @@ GlassVision::Application.routes.draw do
   resources :doors do
     collection do
       get 'configure_panels'
+      get 'configure_panel_dimensions'
       get 'configure_glass_families'
       get 'configure_glasses'
       get 'configure_openings'

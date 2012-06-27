@@ -16,6 +16,7 @@ $j(document).ready(function() {
       var section = selected_panel.closest('.door-line-section');
       var id = selected_panel.attr('id').replace('dp-', '');
       var door_glass_id = section.find('#door-glass-id').val();
+      var door_panel_dimension_id = section.find('#door-panel-dimension-id').val();
 
       // highlight the selection
       selected_panel.parent().find('.door-panel').removeClass('selected');
@@ -33,13 +34,11 @@ $j(document).ready(function() {
         attach_door_glass_families_configuration_events(section);
         section.find('#door_glass_family').change();
       });
-    });
 
-    // section dimensions interraction
-    $j('#door-panels-configuration #door_section_dimension').change(function(){
-      var id = $j(this).val();
-      var section = $j(this).closest('.door-line-section');
-      section.find('#door-section_dimension-id').val(id);
+      // load the interface to configure panel dimensions
+      $j.get('/doors/configure_panel_dimensions', {door_panel_id: id, door_panel_dimension_id: door_panel_dimension_id}, function(response) {
+        section.find('.selection-door-panel-dimensions').html(response);
+      });
     });
   };
 
