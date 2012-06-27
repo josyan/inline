@@ -38,7 +38,17 @@ $j(document).ready(function() {
       // load the interface to configure panel dimensions
       $j.get('/doors/configure_panel_dimensions', {door_panel_id: id, door_panel_dimension_id: door_panel_dimension_id}, function(response) {
         section.find('.selection-door-panel-dimensions').html(response);
+        attach_door_panel_dimension_configuration_events(section);
+        section.find('#door_panel_dimension').change();
       });
+    });
+  };
+
+  var attach_door_panel_dimension_configuration_events = function(section) {
+    section.find('#door_panel_dimension').change(function() {
+      var id = $j(this).val();
+
+      section.find('#door-panel-dimension-id').val(id);
     });
   };
 

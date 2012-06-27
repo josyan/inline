@@ -34,21 +34,35 @@ class DoorsController < ApplicationController
       # check if we can somewhat recopy the previous configuration in the new one
       possible_choices = previous_sections.select { |s| s[:door_section_id] == door_line_section[:door_section].id.to_s }
       if possible_choices.length >= 1
+
+        # same panel
         unless possible_choices[0][:door_panel_id].blank?
           dp = DoorPanel.first(:conditions => { :id => possible_choices[0][:door_panel_id] })
           if dp and dp.door_panel_family.slab_material_id == slab_material.id
             door_line_section[:door_line_section].door_panel_id = possible_choices[0][:door_panel_id].to_i
           end
         end
-      #   door_line_section[:door_line_section].door_section_dimension_id = possible_choices[0][:door_section_dimension_id].to_i unless possible_choices[0][:door_section_dimension_id].blank?
-      #   if possible_choices.length > 1
-      #     previous_sections.each_with_index do |section, index|
-      #       if section[:door_section_id] == possible_choices.first[:door_section_id]
-      #         previous_sections.delete_at index
-      #         break
-      #       end
-      #     end
-      #   end
+
+        # same dimension
+        unless possible_choices[0][:door_panel_dimension_id].blank?
+          dpd = DoorPanelDimension.first(:conditions => { :id => possible_choices[0][:door_panel_dimension_id] })
+          door_line_section[:door_line_section].door_panel.door_panel_dimensions.each do |dim|
+            if dpd.width == dim.width and dpd.height == dim.height
+              door_line_section[:door_line_section].door_panel_dimension = dim
+              break
+            end
+          end
+        end
+
+        # some cleaning
+        if possible_choices.length > 1
+          previous_sections.each_with_index do |section, index|
+            if section[:door_section_id] == possible_choices.first[:door_section_id]
+              previous_sections.delete_at index
+              break
+            end
+          end
+        end
       end
 
       door_line_section

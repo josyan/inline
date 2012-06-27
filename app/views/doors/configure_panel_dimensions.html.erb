@@ -1,1 +1,1 @@
-<%= select_tag "door_line_sections[][door_section_dimension_id]", options_for_select(@door_panel_dimensions.map { |dpd| ["#{dpd.width} x #{dpd.height}", dpd.id] }, @door_panel_dimension_id), :id => 'door-panel-dimension-id' %>
+<%= select_tag "door_panel_dimension", options_for_select(@door_panel_dimensions.map { |dpd| ["#{dpd.width} x #{dpd.height}", dpd.id] }, @door_panel_dimension_id) %>
