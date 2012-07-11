@@ -7,7 +7,7 @@ class Serie < ActiveRecord::Base
   has_many :widths, :order => "value"
   has_many :heights, :order => "value"
   has_many :quotation_lines, :dependent => :destroy
-  has_and_belongs_to_many :options, :order => 'description', :include => [:option_categories]
+  has_and_belongs_to_many :options, :order => 'options.description', :include => [:option_categories]
   has_and_belongs_to_many :openings
 
   def standard_product?

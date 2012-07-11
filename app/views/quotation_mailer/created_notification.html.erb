@@ -20,7 +20,7 @@
   <% if @quotation.comments and !@quotation.comments.empty? %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_COMMENTS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @quotation.comments.html_safe.gsub("\n", '<br/>') %></td>
+    <td><%= @quotation.comments.gsub("\n", '<br/>').html_safe %></td>
   </tr>
   <% end %>
   <tr valign="top">
@@ -36,7 +36,7 @@
   <% if @quotation.customer_address and !@quotation.customer_address.empty? %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_CUSTOMER_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @quotation.customer_address.html_safe.gsub("\n", '<br/>') %></td>
+    <td><%= @quotation.customer_address.gsub("\n", '<br/>').html_safe %></td>
   </tr>
   <% end %>
   <% if @quotation.customer_phone and !@quotation.customer_phone.empty? %>
@@ -68,7 +68,7 @@
   <% if @quotation.notes and !@quotation.notes.empty? %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_NOTES') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @quotation.notes.html_safe.gsub("\n", '<br/>') %></td>
+    <td><%= @quotation.notes.gsub("\n", '<br/>').html_safe %></td>
   </tr>
   <% end %>
 

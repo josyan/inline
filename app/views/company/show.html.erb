@@ -7,7 +7,7 @@
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_ADDRESS') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= @company.address.gsub(/\n/, '<br/>') %></td>
+    <td><%= @company.address.gsub(/\n/, '<br/>').html_safe %></td>
   </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %></td>

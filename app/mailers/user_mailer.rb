@@ -3,28 +3,32 @@ class UserMailer < ActionMailer::Base
   default :from => 'info@glass-vision.net'
   
   def signup_notification(user)
-    @url = activate_url(:id => user.activation_code)
+    @user = user
+    @url = activate_url(:id => user.activation_code, :host => "quotations.glass-vision.net")
     mail(:to => user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_NEEDS_ACTIVATION_SUBJECT'))
   end
   
   def activation_to_admin(user)
-    @admin_user = User.get_administrator
-    @url  = edit_user_url(user.id)
+    @admin_user = User.get_administrator.first
+    @url  = edit_user_url(user.id, :host => "quotations.glass-vision.net")
     @user = user
     mail(:to => @admin_user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_ACTIVATED_ADMIN_SUBJECT'))
   end
   
   def activation(user)
-    @url = root_url
+    @url = root_url(:host => "quotations.glass-vision.net")
+    @user = user
     mail(:to => user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_ACTIVATED_SUBJECT'))
   end
   
   def forgot_password(user)
     @url  = reset_password_url(id => user.password_reset_code)
+    @user = user
     mail(:to => user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_CHANGE_PASSWORD_SUBJECT'))
   end
  
   def reset_password(user)
+    @user = user
     mail(:to => user.email, :subject => "[Glass Vision] " + trn_get('ACCOUNT_PASSWORD_RESET_SUBJECT'))
   end
 

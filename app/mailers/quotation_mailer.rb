@@ -7,7 +7,7 @@ class QuotationMailer < ActionMailer::Base
  
     @user = quotation.user
     @quotation = quotation
-    @url = url_for(:host => "quotations.glass-vision.net", :controller => "quotation", :action => "show", :id => quotation.id)
+    @url = url_for(:host => "quotations.glass-vision.net", :controller => "quotation", :action => "show", :id => quotation.slug)
     
     mail(:to => @admin_user.email, :subject => "[Glass Vision] #{trn_get('SUBJECT_NEW_QUOTATION_CREATED')}")
   end

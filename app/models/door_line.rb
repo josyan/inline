@@ -1,4 +1,5 @@
 require 'erb'
+require 'RMagick'
 include Magick
 
 class DoorLine < ActiveRecord::Base

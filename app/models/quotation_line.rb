@@ -1,4 +1,5 @@
 require 'erb'
+require 'RMagick'
 include Magick
 
 class QuotationLine < ActiveRecord::Base
@@ -24,7 +25,7 @@ class QuotationLine < ActiveRecord::Base
   ARROW_SIZE = 5.0
   PIXELS_PER_INCH = 3
 
-  def create_image(shape)
+  def create_image()
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
 
@@ -302,7 +303,7 @@ end
     # paint the image on canvas
     canvas.composite! size_image, offset_x_px, offset_y_px, OverCompositeOp
   end
-  
+
   def draw_horizontal_measurement(canvas, section_width, current_x)
     # binding for erb file
     # constants

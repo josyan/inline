@@ -1,6 +1,7 @@
 <h1><%= trn_geth('TITLE_OPTION_CATEGORY_LIST') %></h1>
 
 <%= link_to trn_geth('BUTTON_ADD'), :action => 'add' %>
+<%= will_paginate @option_categories, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
 <table>
   <tr class="header">
     <th><%= trn_geth('HEADER_ORDER') %></th>
@@ -24,7 +25,7 @@
   <% end %>
 </table>
 
-<%= will_paginate @option_categories %>
+<%= will_paginate @option_categories, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
 
 <br/>
 
