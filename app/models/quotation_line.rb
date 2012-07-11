@@ -1,4 +1,5 @@
 require 'erb'
+require 'RMagick'
 include Magick
 
 class QuotationLine < ActiveRecord::Base
@@ -302,7 +303,7 @@ end
     # paint the image on canvas
     canvas.composite! size_image, offset_x_px, offset_y_px, OverCompositeOp
   end
-  
+
   def draw_horizontal_measurement(canvas, section_width, current_x)
     # binding for erb file
     # constants
