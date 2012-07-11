@@ -56,7 +56,8 @@ GlassVision::Application.configure do
     :domain  => "glass-vision.net",
     :authentication => :login,
     :user_name => "info@glass-vision.net",
-    :password => "info"
+    :password => "info",
+    :openssl_verify_mode  => 'none'
   }
 
 end

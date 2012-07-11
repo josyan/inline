@@ -141,7 +141,7 @@ class User < ActiveRecord::Base
   end  
   
   def self.find_for_forget(email)
-    User.where('email = ? and activated_at IS NOT NULL', email)
+    User.where('email = ? and activated_at IS NOT NULL', email).first
   end
 
   def has_role?(rolename)

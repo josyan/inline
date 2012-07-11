@@ -5,8 +5,8 @@
   <br />
   <div class="form_button_bar submit" >
     <%= css_button_to trn_geth('BUTTON_BACK_TO_LIST'), :action => 'index' %> 
-    <%= css_button_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %> 
-    <%= css_button_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @quotation %> 
+    <%= css_button_to trn_geth('BUTTON_DELETE'), {:action => 'destroy', :id => @quotation.slug}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+    <%= css_button_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => @quotation.slug %>
     <%= submit_tag trn_geth('BUTTON_EDIT') %>
   </div>
   <% end %>

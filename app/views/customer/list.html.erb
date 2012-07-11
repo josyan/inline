@@ -1,5 +1,6 @@
 <h1><%= trn_geth('TITLE_CUSTOMER_LIST') %></h1>
 
+<%= will_paginate @customers, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
 <table>
   <tr>
   <% for column in Customer.content_columns %>
@@ -10,17 +11,17 @@
   
 <% for customer in @customers %>
   <tr class="<%= cycle('odd', 'even') %>">
-  <% for column in Customer.content_columns %>
-    <td><%= trn_get(customer.send(column.name)) unless %w{created_at updated_at}.include?(column.name) %></td>
-  <% end %>
-    <td><%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :action => 'show', :id => customer %></td>
-    <td><%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => customer %></td>
-    <td><%= link_to trn_geth('BUTTON_DELETE'), { :action => 'destroy', :id => customer }, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :post %></td>
+    <td><%= link_to(customer.name, :action => 'edit', :id => customer) %></td>
+    <td><%= customer.address %></td>
+    <td><a href="tel:<%= customer.phone %>"><%= customer.phone %></a></td>
+    <td><%= customer.fax %></td>
+    <td><a href="mailto:<%= customer.email %>"><%= customer.email %></a></td>
+    <td colspan="5"><%= link_to trn_geth('BUTTON_DELETE'), { :action => 'destroy', :id => customer }, :confirm => trn_geth('LABEL_DELETE_QUESTION'), :method => :post %></td>
   </tr>
 <% end %>
 </table>
 
-<%= will_paginate @customers %>
+<%= will_paginate @customers, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
 
 
 <br />

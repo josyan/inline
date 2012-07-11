@@ -9,8 +9,7 @@
   <p><%= trn_geth('EMAIL_LABEL')%>:<br /><%= f.text_field :email, :size => 60 %></p>
   <p><%= trn_geth('LABEL_DISCOUNT')%><br /><%= f.text_field :discount, :size => 10 %> </p>
 
-  <% unless @user.companies.empty? %>
-    <%= trn_geth('LABEL_COMPANY') + ":" %>
+  <%= trn_geth('LABEL_COMPANY') +":" unless @user.companies.empty? %>
     <% @user.companies.each do |company| %>
         <%= company.name %> <br />
     <% end %>

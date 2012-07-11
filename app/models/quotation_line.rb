@@ -24,7 +24,7 @@ class QuotationLine < ActiveRecord::Base
   ARROW_SIZE = 5.0
   PIXELS_PER_INCH = 3
 
-  def create_image(shape)
+  def create_image()
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     final_file_name = File.join(Rails.root, 'public', 'system', 'images', 'previews', "preview_#{id}.png")
 

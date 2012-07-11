@@ -47,6 +47,7 @@ GlassVision::Application.routes.draw do
   resource :session, :controller => :session
   resource :passwords
   resources :quotations, :controller => :quotation do
+    post :copy
     get :print
     get :print_invoice
     get :print_calculations

@@ -6,7 +6,7 @@
     </td>
     <td rowspan="2" width="1%" nowrap="nowrap">
       <strong><%= @quotation.company.name %></strong><br/>
-      <%= @quotation.company.address.html_safe.gsub(/\n/, '<br/>') %>
+      <%= @quotation.company.address.gsub(/\n/, '<br/>').html_safe %>
       <br/>
       <%= trn_geth('PRINT_LABEL_PHONE') %><%= trn_geth('LABEL_SEMICOLON') %><%= @quotation.company.phone %>
       <br/>
@@ -14,7 +14,7 @@
     </td>
     <td width="98%" align="right">
       <h2>
-        #<%= @quotation.id %>
+        #<%= @quotation.slug %>
         <%= @quotation.project_name %>
       </h2>
       <%= gv_humanize_time @quotation.updated_at %>
@@ -47,7 +47,7 @@
           <td><%= @quotation.customer_name %></td>
         </tr>
         <tr>
-          <td><%= @quotation.customer_address.html_safe.gsub("\n", '<br/>') if @quotation.customer_address %></td>
+          <td><%= @quotation.customer_address.gsub("\n", '<br/>').html_safe if @quotation.customer_address %></td>
         </tr>
         <tr>
           <td>
@@ -73,9 +73,9 @@
     </td>
     <td width="50%" style="border: 1px solid #808080;" valign="top">
       <% if !@quotation.delivery_address.blank? %>
-          <%= @quotation.delivery_address.html_safe.gsub("\n", '<br/>') %>
+          <%= @quotation.delivery_address.gsub("\n", '<br/>').html_safe %>
       <% elsif !@quotation.customer_address.blank? %>
-          <%= @quotation.customer_address.html_safe.gsub("\n", '<br/>') %>
+          <%= @quotation.customer_address.gsub("\n", '<br/>').html_safe %>
       <% else %>
           &nbsp;<br/>
 
@@ -167,17 +167,14 @@
          total_option_prices = 0
          option_string = ""
 
-         first_time = true
          ql.options_quotation_lines.each do |opt|
            option_price = calculate_one_option_price(opt.option, @openings, Shape.find(ql.shape_id)) * discount_percent
            total_option_prices += option_price
 
-           option_string += ', ' unless first_time
+               option_string += ', ' unless option_string.blank?
            option_string += opt.option.tr_description
            option_string += " x #{opt.quantity}" if opt.quantity != 1
            option_string += " (#{number_to_currency(option_price)})"
-
-           first_time = false
         end
       %>
       <td width="10%" align="right">
@@ -379,26 +376,34 @@
   <tr>
     <td><%= trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>
     <td><%= trn_get('LABEL_GST') %><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.gst_number %></td>
-    <td><%= trn_get('LABEL_PST') %><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
+    <td colspan="3"><%= trn_get('LABEL_PST') %><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.company.pst_number %></td>
   </tr>
   <tr>
-    <td colspan="3" rowspan="4" style="border:1px solid #808080;" valign="top">
+    <td colspan="3" rowspan="5" style="border:1px solid #808080;" valign="top">
       <p>
         <strong><%= trn_geth('PRINT_HEADER_NOTES') %></strong><br/>
-        <%= @quotation.notes.html_safe.gsub("\n", '<br/>') if @quotation.notes and !@quotation.notes.empty? %>
+        <%= @quotation.notes.gsub("\n", '<br/>').html_safe if @quotation.notes and !@quotation.notes.empty? %>
       </p>
     </td>
     <td align="right" bgcolor="#b2b2b2" width="20%" style="border-top:1px solid #808080;">
-      <strong><%= trn_geth('PRINT_HEADER_TRANSPORT') %></strong>
+      <strong><%= trn_geth('PRINT_HEADER_SUBTOTAL') %></strong>
     </td>
     <td align="right" bgcolor="#b2b2b2" style="border-top:1px solid #808080;border-right:1px solid #808080;">
-      <strong><%= number_to_currency @quotation.transport %></strong>
+      <strong><%= number_to_currency total %></strong>
     </td>
   </tr>
   <% total += @quotation.transport %>
   <% taxes = @quotation.calculate_taxes(total) %>
   <% total += taxes %>
   <% pst_taxes = @quotation.calculate_pst(total) %>
+  <tr bgcolor="#b2b2b2">
+    <td align="right" colspan="1" width="20%">
+      <strong><%= trn_geth('PRINT_HEADER_TRANSPORT') %></strong>
+    </td>
+    <td align="right" style="border-right:1px solid #808080;">
+      <strong><%= number_to_currency @quotation.transport %></strong>
+    </td>
+  </tr>
   <tr bgcolor="#b2b2b2">
     <td align="right" colspan="1" width="20%">
       <strong><%= trn_get('PRINT_HEADER_TAXES') % number_to_percentage(@quotation.taxes) %></strong>
@@ -429,7 +434,7 @@
         <td colspan="5" style="border:1px solid #808080;" valign="top">
           <p>
             <strong><%= trn_geth('PRINT_LABEL_COMMENTS') %></strong><br/>
-            <%= @quotation.comments.html_safe.gsub("\n", '<br/>') %>
+            <%= @quotation.comments.gsub("\n", '<br/>').html_safe %>
           </p>
         </td>
       </tr>
