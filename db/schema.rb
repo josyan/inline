@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120603194540) do
+ActiveRecord::Schema.define(:version => 20120612171421) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -364,7 +364,10 @@ ActiveRecord::Schema.define(:version => 20120603194540) do
     t.string   "consultant"
     t.float    "deposit"
     t.float    "taxes_pst"
+    t.string   "slug"
   end
+
+  add_index "quotations", ["slug"], :name => "quotations_slug_index", :unique => true
 
   create_table "roles", :force => true do |t|
     t.string "rolename"
