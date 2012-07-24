@@ -85,6 +85,8 @@
     <td align="right"><%= trn_geth('LABEL_DISCOUNT') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field "quotation", "discount", :size => 10, :style => "text-align: right;" %>%</td>
   </tr>
+  <% else %>
+    <%= hidden_field "quotation", "discount" %>
   <% end %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_MARKUP') %><%= trn_geth('LABEL_SEMICOLON') %></td>

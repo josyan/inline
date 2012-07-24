@@ -12,8 +12,7 @@
         <%= form.input :has_left_sidelight, :label => trn_geth('LABEL_ALLOW_LEFT_SIDELIGHT') %>
       	<%= form.input :has_right_sidelight, :label => trn_geth('LABEL_ALLOW_RIGHT_SIDELIGHT') %>
 	<% end %>
-	<% form.buttons do %>
- 		<%= form.commit_button trn_get('BUTTON_ADD') %>
-		<%= %>
+	<% form.actions do %>
+ 		<%= form.action :submit, :label => trn_get('BUTTON_ADD') %>
 	<% end %>
 <% end %>
