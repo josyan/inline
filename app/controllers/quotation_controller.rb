@@ -58,14 +58,14 @@ class QuotationController < ApplicationController
 
     if @quotation.update_attributes(params[:quotation])
       flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
-      redirect_to :action => 'show', :id => @quotation
+      redirect_to :action => 'show', :id => @quotation.slug
     else
       render :action => 'edit'
     end
   end
 
   def destroy
-    Quotation.find(params[:id]).destroy
+    Quotation.find_by_slug(params[:id]).destroy
     flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
     redirect_to :action => 'index'
   end
@@ -90,9 +90,23 @@ class QuotationController < ApplicationController
     end
   end
 
+  def copy
+#    return unless request.xhr?
+    @orig_quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening}, {:options_quotation_lines=> :option}]).find_by_slug(params[:quotation_id])
+    if @orig_quotation.user_id != @current_user.id && !@current_user.has_role?('administrator')
+      flash[notice] = trn_get("PERMISSION_DENIED")
+      redirect_to :action => 'index'
+    end
+    @quotation = Quotation.copy(@orig_quotation)
+    @quotation.save!
+    @quotation.regenerate_previews
+    flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
+    redirect_to edit_quotation_path(@quotation.slug)
+  end
+
 protected
   def find_quotation
-    @quotation = Quotation.find(params[:id], :include => [{:quotation_lines => [:serie, :shape, {:quotation_lines_openings=> [:opening]}, {:options_quotation_lines=> [:option]}]}])
+    @quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening}, {:options_quotation_lines=> :option}]).find_by_slug(params[:id])
   end
 
   def set_taxes_if_not_present
