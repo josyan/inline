@@ -42,7 +42,7 @@ class QuotationController < ApplicationController
       flash[notice] = customer_msg.html_safe
       redirect_to :action => 'show', :id => @quotation.slug
     else
-      render :action => 'add'
+      render :action => 'new'
     end
   end
 
