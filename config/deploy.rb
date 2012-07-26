@@ -1,3 +1,7 @@
+require "bundler/capistrano"
+
+set :bundle_dir, "#{release_path}/vendor/bundle"
+
 set :application, "inline"
 set :repository,  "git://github.com/josyan/inline.git"
 
