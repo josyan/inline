@@ -1,9 +1,9 @@
 require "bundler/capistrano"
 
-set :bundle_dir, "#{release_path}/vendor/bundle"
-
 set :application, "inline"
 set :repository,  "git://github.com/josyan/inline.git"
+
+set :bundle_dir, "#{release_path}/vendor/bundle"
 
 set :scm, :git
 # Or: `accurev`, `bzr`, `cvs`, `darcs`, `git`, `mercurial`, `perforce`, `subversion` or `none`
