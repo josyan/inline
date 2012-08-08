@@ -40,7 +40,7 @@
 		<%= form.input :name, :label => trn_geth('LABEL_NAME') %>
 		<%= form.input :value, :label => trn_geth('LABEL_COLOR_VALUE'), :input_html => {:onchange=> 'change_swatch();', :onkeyup=> 'change_swatch();'}%>
 	<% end %>
-	<%= form.buttons do %>
- 		<%= form.commit_button  trn_get('BUTTON_SAVE_COLOR') %>
+	<%= form.actions do %>
+ 		<%= form.action :submit, :label => trn_get('BUTTON_SAVE_COLOR') %>
 	<% end %>
 <% end %>
