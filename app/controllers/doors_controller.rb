@@ -111,9 +111,11 @@ class DoorsController < ApplicationController
   end
 
   def configure_glasses
+    door_panel = DoorPanel.find(params[:door_panel_id])
     door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
 
     @door_glasses = door_glass_family.door_glasses
+    @door_glasses.delete_if { |dg| !door_panel.door_glasses.include? dg }
     @door_glass_id = @door_glasses.first.id unless @door_glasses.empty?
     @door_glass_id = params[:door_glass_id].to_i if params[:door_glass_id] and @door_glasses.map(&:id).include?(params[:door_glass_id].to_i)
   end
