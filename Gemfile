@@ -10,4 +10,4 @@ gem 'formtastic'
 gem 'validation_reflection'
 gem 'mysql2','0.2.7'
 gem 'rmagick'
-gem 'deep_cloneable', "~> 1.2.4"
+gem 'deep_cloneable', "~> 1.4.1"

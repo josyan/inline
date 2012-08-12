@@ -4,5 +4,5 @@
   <%= render :partial => 'form2' %>
   <%= submit_tag trn_geth('BUTTON_EDIT') %>
 <% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation_id %> |
+<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation.slug %> |
 <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => @quotation_line}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>

@@ -193,4 +193,4 @@
 </div>
 
 <%= submit_tag trn_geth(@door_line.new_record? ? 'BUTTON_ADD' : 'BUTTON_EDIT') %>
-<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @door_line.quotation_id %>
+<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @door_line.quotation.slug %>

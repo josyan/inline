@@ -5,4 +5,4 @@
   <%= render :partial => 'form' %>
   <%= submit_tag trn_geth('BUTTON_NEXT>>') %>
 <% end %>
-<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation_id %>
+<%= link_to trn_geth('BUTTON_BACK_TO_QUOTATION'), :controller => 'quotation', :action => 'show', :id => @quotation_line.quotation.slug %>
