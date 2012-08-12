@@ -49,6 +49,9 @@ class Quotation < ActiveRecord::Base
     quotation_lines.each do |line|
       line.create_image
     end
+    door_lines.each do |line|
+      line.create_image
+    end
   end
 
   def generate_new_slug(slug)
