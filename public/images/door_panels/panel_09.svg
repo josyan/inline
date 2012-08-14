@@ -18,7 +18,8 @@
    inkscape:export-filename="/home/josyan/Documents/panel_09.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="panel_09.svg">
+   sodipodi:docname="panel_09.svg"
+   style="display:inline">
   <defs
      id="defs4">
     <linearGradient
@@ -49,9 +50,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="19.3875"
+     inkscape:zoom="3.5052632"
      inkscape:cx="40"
-     inkscape:cy="142.45326"
+     inkscape:cy="95"
      inkscape:document-units="px"
      inkscape:current-layer="layer3"
      showgrid="true"
@@ -59,7 +60,7 @@
      inkscape:snap-global="true"
      inkscape:snap-page="true"
      inkscape:window-width="1680"
-     inkscape:window-height="973"
+     inkscape:window-height="879"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1">
@@ -82,7 +83,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -99,20 +100,6 @@
        height="189.00005"
        x="0.50000006"
        y="862.86218" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Template"
-     style="display:none"
-     sodipodi:insensitive="true">
-    <image
-       y="0.5"
-       x="0.5"
-       id="image3826"
-       xlink:href="file:///home/josyan/Documents/panel_09.jpg"
-       height="189"
-       width="79" />
   </g>
   <g
      inkscape:groupmode="layer"

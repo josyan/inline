@@ -18,7 +18,8 @@
    inkscape:export-filename="/home/josyan/Documents/panel_16.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="panel_16.svg">
+   sodipodi:docname="panel_16.svg"
+   style="display:inline">
   <defs
      id="defs4">
     <linearGradient
@@ -60,7 +61,7 @@
      inkscape:snap-global="true"
      inkscape:snap-page="true"
      inkscape:window-width="1680"
-     inkscape:window-height="973"
+     inkscape:window-height="879"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1">
@@ -83,7 +84,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -100,20 +101,6 @@
        height="189.00005"
        x="0.50000006"
        y="862.86218" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Template"
-     style="display:none"
-     sodipodi:insensitive="true">
-    <image
-       y="0.5"
-       x="0.5"
-       id="image3804"
-       xlink:href="file:///home/josyan/Documents/panel_16.jpg"
-       height="189"
-       width="79" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -154,7 +141,7 @@
        x="48.5"
        y="142.5" />
     <path
-       style="fill:url(#linearGradient3813);fill-opacity:1.0;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:url(#linearGradient3813);fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        d="m 40.5,17.5 c -8.284271,0 -15,3.581722 -15,8 l -9,0 0,101 47,0 0,-101 -8,0 c 0,-4.418278 -6.715729,-8 -15,-8 z"
        id="rect3830"
        inkscape:connector-curvature="0" />

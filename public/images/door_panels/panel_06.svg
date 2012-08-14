@@ -18,7 +18,8 @@
    inkscape:export-filename="/home/josyan/Documents/panel_06.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="panel_06.svg">
+   sodipodi:docname="panel_06.svg"
+   style="display:inline">
   <defs
      id="defs4">
     <linearGradient
@@ -59,7 +60,7 @@
      inkscape:snap-global="true"
      inkscape:snap-page="true"
      inkscape:window-width="1680"
-     inkscape:window-height="973"
+     inkscape:window-height="879"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1">
@@ -102,20 +103,6 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Template"
-     sodipodi:insensitive="true"
-     style="display:none">
-    <image
-       y="0.5"
-       x="0.5"
-       id="image3028"
-       xlink:href="file:///home/josyan/Documents/panel_06.jpg"
-       height="189"
-       width="79" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Design"
      style="display:inline">
@@ -127,7 +114,7 @@
        x="14.5"
        y="14.5" />
     <rect
-       style="fill:url(#linearGradient3828);stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1"
+       style="fill:url(#linearGradient3828);fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect3800-3"
        width="47"
        height="151"

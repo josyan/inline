@@ -18,7 +18,8 @@
    inkscape:export-filename="/home/josyan/Documents/panel_01.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="panel_01.svg">
+   sodipodi:docname="panel_01.svg"
+   style="display:inline">
   <defs
      id="defs4">
     <linearGradient
@@ -91,15 +92,15 @@
      inkscape:pageshadow="2"
      inkscape:zoom="4.0157895"
      inkscape:cx="40"
-     inkscape:cy="95"
+     inkscape:cy="75.078637"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer1"
      showgrid="true"
      objecttolerance="10000"
      inkscape:snap-global="true"
      inkscape:snap-page="true"
      inkscape:window-width="1680"
-     inkscape:window-height="973"
+     inkscape:window-height="879"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1">
@@ -122,7 +123,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -131,7 +132,8 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="translate(0,-862.36218)"
-     sodipodi:insensitive="true">
+     sodipodi:insensitive="true"
+     style="display:inline">
     <rect
        style="fill:#ffffff;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.99999988;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
        id="rect2987"
@@ -139,20 +141,6 @@
        height="189.00005"
        x="0.50000006"
        y="862.86218" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Template"
-     style="display:none"
-     sodipodi:insensitive="true">
-    <image
-       y="0.5"
-       x="0.5"
-       id="image3812"
-       xlink:href="file:///home/josyan/Documents/panel_01.jpg"
-       height="189"
-       width="79" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -193,7 +181,7 @@
        id="rect3815"
        inkscape:connector-curvature="0" />
     <path
-       style="fill:url(#linearGradient3863);stroke:#808080;stroke-width:0.99999994000000003;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;fill-opacity:1"
+       style="fill:url(#linearGradient3863);fill-opacity:1;stroke:#808080;stroke-width:0.99999994;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
        d="m 40,16.5 c -12.978691,0 -23.5,10.297451 -23.5,23 l 0,63 47,0 0,-63 c 0,-12.702549 -10.521309,-23 -23.5,-23 z"
        id="path3817-5"
        inkscape:connector-curvature="0" />

@@ -7,7 +7,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="80"
@@ -18,7 +17,8 @@
    inkscape:export-filename="/home/josyan/Documents/panel_18.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="panel_18.svg">
+   sodipodi:docname="panel_18.svg"
+   style="display:inline">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -32,13 +32,13 @@
      inkscape:cx="40"
      inkscape:cy="95"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer3"
      showgrid="true"
      objecttolerance="10000"
      inkscape:snap-global="true"
      inkscape:snap-page="true"
      inkscape:window-width="1680"
-     inkscape:window-height="973"
+     inkscape:window-height="879"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1">
@@ -81,20 +81,6 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Template"
-     style="display:none"
-     sodipodi:insensitive="true">
-    <image
-       y="0.5"
-       x="0.5"
-       id="image3052"
-       xlink:href="file:///home/josyan/Documents/panel_18.jpg"
-       height="189"
-       width="79" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Design"
      style="display:inline">
@@ -113,12 +99,14 @@
        x="16.555649"
        y="123.5" />
     <path
-       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:0.99999994000000003;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
-       d="M 40 16.5 C 37.273094 16.5 34.602605 16.623955 32.03125 16.84375 C 29.459895 17.063545 26.987857 17.363777 24.625 17.78125 C 22.262143 18.198723 20.007664 18.719466 17.90625 19.3125 C 16.68097 19.658283 15.622147 20.100483 14.5 20.5 L 14.5 45.5 L 14.5 101.5 L 65.5 101.5 L 65.5 45.5 L 65.5 20.5 C 64.377853 20.100483 63.31903 19.658283 62.09375 19.3125 C 59.992336 18.719466 57.737857 18.198723 55.375 17.78125 C 53.012143 17.363777 50.540105 17.063545 47.96875 16.84375 C 45.397395 16.623955 42.726906 16.5 40 16.5 z "
-       id="path3993" />
+       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:0.99999994;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="m 40,16.5 c -2.726906,0 -5.397395,0.123955 -7.96875,0.34375 -2.571355,0.219795 -5.043393,0.520027 -7.40625,0.9375 -2.362857,0.417473 -4.617336,0.938216 -6.71875,1.53125 C 16.68097,19.658283 15.622147,20.100483 14.5,20.5 l 0,25 0,56 51,0 0,-56 0,-25 C 64.377853,20.100483 63.31903,19.658283 62.09375,19.3125 59.992336,18.719466 57.737857,18.198723 55.375,17.78125 53.012143,17.363777 50.540105,17.063545 47.96875,16.84375 45.397395,16.623955 42.726906,16.5 40,16.5 z"
+       id="path3993"
+       inkscape:connector-curvature="0" />
     <path
-       style="fill:#ffffff;stroke:#808080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline;fill-opacity:1"
-       d="M 40 18.5 C 37.411165 18.5 34.87866 18.588097 32.4375 18.78125 C 29.99634 18.974403 27.649469 19.25813 25.40625 19.625 C 23.163031 19.99187 21.026263 20.447599 19.03125 20.96875 C 18.123206 21.205956 17.349047 21.515012 16.5 21.78125 L 16.5 44.21875 L 16.5 99.5 L 63.5 99.5 L 63.5 44.21875 L 63.5 21.78125 C 62.650953 21.515012 61.876794 21.205956 60.96875 20.96875 C 58.973737 20.447599 56.836969 19.99187 54.59375 19.625 C 52.350531 19.25813 50.00366 18.974403 47.5625 18.78125 C 45.12134 18.588097 42.588835 18.5 40 18.5 z "
-       id="path3999" />
+       style="fill:#ffffff;fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;display:inline"
+       d="m 40,18.5 c -2.588835,0 -5.12134,0.0881 -7.5625,0.28125 -2.44116,0.193153 -4.788031,0.47688 -7.03125,0.84375 -2.243219,0.36687 -4.379987,0.822599 -6.375,1.34375 -0.908044,0.237206 -1.682203,0.546262 -2.53125,0.8125 l 0,22.4375 0,55.28125 47,0 0,-55.28125 0,-22.4375 C 62.650953,21.515012 61.876794,21.205956 60.96875,20.96875 58.973737,20.447599 56.836969,19.99187 54.59375,19.625 52.350531,19.25813 50.00366,18.974403 47.5625,18.78125 45.12134,18.588097 42.588835,18.5 40,18.5 z"
+       id="path3999"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

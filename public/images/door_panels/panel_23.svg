@@ -7,7 +7,6 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="80"
@@ -18,7 +17,8 @@
    inkscape:export-filename="/home/josyan/Documents/panel_23.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="panel_23.svg">
+   sodipodi:docname="panel_23.svg"
+   style="display:inline">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -32,13 +32,13 @@
      inkscape:cx="40"
      inkscape:cy="95"
      inkscape:document-units="px"
-     inkscape:current-layer="layer2"
+     inkscape:current-layer="layer3"
      showgrid="true"
      objecttolerance="10000"
      inkscape:snap-global="true"
      inkscape:snap-page="true"
      inkscape:window-width="1680"
-     inkscape:window-height="973"
+     inkscape:window-height="879"
      inkscape:window-x="0"
      inkscape:window-y="24"
      inkscape:window-maximized="1">
@@ -61,7 +61,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -81,29 +81,17 @@
   </g>
   <g
      inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Template"
-     sodipodi:insensitive="true"
-     style="display:none">
-    <image
-       y="0.5"
-       x="0.5"
-       id="image3044"
-       xlink:href="file:///home/josyan/Documents/panel_23.jpg"
-       height="189"
-       width="79" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="Design">
     <path
-       style="fill:none;fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 40 15.5 C 37.273094 15.5 34.602605 15.64444 32.03125 15.9375 C 31.85241 15.957883 31.677876 15.978282 31.5 16 L 31.5 31.5 L 48.5 31.5 L 48.5 16 C 48.322124 15.978282 48.14759 15.957883 47.96875 15.9375 C 45.397395 15.64444 42.726906 15.5 40 15.5 z M 24.5 17.25 C 22.183152 17.801148 19.970139 18.473408 17.90625 19.25 C 16.681909 19.71069 15.62137 20.280271 14.5 20.8125 L 14.5 31.5 L 24.5 31.5 L 24.5 17.25 z M 55.5 17.25 L 55.5 31.5 L 65.5 31.5 L 65.5 20.8125 C 64.37863 20.280271 63.318091 19.71069 62.09375 19.25 C 60.029861 18.473408 57.816848 17.801148 55.5 17.25 z M 14.5 39.5 L 14.5 54.1875 L 14.5 83.5 L 24.5 83.5 L 24.5 39.5 L 14.5 39.5 z M 31.5 39.5 L 31.5 83.5 L 48.5 83.5 L 48.5 39.5 L 31.5 39.5 z M 55.5 39.5 L 55.5 83.5 L 65.5 83.5 L 65.5 54.1875 L 65.5 39.5 L 55.5 39.5 z M 14.5 91.5 L 14.5 168.5 L 24.5 168.5 L 24.5 91.5 L 14.5 91.5 z M 31.5 91.5 L 31.5 168.5 L 48.5 168.5 L 48.5 91.5 L 31.5 91.5 z M 55.5 91.5 L 55.5 168.5 L 65.5 168.5 L 65.5 91.5 L 55.5 91.5 z "
-       id="path3888" />
+       style="fill:none;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 40,15.5 c -2.726906,0 -5.397395,0.14444 -7.96875,0.4375 C 31.85241,15.957883 31.677876,15.978282 31.5,16 l 0,15.5 17,0 0,-15.5 C 48.322124,15.978282 48.14759,15.957883 47.96875,15.9375 45.397395,15.64444 42.726906,15.5 40,15.5 z m -15.5,1.75 c -2.316848,0.551148 -4.529861,1.223408 -6.59375,2 -1.224341,0.46069 -2.28488,1.030271 -3.40625,1.5625 l 0,10.6875 10,0 0,-14.25 z m 31,0 0,14.25 10,0 0,-10.6875 C 64.37863,20.280271 63.318091,19.71069 62.09375,19.25 60.029861,18.473408 57.816848,17.801148 55.5,17.25 z m -41,22.25 0,14.6875 0,29.3125 10,0 0,-44 -10,0 z m 17,0 0,44 17,0 0,-44 -17,0 z m 24,0 0,44 10,0 0,-29.3125 0,-14.6875 -10,0 z m -41,52 0,77 10,0 0,-77 -10,0 z m 17,0 0,77 17,0 0,-77 -17,0 z m 24,0 0,77 10,0 0,-77 -10,0 z"
+       id="path3888"
+       inkscape:connector-curvature="0" />
     <path
-       style="fill:none;fill-opacity:1;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
-       d="M 40 17.5 C 37.783627 17.5 35.611826 17.615831 33.5 17.8125 L 33.5 29.5 L 46.5 29.5 L 46.5 17.8125 C 44.388174 17.615831 42.216373 17.5 40 17.5 z M 22.5 19.8125 C 21.305977 20.148844 20.143298 20.505565 19.03125 20.90625 C 18.125444 21.232624 17.347105 21.633776 16.5 22 L 16.5 29.5 L 22.5 29.5 L 22.5 19.8125 z M 57.5 19.8125 L 57.5 29.5 L 63.5 29.5 L 63.5 22 C 62.652895 21.633776 61.874556 21.232624 60.96875 20.90625 C 59.856702 20.505565 58.694023 20.148844 57.5 19.8125 z M 16.5 41.5 L 16.5 53 L 16.5 81.5 L 22.5 81.5 L 22.5 41.5 L 16.5 41.5 z M 33.5 41.5 L 33.5 81.5 L 46.5 81.5 L 46.5 41.5 L 33.5 41.5 z M 57.5 41.5 L 57.5 81.5 L 63.5 81.5 L 63.5 53 L 63.5 41.5 L 57.5 41.5 z M 16.5 93.5 L 16.5 166.5 L 22.5 166.5 L 22.5 93.5 L 16.5 93.5 z M 33.5 93.5 L 33.5 166.5 L 46.5 166.5 L 46.5 93.5 L 33.5 93.5 z M 57.5 93.5 L 57.5 166.5 L 63.5 166.5 L 63.5 93.5 L 57.5 93.5 z "
-       id="path3882" />
+       style="fill:none;stroke:#808080;stroke-width:1;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       d="m 40,17.5 c -2.216373,0 -4.388174,0.115831 -6.5,0.3125 l 0,11.6875 13,0 0,-11.6875 C 44.388174,17.615831 42.216373,17.5 40,17.5 z m -17.5,2.3125 c -1.194023,0.336344 -2.356702,0.693065 -3.46875,1.09375 C 18.125444,21.232624 17.347105,21.633776 16.5,22 l 0,7.5 6,0 0,-9.6875 z m 35,0 0,9.6875 6,0 0,-7.5 C 62.652895,21.633776 61.874556,21.232624 60.96875,20.90625 59.856702,20.505565 58.694023,20.148844 57.5,19.8125 z m -41,21.6875 0,11.5 0,28.5 6,0 0,-40 -6,0 z m 17,0 0,40 13,0 0,-40 -13,0 z m 24,0 0,40 6,0 0,-28.5 0,-11.5 -6,0 z m -41,52 0,73 6,0 0,-73 -6,0 z m 17,0 0,73 13,0 0,-73 -13,0 z m 24,0 0,73 6,0 0,-73 -6,0 z"
+       id="path3882"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>

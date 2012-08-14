@@ -18,7 +18,8 @@
    inkscape:export-filename="/home/josyan/Documents/door_panels/panel_56.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
-   sodipodi:docname="panel_56.svg">
+   sodipodi:docname="panel_56.svg"
+   style="display:inline">
   <defs
      id="defs4">
     <linearGradient
@@ -83,7 +84,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -100,20 +101,6 @@
        height="189.00005"
        x="0.50000006"
        y="862.86218" />
-  </g>
-  <g
-     inkscape:groupmode="layer"
-     id="layer2"
-     inkscape:label="Template"
-     sodipodi:insensitive="true"
-     style="display:none">
-    <image
-       y="0.5"
-       x="0.5"
-       id="image3028"
-       xlink:href="file:///home/josyan/Documents/panel_06.jpg"
-       height="189"
-       width="79" />
   </g>
   <g
      inkscape:groupmode="layer"
