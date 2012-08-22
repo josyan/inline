@@ -161,11 +161,11 @@ class DoorLine < ActiveRecord::Base
     # vertical line
     gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH
     # top arrow
-    gc.line total_width * PIXELS_PER_INCH + arrow_offset, currenty * PIXELS_PER_INCH + arrow_width, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH
-    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, currenty * PIXELS_PER_INCH + arrow_width
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, currenty * PIXELS_PER_INCH + arrow_width / 2, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, currenty * PIXELS_PER_INCH + arrow_width / 2
     # bottom arrow
-    gc.line total_width * PIXELS_PER_INCH + arrow_offset, (currenty + section_height) * PIXELS_PER_INCH - arrow_width, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH
-    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, (currenty + section_height) * PIXELS_PER_INCH - arrow_width
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, (currenty + section_height) * PIXELS_PER_INCH - arrow_width / 2, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, (currenty + section_height) * PIXELS_PER_INCH - arrow_width / 2
     # text
     gc.stroke 'transparent'
     gc.fill 'black'
@@ -176,25 +176,31 @@ class DoorLine < ActiveRecord::Base
   end
 
   def draw_horizontal_measurement(canvas, section_width, currentx, extra_offset = 0)
-    # binding for erb file
-    # constants
-    arrow_size = ARROW_SIZE
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
-    # load erb file and generate svg
-    File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'horizontal_size.svg'))).result(binding)
-    end
+    arrow_offset = 15
+    arrow_height = 20
+    text_offset_x = -20
+    text_offset_y = -5
+    gc = Draw.new
+    gc.stroke 'black'
+    # left line
+    gc.line currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset, currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height
+    # right line
+    gc.line((currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset, (currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height)
+    # horizontal line
+    gc.line currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2, (currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2
+    # top arrow
+    gc.line currentx * PIXELS_PER_INCH + arrow_height / 2, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset, currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2
+    gc.line currentx * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2, currentx * PIXELS_PER_INCH + arrow_height / 2, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height
+    # bottom arrow
+    gc.line((currentx + section_width) * PIXELS_PER_INCH - arrow_height / 2, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset, (currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2)
+    gc.line((currentx + section_width) * PIXELS_PER_INCH, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2, (currentx + section_width) * PIXELS_PER_INCH - arrow_height / 2, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height)
+    # text
+    gc.stroke 'transparent'
+    gc.fill 'black'
+    gc.pointsize 16
+    gc.text((currentx + section_width / 2) * PIXELS_PER_INCH + text_offset_x, total_height * PIXELS_PER_INCH + arrow_offset + extra_offset + arrow_height / 2 + text_offset_y, section_width.to_s)
 
-    #load svg file
-    size_image = Image.read(temp_file_name)[0]
-
-    # define offset to paint section
-    offsetx_px = currentx * PIXELS_PER_INCH
-    offsety_px = total_height * PIXELS_PER_INCH + extra_offset
-
-    # paint the image on canvas
-    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
-    size_image.destroy!
+    gc.draw canvas
   end
 
 end
