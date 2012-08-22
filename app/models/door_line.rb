@@ -149,25 +149,30 @@ class DoorLine < ActiveRecord::Base
   private ####################################################################
 
   def draw_vertical_measurement(canvas, section_height, currenty)
-    # binding for erb file
-    # constants
-    arrow_size = ARROW_SIZE
-    temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
-    # load erb file and generate svg
-    File.open(temp_file_name, 'w') do |f|
-      f.write ERB.new(File.read(File.join(Rails.root, 'components', 'misc', 'vertical_size.svg'))).result(binding)
-    end
+    arrow_offset = 15
+    arrow_width = 20
+    text_offset = 5
+    gc = Draw.new
+    gc.stroke 'black'
+    # top line
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, currenty * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, currenty * PIXELS_PER_INCH
+    # bottom line
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, (currenty + section_height) * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, (currenty + section_height) * PIXELS_PER_INCH
+    # vertical line
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH
+    # top arrow
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, currenty * PIXELS_PER_INCH + arrow_width, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, currenty * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, currenty * PIXELS_PER_INCH + arrow_width
+    # bottom arrow
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset, (currenty + section_height) * PIXELS_PER_INCH - arrow_width, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH
+    gc.line total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2, (currenty + section_height) * PIXELS_PER_INCH, total_width * PIXELS_PER_INCH + arrow_offset + arrow_width, (currenty + section_height) * PIXELS_PER_INCH - arrow_width
+    # text
+    gc.stroke 'transparent'
+    gc.fill 'black'
+    gc.pointsize 16
+    gc.text total_width * PIXELS_PER_INCH + arrow_offset + arrow_width / 2 + text_offset, (currenty + section_height / 2) * PIXELS_PER_INCH, section_height.to_s
 
-    #load svg file
-    size_image = Image.read(temp_file_name)[0]
-
-    # define offset to paint section
-    offsetx_px = total_width * PIXELS_PER_INCH
-    offsety_px = currenty * PIXELS_PER_INCH
-
-    # paint the image on canvas
-    canvas.composite! size_image, offsetx_px, offsety_px, OverCompositeOp
-    size_image.destroy!
+    gc.draw canvas
   end
 
   def draw_horizontal_measurement(canvas, section_width, currentx, extra_offset = 0)
@@ -193,3 +198,4 @@ class DoorLine < ActiveRecord::Base
   end
 
 end
+
