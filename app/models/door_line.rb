@@ -88,9 +88,9 @@ class DoorLine < ActiveRecord::Base
 
       # get the file to be painted
       if door_line_section.door_panel
-        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name, '.png') + '.svg')
+        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', File.basename(door_line_section.door_panel.preview_image_name))
       else
-        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', door_line_section.door_section.code + '.svg')
+        src_image = File.join(Rails.root, 'public', 'images', 'door_panels', door_line_section.door_section.code + '.png')
       end
 
       # load section image
