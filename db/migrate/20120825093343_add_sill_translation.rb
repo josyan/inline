@@ -1,4 +1,4 @@
-class AddDoorsTranslation < ActiveRecord::Migration
+class AddSillTranslation < ActiveRecord::Migration
   DATAFILE = __FILE__.gsub('.rb', '.sql')
   def self.up
     IO.readlines(DATAFILE).join.gsub("\r\n", "\n").split(";\n").each do |s|
