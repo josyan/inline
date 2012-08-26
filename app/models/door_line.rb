@@ -65,7 +65,7 @@ class DoorLine < ActiveRecord::Base
 
   def total_height
     height = 0
-    height = door_line_sections.first.door_panel_dimension.height + 2 * frame_profile.width + frame_profile.gap
+    height = door_line_sections.first.door_panel_dimension.height + 2 * frame_profile.width + frame_profile.gap + frame_profile.sill
     height
   end
 
