@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120826011401) do
+ActiveRecord::Schema.define(:version => 20120912003819) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -217,8 +217,11 @@ ActiveRecord::Schema.define(:version => 20120826011401) do
     t.float    "price",              :default => 0.0
     t.float    "width",              :default => 0.0
     t.float    "separator_width",    :default => 0.0
-    t.float    "gap",                :default => 0.0
+    t.float    "gap_slab",           :default => 0.0
     t.float    "sill",               :default => 0.0
+    t.float    "gap_l",              :default => 0.0
+    t.float    "gap_lp",             :default => 0.0
+    t.float    "gap_slf",            :default => 0.0
   end
 
   create_table "module_types", :force => true do |t|
