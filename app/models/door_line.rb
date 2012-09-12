@@ -56,7 +56,7 @@ class DoorLine < ActiveRecord::Base
     width = 0
     door_line_sections.each do |door_line_section|
       width += door_line_section.door_panel_dimension.width
-      width += frame_profile.gap if door_line_section.door_section.openable?
+      width += frame_profile.send(:"gap_#{door_line_section.door_panel.gap}") if door_line_section.door_panel
     end
     width += 2 * frame_profile.width
     width += (door_line_sections.count - 1) * frame_profile.separator_width
@@ -65,7 +65,7 @@ class DoorLine < ActiveRecord::Base
 
   def total_height
     height = 0
-    height = door_line_sections.first.door_panel_dimension.height + 2 * frame_profile.width + frame_profile.gap + frame_profile.sill
+    height = door_line_sections.first.door_panel_dimension.height + 2 * frame_profile.width + frame_profile.gap_slab + frame_profile.sill
     height
   end
 
@@ -80,11 +80,11 @@ class DoorLine < ActiveRecord::Base
 
     # intialize coordinates
     currentx = frame_profile.width
-    currenty = frame_profile.width + frame_profile.gap / 2
+    currenty = frame_profile.width + frame_profile.gap_slab / 2
 
     # loop on sections
     door_line_sections.each do |door_line_section|
-      currentx += frame_profile.gap / 2 if door_line_section.door_section.openable?
+      currentx += frame_profile.send(:"gap_#{door_line_section.door_panel.gap}") / 2 if door_line_section.door_panel
 
       # get the file to be painted
       if door_line_section.door_panel
@@ -112,7 +112,7 @@ class DoorLine < ActiveRecord::Base
 
       # update coordinates
       currentx += door_line_section.door_panel_dimension.width
-      currentx += frame_profile.gap / 2 if door_line_section.door_section.openable?
+      currentx += frame_profile.send(:"gap_#{door_line_section.door_panel.gap}") / 2 if door_line_section.door_panel
       currentx += (door_line_section.id == door_line_sections.last.id ? frame_profile.width : frame_profile.separator_width)
     end
 
