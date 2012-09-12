@@ -18,6 +18,10 @@
     </td>
   </tr>
   <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_GAP') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= select 'door_panel', 'gap', %w{slab l lp slf}.collect { |g| [g.upcase, g] } %></td>
+  </tr>
+  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= text_field "door_panel", "price", :size => 20 %></td>
   </tr>
