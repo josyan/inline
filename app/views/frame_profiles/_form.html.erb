@@ -17,10 +17,12 @@
     <td align="right"><%= trn_geth('LABEL_SEPARATOR_WIDTH') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.text_field "separator_width", :size => 20 %></td>
   </tr>
-  <tr valign="top">
-    <td align="right"><%= trn_geth('LABEL_GAP') %><%= trn_geth('LABEL_SEMICOLON') %></td>
-    <td><%= f.text_field "gap", :size => 20 %></td>
-  </tr>
+  <% %w{slab l lp slf}.each do |kind| %>
+    <tr valign="top">
+      <td align="right"><%= trn_geth("LABEL_GAP_#{kind.upcase}") %><%= trn_geth('LABEL_SEMICOLON') %></td>
+      <td><%= f.text_field "gap_#{kind}", :size => 20 %></td>
+    </tr>
+  <% end %>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_SILL') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.text_field "sill", :size => 20 %></td>
