@@ -96,6 +96,17 @@ class DoorLine < ActiveRecord::Base
       # load section image
       section_image = Image.read(src_image)[0]
 
+      # render the glass here if any
+      if door_line_section.door_glass
+        src_image = door_line_section.door_glass.photo.url(:normal)
+        src_image = src_image.gsub(File.basename(src_image), 'rendered.png')
+        src_image = File.join(Rails.root, 'public', src_image)
+        if File.exist?(src_image)
+          glass_image = Image.read(src_image)[0]
+          section_image.composite! glass_image, 0, 0, OverCompositeOp
+        end
+      end
+
       # resize the section image to fit the dimensions
       section_image.resize! door_line_section.door_panel_dimension.width * PIXELS_PER_INCH, door_line_section.door_panel_dimension.height * PIXELS_PER_INCH
 
