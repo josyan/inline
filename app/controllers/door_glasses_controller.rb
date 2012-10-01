@@ -14,6 +14,7 @@ class DoorGlassesController < ApplicationController
     @door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
     @door_glass = @door_glass_family.door_glasses.new(params[:door_glass])
     if @door_glass.save
+      GlassMailer.glass_edition(@door_glass).deliver
       flash[:notice] = trn_geth('LABEL_DOOR_GLASS') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_M')
       redirect_to door_glass_family_door_glasses_path(@door_glass_family)
     else
@@ -32,6 +33,7 @@ class DoorGlassesController < ApplicationController
     @door_glass_family = DoorGlassFamily.find(params[:door_glass_family_id])
     @door_glass = DoorGlass.find(params[:id])
     if @door_glass.update_attributes(params[:door_glass])
+      GlassMailer.glass_edition(@door_glass).deliver
       flash[:notice] = trn_geth('LABEL_DOOR_GLASS') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_M')
       redirect_to door_glass_family_door_glasses_path(@door_glass_family)
     else
