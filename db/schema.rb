@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120912011330) do
+ActiveRecord::Schema.define(:version => 20121011212027) do
 
   create_table "companies", :force => true do |t|
     t.string  "name",              :limit => 100, :default => "", :null => false
@@ -263,17 +263,18 @@ ActiveRecord::Schema.define(:version => 20120912011330) do
   end
 
   create_table "options", :force => true do |t|
-    t.string  "description",             :limit => 50, :default => "",  :null => false
+    t.string  "description",             :limit => 50, :default => "",    :null => false
     t.text    "comments"
-    t.integer "pricing_method_id",                     :default => 0,   :null => false
-    t.float   "price",                                 :default => 0.0, :null => false
-    t.float   "minimum_quantity",                      :default => 0.0, :null => false
-    t.integer "options_minimum_unit_id",               :default => 1,   :null => false
+    t.integer "pricing_method_id",                     :default => 0,     :null => false
+    t.float   "price",                                 :default => 0.0,   :null => false
+    t.float   "minimum_quantity",                      :default => 0.0,   :null => false
+    t.integer "options_minimum_unit_id",               :default => 1,     :null => false
     t.string  "photo_file_name"
     t.string  "photo_content_type"
     t.integer "photo_file_size"
-    t.integer "apply_to",                              :default => 0,   :null => false
+    t.integer "apply_to",                              :default => 0,     :null => false
     t.integer "module_type_id",                        :default => 1
+    t.boolean "emphasize",                             :default => false
   end
 
   create_table "options_minimum_units", :force => true do |t|
