@@ -32,6 +32,11 @@
     <td><%= @option.minimum_quantity %> <%= @option.options_minimum_unit.description %></td>
   </tr>
   <% end %>
+  <tr>
+    <td>&nbsp;</td>
+    <td><%= check_box "option","emphasize", :disabled => true%><label for="option_emphasize"><%= trn_geth('LABEL_EMPHASIZE')%> </label>
+    </td>
+  </tr>
  <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= image_tag(@option.photo.url, :class => 'popup') unless @option.photo.original_filename.blank?%></td>

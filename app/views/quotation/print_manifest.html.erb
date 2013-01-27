@@ -82,15 +82,10 @@
 <br/>
 
 <!-- content -->
-<!-- print 2 lines on the first page, 3 on all others. -->
-<% printed_line = 1 %>
-<% print_header = true %>
 <table width="100%" cellspacing="0" cellpadding="3">
   <% total = 0 %>
 
-  <!-- fenetres -->
-  <% for ql in @quotation.quotation_lines %>
-    <% if print_header %>
+  <thead>
       <tr bgcolor="#b2b2b2">
         <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
         <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
@@ -98,9 +93,10 @@
         <th></th>
         <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
       </tr>
-      <% print_header = false %>
-    <% end %>
-    <tr valign="top">
+  </thead>
+  <!-- fenetres -->
+  <% for ql in @quotation.quotation_lines %>
+    <tr valign="top" style="page-break-inside: avoid;">
       <%
         dims = ql.get_image_size
         options = {:style => "margin-top: 3px;"}
@@ -161,7 +157,7 @@
       <td width="10%" align="right"></td>
       <td width="10%" align="center"><%= ql.quantity %></td>
     </tr>
-    <tr valign="top" >
+    <tr valign="top" style="page-break-inside: avoid;" >
         <td  style="border-bottom: 2px dotted #808080;">
             <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
         </td>
@@ -173,7 +169,7 @@
                   first = true
                   ql.options_quotation_lines.each { |opt| %>
                     <%= ', ' if !first %>
-                    <%= opt.option.tr_description %>
+                    <%= show_option opt.option %>
                     <% if opt.quantity != 1 %>
                       x <%= opt.quantity %>
                     <% end %>
@@ -187,29 +183,11 @@
         </td>
         <td  style="border-bottom: 2px dotted #808080;">&nbsp;</td>
     </tr>
-    <% printed_line += 1 %>
-    <% if printed_line == 3
-         printed_line = 0
-         print_header = true %>
-  </table>
-  <div style="page-break-before: always;">&nbsp;</div>
-  <table width="100%" cellspacing="0" cellpadding="3">
-    <% end %>
   <% end %>
 
   <!-- portes -->
   <% for dl in @quotation.door_lines %>
-    <% if print_header %>
-      <tr bgcolor="#b2b2b2">
-        <th><%= trn_geth('PRINT_HEADER_PREVIEW') %></th>
-        <th><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
-        <th></th>
-        <th></th>
-        <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
-      </tr>
-      <% print_header = false %>
-    <% end %>
-    <tr valign="top">
+    <tr valign="top" style="page-break-inside: avoid;">
       <%
         dims = dl.get_image_size
         options = {:style => "margin-top: 3px;"}
@@ -277,7 +255,7 @@
       <td width="10%" align="right"></td>
       <td width="10%" align="center"><%= dl.quantity %></td>
     </tr>
-    <tr valign="top" >
+    <tr valign="top" style="page-break-inside: avoid;" >
         <td  style="border-bottom: 2px dotted #808080;">
             <span style="font-size:smaller;font-weight:bold;"><%= trn_get('MSG_VIEW_FROM_OUTSIDE') %></span>
         </td>
@@ -288,7 +266,7 @@
                   first = true
                   dl.door_line_options.each { |opt| %>
                     <%= ', ' if !first %>
-                    <%= opt.option.tr_description %>
+                    <%= show_option opt.option %>
                     <% if opt.quantity != 1 %>
                       x <%= opt.quantity %>
                     <% end %>
@@ -301,14 +279,6 @@
         </td>
         <td  style="border-bottom: 2px dotted #808080;">&nbsp;</td>
     </tr>
-    <% printed_line += 1 %>
-    <% if printed_line == 3
-         printed_line = 0
-         print_header = true %>
-  </table>
-  <div style="page-break-before: always;">&nbsp;</div>
-  <table width="100%" cellspacing="0" cellpadding="3">
-    <% end %>
   <% end %>
 
   <!-- options -->
@@ -325,20 +295,12 @@
     <% end %>
     <tr valign="top">
       <td colspan="2" style="border-bottom: 2px dotted #808080;">
-        <%= option.option.tr_description %>
+        <%= show_option option.option %>
       </td>
       <td width="10%" align="right" style="border-bottom: 2px dotted #808080;">&nbsp;</td>
       <td width="10%" align="center" style="border-bottom: 2px dotted #808080;" ><%= option.quantity %></td>
       <td width="10%" align="right" style="border-bottom: 2px dotted #808080;">&nbsp;</td>
     </tr>
-    <% printed_line += 0.2
-      if printed_line == 3
-        printed_line = 0
-        print_header = true %>
-        </table>
-        <div style="page-break-before: always;">&nbsp;</div>
-        <table width="100%" cellspacing="0" cellpadding="3">
-    <% end %>
   <% end %>
   <tr>
     <td><%= trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>

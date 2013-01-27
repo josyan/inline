@@ -5,6 +5,7 @@ require 'pp'
 class ApplicationController < ActionController::Base
   include TranslationGet
   include AuthenticatedSystem
+  include SortableTable::App::Controllers::ApplicationController
 
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details

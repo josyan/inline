@@ -1,30 +1,17 @@
 <h2><%= trn_geth('TITLE_QUOTATION_LIST') %></h2>
 
 <%= link_to trn_geth('BUTTON_ADD'), new_quotation_path %>
-<%= will_paginate @quotations, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
 
-<table cellspacing="0" style="width:100%;">
-  <tr class="header">
-    <th><%= trn_geth('HEADER_NUMBER') %></th>
-    <th><%= trn_geth('HEADER_DATE_MODIFIED') %></th>
-    <th><%= trn_geth('HEADER_DESCRIPTION') %></th>
-    <th><%= trn_geth('HEADER_CREATED_BY') if @current_user.has_role?('administrator') %></th>
-    <th><%= trn_geth('LABEL_CONSULTANT') if @current_user.has_role?('administrator') %></th>
-    <th></th>
-  </tr>
-<% for quotation in @quotations %>
-  <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= quotation.slug %></td>
-		<td><%= gv_humanize_time quotation.updated_at %></td>
-    <td><%= link_to quotation.project_name, quotation_path(quotation.slug) %><%= ' (' + quotation.description + ')' unless quotation.description.blank? %></td>
-    <td><%= quotation.user.login  if @current_user.has_role?('administrator') and !quotation.user.nil? %> </td>
-    <td><%= quotation.consultant  if @current_user.has_role?('administrator') and !quotation.consultant.nil? %> </td>
-    <td>
-      <%= link_to trn_geth('BUTTON_COPY'), quotation_copy_path(quotation.slug), :method => :post %> |
-      <%= link_to trn_geth('BUTTON_EDIT'), edit_quotation_path(quotation.slug) %> |
-      <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'destroy', :id => quotation.slug}, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
-    </td>
-  </tr>
+<%= form_remote_tag :url => search_quotations_path, :id => 'search-form', :update => "results", :loading => "toggleLoading();" do %>
+  <div id="results">
+    <%= render :partial => 'quotation_list' %>
+  </div>
+  <%= submit_tag "Search", :style => "display:none;"%>
 <% end %>
-</table>
-<%= will_paginate @quotations, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
+
+<script type="text/javascript">
+      // create a convenient toggleLoading function
+      var toggleLoading = function() {
+          jQuery("#loading").toggle()
+      };
+</script>

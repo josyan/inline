@@ -1,13 +1,13 @@
 class QuotationController < ApplicationController
 
   before_filter :find_quotation, :only => [:show, :print, :print_invoice, :print_manifest, :print_calculations]
+  sortable_attributes  :updated_at, :slug, :description, :created_by, :consultant
 
+  SEARCH_FIELDS = %w(search_description search_slug)
   def index
-    if @current_user.has_role?('administrator')
-      @quotations = Quotation.includes(:user).paginate(:page => params[:page], :per_page => 25).order('updated_at DESC, id DESC')
-    else
-      @quotations = Quotation.includes(:user).where("user_id = ?", @current_user.id).paginate(:page => params[:page], :per_page => 25).order("updated_at DESC, id DESC")
-    end
+    search_params_from_session
+    conditions = {:user_id => @current_user.id} unless @current_user.has_role?('administrator')
+    @quotations = Quotation.includes(:user).where(conditions).where(search_conditions).paginate(:page => params[:page], :per_page => 25).order(sort_order || "updated_at DESC")
   end
 
   def show
@@ -103,8 +103,60 @@ class QuotationController < ApplicationController
     flash[:notice] = trn_geth('LABEL_QUOTATION') + " " + trn_get('MSG_SUCCESSFULLY_CREATED_F')
     redirect_to edit_quotation_path(@quotation.slug)
   end
+  def search
+    save_search_params_to_session
+    params[:action] = "index"
+
+    if @current_user.has_role?('administrator')
+      @quotations = Quotation.includes(:user).paginate(:page => params[:page], :order => sort_order, :conditions => search_conditions, :per_page => 25)
+    else
+      @quotations = Quotation.includes(:user).where("user_id = ?", @current_user.id).paginate(:page => params[:page], :order => sort_order, :conditions => search_conditions, :per_page => 25)
+    end
+
+    render :partial => 'quotation_list'
+  end
 
 protected
+  def search_params_from_session
+    SEARCH_FIELDS.each { |x| params[x.to_sym] = session[x.to_sym]}
+  end
+
+  def save_search_params_to_session
+    SEARCH_FIELDS.each { |x| session[x.to_sym] = params[x.to_sym]}
+  end
+
+  def match_beginning(value)
+    " like \'#{value}%\'"
+  end
+
+  def match_ending(value)
+    " like \'%#{value}\'"
+  end
+
+  def match_anywhere(value)
+    " like \'%#{value}%\'"
+  end
+
+  def match_exact(value)
+    new_value = value.gsub /\*/, '%'
+    " like '#{new_value}'"
+  end
+
+  def search_condition_for(field, value)
+    return nil if value.blank?
+    case field.gsub(/search_/, "")
+      when "slug"
+        "slug "+ match_anywhere(value)
+      when "description"
+        "customer_name" + match_anywhere(value)
+    end
+  end
+
+  def search_conditions
+    conditions = SEARCH_FIELDS.collect{|x| search_condition_for(x, params[x.to_sym])}
+    conditions = conditions.delete_if{|x| x.nil?}
+    conditions.join(" and ")
+  end
   def find_quotation
     @quotation = Quotation.includes(:quotation_lines => [:serie, :shape, {:quotation_lines_openings => :opening}, {:options_quotation_lines=> :option}]).find_by_slug(params[:id])
   end

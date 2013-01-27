@@ -35,6 +35,12 @@
 			{:disabled => @option.pricing_method_id > 2 } %> <strong><%= trn_geth('LABEL_SIZABLE_ONLY') %></strong>
 		</td>
 	</tr>
+  <tr>
+    <td align="right">&nbsp;</td>
+    <td>
+      <%= f.check_box :emphasize %><label for="option_emphasize"><%= trn_geth('LABEL_EMPHASIZE')%></label>
+    </td>
+  </tr>
   <tr valign="top">
     <td align="right"><%= trn_geth('LABEL_PHOTO') %><%= trn_geth('LABEL_SEMICOLON') %></td>
     <td><%= f.file_field :photo %></td>

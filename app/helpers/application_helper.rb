@@ -1,6 +1,7 @@
 # Methods added to this helper will be available to all templates in the application.
 include TranslationGet
 module ApplicationHelper
+  include SortableTable::App::Helpers::ApplicationHelper
 
   def yes_or_no(b)
     trn_get(b ? 'MSG_YES' : 'MSG_NO')

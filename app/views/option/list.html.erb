@@ -11,7 +11,8 @@
   </tr>
 <% for option in @options %>
   <tr class="<%= cycle('odd', 'even') %>">
-    <td><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %> <%= option.tr_description %></td>
+    <td><%= image_tag option.photo.url(:thumb), :class => "#{ 'popup' unless option.photo.original_filename.blank? }", :style => "vertical-align:middle;"   %>
+      <%= link_to option.tr_description, :action => 'show', :id => option %></td>
     <td><%= option.pricing_method.tr_description %></td>
     <td><%= number_to_currency option.price %></td>
     <td>
@@ -20,7 +21,6 @@
       <% end %>
     </td>
     <td>
-      <%= link_to trn_geth('BUTTON_SHOW'), :action => 'show', :id => option %> |
       <%= link_to trn_geth('BUTTON_EDIT'), :action => 'edit', :id => option %> |
       <%= link_to trn_geth('BUTTON_DELETE'), {:action => 'delete', :id => option}, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
     </td>

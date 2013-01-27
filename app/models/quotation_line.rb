@@ -272,6 +272,7 @@ end
     # constants
     frame_thickness = FRAME_THICKNESS
     arrow_size = ARROW_SIZE
+    section_height2 = 5
     temp_file_name = File.join(Rails.root, 'tmp', "image_#{id}.svg")
     # load erb file for section and generate scaled svg file
     image_file_name = File.basename(get_opening(cpt_opening).preview_image_name, '.png') + '.svg'

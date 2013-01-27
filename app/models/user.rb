@@ -41,7 +41,13 @@ class User < ActiveRecord::Base
     end
   end
 
+  before_create :set_company
 
+  def set_company
+    if self.companies.empty?
+      self.companies << Company.where(:name => "Glass-Vision").first
+    end
+  end
   #
   # Raises:
   #  +User::ActivationCodeNotFound+ if there is no user with the corresponding activation code
@@ -185,6 +191,6 @@ protected
     end    
   
     def self.get_administrator
-      @administrators = User.joins("INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id",    :select =>"users.*", :order => "id ASC")
+      @administrators = User.joins("INNER JOIN permissions on permissions.user_id = users.id INNER JOIN roles on roles.id = permissions.role_id").select("users.*").order("id ASC")
     end        
 end

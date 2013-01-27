@@ -1,0 +1,42 @@
+<%= will_paginate @quotations, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
+
+<table cellspacing="0" style="width:100%;">
+  <thead class="header">
+  <%= sortable_table_header :name => trn_geth('HEADER_NUMBER'),  :sort => "slug", :page => params[:page] %>
+  <%= sortable_table_header :name => trn_geth('HEADER_DATE_MODIFIED'),  :sort => "updated_at", :page => params[:page] %>
+  <%= sortable_table_header :name => trn_geth('HEADER_DESCRIPTION'),  :sort => "description", :page => params[:page] %>
+  <%= sortable_table_header :name => trn_geth('HEADER_CREATED_BY'),  :sort => "created_by", :page => params[:page] if @current_user.has_role?('administrator') %>
+  <%= sortable_table_header :name => trn_geth('LABEL_CONSULTANT') ,  :sort => "consultant", :page => params[:page] if @current_user.has_role?('administrator')%>
+  <th></th>
+  </thead>
+  <tbody>
+  <tr>
+    <td><%= text_field_tag :search_slug, params[:search_slug], :style=>"width:100%" %></td>
+    <td></td>
+    <td><%= text_field_tag :search_description, params[:search_description], :style=>"width:100%" %></td>
+    <td></td>
+    <td></td>
+    <td><%= image_tag("spinner.gif", :align => "absmiddle", :border => 0, :id => "loading", :style =>"display: none;" ) %>
+    </td>
+  </tr>
+  <% @quotations.each do |quotation| %>
+      <tr class="<%= cycle('odd', 'even') %>">
+        <td><%= quotation.slug %></td>
+        <td><%= gv_humanize_time quotation.updated_at %></td>
+        <td><%= link_to quotation.project_name, quotation_path(quotation.slug) %><%= ' (' + quotation.description + ')' unless quotation.description.blank? %><br/>
+            <%= quotation.customer_name %>
+        </td>
+        <td><%= quotation.user.login  if @current_user.has_role?('administrator') and !quotation.user.nil? %> </td>
+        <td><%= quotation.consultant  if @current_user.has_role?('administrator') and !quotation.consultant.nil? %> </td>
+        <td style="width: 115px;">
+          <%= link_to image_tag('copy.png', :title => trn_geth('BUTTON_COPY')), quotation_copy_path(quotation.slug), :method => :post %>
+          <%= link_to image_tag('page_white_edit.png', :title => trn_geth('BUTTON_EDIT')), edit_quotation_path(quotation.slug) %>
+          <%= link_to image_tag('delete.png', :title => trn_geth('BUTTON_DELETE')), {:action => 'destroy', :id => quotation.slug}, :method => :delete, :confirm => trn_geth('LABEL_DELETE_QUESTION') %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
+<%= will_paginate @quotations, :class => "apple_pagination", :next_label => trn_get('NEXT_PAGE'), :previous_label => trn_get('PREVIOUS_PAGE') %>
+
+<%= page_entries_info @quotations %>

@@ -1,0 +1,63 @@
+#!/usr/bin/env ruby
+require 'rubygems'
+require 'RMagick'
+require 'erb'
+include Magick
+
+# constants for drawing
+FRAME_THICKNESS = 3.0
+ARROW_SIZE = 5.0
+PIXELS_PER_INCH = 2
+
+def create_image(imgname, width, height, height2)
+  basename = File.basename(imgname, ".svg")
+  temp_file_name = File.join( 'tmp', "image_#{basename}.svg")
+  final_file_name = "#{basename}.png"
+
+  # binding for erb file
+  # constants
+  frame_thickness = FRAME_THICKNESS
+  arrow_size = ARROW_SIZE
+
+  # define canvas for final image
+  image_width = (width ) * PIXELS_PER_INCH+FRAME_THICKNESS
+  image_height = (height ) * PIXELS_PER_INCH+FRAME_THICKNESS
+  canvas = Image.new(image_width, image_height)
+
+  # coordinates
+  currenty = 0
+  currentx = 0
+  section_height2 = height2
+
+  # define section dimensions for binding in erb
+  section_width = width
+  section_height = height
+
+  # load svg file
+  File.open(temp_file_name, 'w') do |f|
+    f.write ERB.new(File.read(imgname)).result(binding)
+  end
+
+  # load svg file
+  section_image = Image.read(temp_file_name)[0]
+
+  # define offset to paint section
+  offsetx_px = currentx #* PIXELS_PER_INCH
+  offsety_px = currenty #* PIXELS_PER_INCH
+
+  # paint the image on canvas
+  canvas.composite! section_image, offsetx_px, offsety_px, OverCompositeOp
+  canvas.resize_to_fit!(width, height)
+
+  # write final image
+  canvas.write final_file_name
+
+  # delete temp file
+  begin
+#    File.delete temp_file_name
+  rescue
+    # don't care
+  end
+end
+
+create_image(ARGV[0], ARGV[1].to_i, ARGV[2].to_i, ARGV[3].to_i || 0)

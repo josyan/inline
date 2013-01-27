@@ -324,3 +324,14 @@ div.css_button {
 		cursor:pointer;
 	}
 
+
+th.ascending a {
+background: url(../images/sort-ascending-arrow.gif) 0% 50% no-repeat;
+padding-left: 15px;
+}
+
+th.descending a {
+background: url(../images/sort-descending-arrow.gif) 0% 50% no-repeat;
+padding-left: 15px;
+}
+
