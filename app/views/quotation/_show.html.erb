@@ -133,7 +133,7 @@
   <%= link_to "#{trn_geth('BUTTON_ADD')} #{trn_geth("LABEL_ONE_#{mt.gender.upcase}").downcase} #{mt.tr_name.downcase}", :controller => 'quotation_line', :action => 'add', :id => @quotation, :mt => mt.id %> |
 <% end %>
 <%= link_to trn_geth('BUTTON_ADD_OPTION'), :controller => 'option_quotation', :action => 'add', :id => @quotation %> |
-<%= link_to trn_geth('BUTTON_ADD_MANUAL_LINE'), :controller => 'manual_lines', :action => 'add', :id => @quotation %>
+<%= link_to trn_geth('BUTTON_ADD_MANUAL_LINE'), :controller => 'manual_lines', :action => 'new', :id => @quotation %>
 <table class="quotation">
   <tr>
     <th><%= trn_geth('HEADER_PREVIEW') %></th>

@@ -4,6 +4,7 @@ class CreateManualLines < ActiveRecord::Migration
       t.text :description
       t.integer :quantity
       t.float :unit_price
+      t.integer :quotation_id
 
       t.timestamps
     end
