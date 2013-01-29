@@ -15,12 +15,24 @@ class ManualLinesController < ApplicationController
   end
 
   def edit
+    @manual_line = ManualLine.find(params[:id])
   end
 
   def update
+    @manual_line = ManualLine.find(params[:id])
+    if @manual_line.update_attributes(params[:manual_line])
+      flash[:notice] = trn_geth('LABEL_MANUAL_OPTION') + " " + trn_get('MSG_SUCCESSFULLY_MODIFIED_F')
+      redirect_to :controller => 'quotation', :action => 'show', :id => @manual_line.quotation.slug
+    else
+      render :action => 'edit'
+    end
   end
 
   def delete
+    manual_line = ManualLine.find(params[:id])
+    manual_line.destroy
+    flash[:notice] = trn_geth('LABEL_MANUAL_OPTION') + " " + trn_get('MSG_SUCCESSFULLY_DELETED_F')
+    redirect_to :controller => 'quotation', :action => 'show', :id => manual_line.quotation.slug
   end
 
 end
