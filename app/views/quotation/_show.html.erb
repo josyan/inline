@@ -163,7 +163,7 @@
     <%= render :partial => 'manual_line', :locals => { :option => option, :option_price => option_price } %>
   <% end %>
   <tr>
-    <td align="right"><%=trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum + @quotation.manual_lines.collect(&:quantity).sum %> </td>
+    <td align="right"><%=trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>
     <td align="right" colspan="1">Total</td>
     <td align="right"><%= format('%.2f', total) %>$</td>
     <td></td>
