@@ -372,6 +372,37 @@
           <table width="100%" cellspacing="0" cellpadding="3">
       <% end %>
   <% end %>
+
+  <!-- manual options -->
+  <% print_header = true if @quotation.manual_lines.length > 0 %>
+  <% for option in @quotation.manual_lines %>
+      <% if print_header %>
+          <tr bgcolor="#b2b2b2">
+            <th colspan="2"><%= trn_geth('PRINT_HEADER_DETAILS') %></th>
+            <th><%= trn_geth('PRINT_HEADER_UNIT_PRICE') %></th>
+            <th><%= trn_geth('PRINT_HEADER_QUANTITY') %></th>
+            <th><%= trn_geth('PRINT_HEADER_TOTAL_PRICE') %></th>
+          </tr>
+          <% print_header = false %>
+      <% end %>
+      <tr valign="top">
+        <td colspan="2" style="border-bottom: 2px dotted #808080;"><%= option.description %></td>
+        <% option_price = option.unit_price * (1 - @quotation.discount / 100) %>
+        <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency(option_price) %> &nbsp;</td>
+        <td width="10%" align="center" style="border-bottom: 2px dotted #808080;"><%= option.quantity %> &nbsp;</td>
+        <td width="10%" align="right" style="border-bottom: 2px dotted #808080;"><%= number_to_currency(option_price * option.quantity) %> &nbsp;</td>
+      </tr>
+      <% total += option_price * option.quantity %>
+      <% printed_line += 0.2
+         if printed_line == 3
+             printed_line = 0
+             print_header = true %>
+          </table>
+          <div style="page-break-before: always;">&nbsp;</div>
+          <table width="100%" cellspacing="0" cellpadding="3">
+      <% end %>
+  <% end %>
+
   <!-- total -->
   <tr>
     <td><%= trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>

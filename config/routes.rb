@@ -43,6 +43,7 @@ GlassVision::Application.routes.draw do
   end
   resources :door_borings
   resources :door_sections
+  resources :manual_lines
 
   resource :session, :controller => :session
   resource :passwords

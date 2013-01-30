@@ -1,0 +1,17 @@
+<%= error_messages_for "manual_line" %>
+
+<%= f.hidden_field "quotation_id" %>
+<table>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_DESCRIPTION') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_area "description", :cols => "39", :rows => "10" %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_QUANTITY') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field "quantity", :size => 30 %></td>
+  </tr>
+  <tr valign="top">
+    <td align="right"><%= trn_geth('LABEL_PRICE') %><%= trn_geth('LABEL_SEMICOLON') %></td>
+    <td><%= f.text_field "unit_price", :size => 30 %></td>
+  </tr>
+</table>

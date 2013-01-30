@@ -132,7 +132,8 @@
 <% @current_user.module_types.each do |mt| %>
   <%= link_to "#{trn_geth('BUTTON_ADD')} #{trn_geth("LABEL_ONE_#{mt.gender.upcase}").downcase} #{mt.tr_name.downcase}", :controller => 'quotation_line', :action => 'add', :id => @quotation, :mt => mt.id %> |
 <% end %>
-<%= link_to trn_geth('BUTTON_ADD_OPTION'), :controller => 'option_quotation', :action => 'add', :id => @quotation %>
+<%= link_to trn_geth('BUTTON_ADD_OPTION'), :controller => 'option_quotation', :action => 'add', :id => @quotation %> |
+<%= link_to trn_geth('BUTTON_ADD_MANUAL_LINE'), :controller => 'manual_lines', :action => 'new', :id => @quotation %>
 <table class="quotation">
   <tr>
     <th><%= trn_geth('HEADER_PREVIEW') %></th>
@@ -142,19 +143,24 @@
   </tr>
   <% total = 0 %>
   <% for line in @quotation.quotation_lines %>
-    <% line_price = line.price * (1 - @quotation.discount / 100) * (1 + @quotation.markup / 100)%>
-    <%   total += line.quantity * line_price %>
+    <% line_price = line.price * (1 - @quotation.discount / 100) * (1 + @quotation.markup / 100) %>
+    <% total += line.quantity * line_price %>
     <%= render :partial => 'quotation_line', :locals => { :line => line, :line_price => line_price } %>
   <% end %>
   <% for door in @quotation.door_lines %>
-    <% door_price = door.price * (1 - @quotation.discount / 100) * (1 + @quotation.markup / 100)%>
-    <%   total += door.quantity * door_price %>
+    <% door_price = door.price * (1 - @quotation.discount / 100) * (1 + @quotation.markup / 100) %>
+    <% total += door.quantity * door_price %>
     <%= render :partial => 'door_line', :locals => { :door => door, :door_price => door_price } %>
   <% end %>
   <% for option in @quotation.options_quotations %>
-      <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
-    <%   total += option.quantity * option_price %>
+    <% option_price = option.option.price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
+    <% total += option.quantity * option_price %>
     <%= render :partial => 'option', :locals => { :option => option, :option_price => option_price } %>
+  <% end %>
+  <% for option in @quotation.manual_lines %>
+    <% option_price = option.unit_price * (1 - @quotation.discount / 100) * (1 + (@quotation.markup / 100.00)) %>
+    <% total += option.quantity * option_price %>
+    <%= render :partial => 'manual_line', :locals => { :option => option, :option_price => option_price } %>
   <% end %>
   <tr>
     <td align="right"><%=trn_geth('TOTAL_QUANTITY')%><%= trn_geth('LABEL_SEMICOLON') %> <%= @quotation.quotation_lines.collect(&:quantity).sum + @quotation.door_lines.collect(&:quantity).sum %> </td>
