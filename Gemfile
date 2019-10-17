@@ -5,7 +5,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.0.13'
 
 gem 'will_paginate', ">= 3.0.pre2"
-gem 'paperclip', "=2.3.11"
+gem 'paperclip', "4.2.2"
 gem 'formtastic'
 gem 'validation_reflection'
 gem 'mysql2','0.2.7'
